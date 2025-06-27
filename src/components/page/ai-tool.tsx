@@ -62,13 +62,13 @@ export function AiTool() {
 
   return (
     <section id="ai-tool" className="container py-20 md:py-24">
-      <div className="text-center">
+      <div className="text-center opacity-0 animate-fade-in-up">
         <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Herramienta de Diseño IA</h2>
         <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl mt-4">
           Describe tu idea para un logo o diseño, y la IA generará un prompt detallado para herramientas como DALL-E o Midjourney.
         </p>
       </div>
-      <Card className="max-w-3xl mx-auto mt-12 shadow-lg">
+      <Card className="max-w-3xl mx-auto mt-12 shadow-lg opacity-0 animate-fade-in-up [animation-delay:200ms]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline">
             <Wand2 className="text-accent" /> Generador de Prompts
@@ -110,13 +110,13 @@ export function AiTool() {
                 {isLoading && (
                     <div className="flex items-center space-x-2">
                         <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse delay-200" />
-                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse delay-400" />
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse [animation-delay:200ms]" />
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse [animation-delay:400ms]" />
                         <span className="text-sm text-muted-foreground">La IA está pensando...</span>
                     </div>
                 )}
                 {generatedPrompt && !isLoading && (
-                    <div>
+                    <div className="opacity-0 animate-fade-in">
                         <h3 className="font-semibold mb-2">Prompt Generado:</h3>
                         <div className="relative p-4 bg-muted rounded-md">
                         <p className="text-sm pr-10">{generatedPrompt}</p>

@@ -30,8 +30,8 @@ const projects = [
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="container py-20 md:py-24 bg-secondary/50">
-      <div className="text-center">
+    <section id="portfolio" className="container py-20 md:py-24 bg-gradient-to-b from-background to-secondary/50">
+      <div className="text-center opacity-0 animate-fade-in-up">
         <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Portfolio</h2>
         <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl mt-4">
           Una selección de mis proyectos más recientes.
@@ -39,7 +39,11 @@ export function Portfolio() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {projects.map((project, index) => (
-          <Card key={index} className="overflow-hidden flex flex-col group hover:scale-105 transition-transform duration-300">
+          <Card 
+            key={index} 
+            className="overflow-hidden flex flex-col group hover:scale-105 transition-transform duration-300 opacity-0 animate-fade-in-up"
+            style={{ animationDelay: `${200 * (index + 1)}ms` }}
+          >
             <CardHeader className="p-0">
               <Image src={project.image} alt={project.title} width={600} height={400} className="object-cover w-full h-auto" data-ai-hint={project.hint} />
             </CardHeader>

@@ -27,7 +27,7 @@ export function Footer() {
 
   return (
     <footer id="contact" className="w-full border-t bg-secondary/50">
-      <div className="container py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="container py-12 flex flex-col md:flex-row items-center justify-between gap-6 opacity-0 animate-fade-in-up [animation-delay:400ms]">
         <div className="flex items-center gap-2">
           <Code2 className="h-6 w-6 text-primary" />
           <span className="font-bold font-headline">OneJoan</span>

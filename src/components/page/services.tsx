@@ -22,7 +22,7 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="container py-20 md:py-24">
-      <div className="text-center">
+      <div className="text-center opacity-0 animate-fade-in-up">
         <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Mis Servicios</h2>
         <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl mt-4">
           Ofrezco una gama completa de servicios para llevar tus ideas del concepto a la realidad.
@@ -30,7 +30,11 @@ export function Services() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {services.map((service, index) => (
-          <Card key={index} className="flex flex-col text-center hover:shadow-lg transition-shadow duration-300">
+          <Card 
+            key={index} 
+            className="flex flex-col text-center hover:shadow-lg transition-all duration-300 opacity-0 animate-fade-in-up hover:-translate-y-2"
+            style={{ animationDelay: `${200 * (index + 1)}ms` }}
+          >
             <CardHeader className="items-center pb-4">
               {service.icon}
             </CardHeader>
