@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Suspense, useRef } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stage, useGLTF } from '@react-three/drei'
 import { Card, CardContent } from '../ui/card'
@@ -27,6 +27,12 @@ const models = [
 ]
 
 export function Splatting() {
+    const [isClient, setIsClient] = useState(false)
+
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
+
     return (
         <section id="splatting" className="w-full py-20 md:py-32">
             <div className="container">
@@ -52,15 +58,17 @@ export function Splatting() {
                                     <div className="p-1">
                                         <Card className="overflow-hidden">
                                             <CardContent className="p-0 aspect-square">
-                                                <Suspense fallback={<div className="w-full h-full flex items-center justify-center bg-muted"><Loader className="animate-spin h-8 w-8 text-primary"/></div>}>
-                                                    <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ touchAction: 'none' }}>
-                                                        <color attach="background" args={['#222631']} />
-                                                        <Stage environment="city" intensity={0.6}>
-                                                            <Model path={model.path} />
-                                                        </Stage>
-                                                        <OrbitControls autoRotate enableZoom={false} />
-                                                    </Canvas>
-                                                </Suspense>
+                                                {isClient && (
+                                                    <Suspense fallback={<div className="w-full h-full flex items-center justify-center bg-muted"><Loader className="animate-spin h-8 w-8 text-primary"/></div>}>
+                                                        <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ touchAction: 'none' }}>
+                                                            <color attach="background" args={['#222631']} />
+                                                            <Stage environment="city" intensity={0.6}>
+                                                                <Model path={model.path} />
+                                                            </Stage>
+                                                            <OrbitControls autoRotate enableZoom={false} />
+                                                        </Canvas>
+                                                    </Suspense>
+                                                )}
                                             </CardContent>
                                         </Card>
                                         <div className="mt-4 text-center">

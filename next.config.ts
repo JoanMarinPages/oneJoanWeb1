@@ -18,12 +18,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-   webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      three: require.resolve('three'),
-    };
-    return config;
+  turbo: {
+    resolveAliases: {
+      three: 'three',
+    },
   },
 };
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from 'react';
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Rewind, FastForward, Home, Building } from "lucide-react";
