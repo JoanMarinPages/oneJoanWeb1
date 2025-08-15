@@ -43,7 +43,7 @@ export function Contact() {
     <section id="contact" className="w-full py-20 md:py-32">
       <div className="container">
         <div className="text-center mb-12 opacity-0 animate-fade-in-up">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline animated-gradient-text">
             ¿Hablamos?
           </h2>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">

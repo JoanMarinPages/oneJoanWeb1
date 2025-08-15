@@ -74,8 +74,26 @@
 }
 
 @layer utilities {
+    .animated-gradient-text {
+        @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+        background-size: 200% auto;
+        animation: gradient-animation 5s ease-in-out infinite;
+    }
+
     .animate-tilt {
         animation: tilt 10s infinite linear;
+    }
+
+    @keyframes gradient-animation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
 
     @keyframes tilt {
@@ -87,6 +105,17 @@
         }
         75% {
             transform: rotate(-0.5deg);
+        }
+    }
+
+    @keyframes fade-in-up {
+        '0%': {
+            opacity: '0';
+            transform: 'translateY(1rem)';
+        }
+        '100%': {
+            opacity: '1';
+            transform: 'translateY(0)';
         }
     }
 }

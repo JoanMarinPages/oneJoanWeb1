@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Code2, Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { cn } from '@/lib/utils';
 
 const navLinks = [
     { href: "#real-estate", label: "Inmobiliaria" },
@@ -20,15 +19,14 @@ export function Header() {
             <span className="font-bold text-xl font-headline">OneJoan</span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            {navLinks.map((link, index) => (
+        <nav className="hidden md:flex items-center gap-1 bg-background/50 border border-border/50 rounded-full px-2 py-1">
+            {navLinks.map((link) => (
                 <Link 
                   key={link.href} 
                   href={link.href} 
-                  className="relative text-foreground/70 transition-colors hover:text-primary"
+                  className="relative text-foreground/70 transition-colors hover:text-primary px-4 py-2 rounded-full text-sm font-medium"
                 >
                   {link.label}
-                  <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
                 </Link>
             ))}
         </nav>
