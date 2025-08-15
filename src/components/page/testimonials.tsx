@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
@@ -7,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { useEffect, useState } from "react";
 
 const testimonials = [
     {
@@ -32,12 +35,28 @@ const testimonials = [
     }
 ]
 
+// Videos from /public/assets/videosBackground
+const availableVideos = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
+
+const getRandomVideo = () => {
+    if (availableVideos.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * availableVideos.length);
+    return `/assets/videosBackground/${availableVideos[randomIndex]}`;
+}
+
 export function Testimonials() {
+  const [testimonialVideos, setTestimonialVideos] = useState<(string | null)[]>([]);
+
+  useEffect(() => {
+      const videos = testimonials.map(() => getRandomVideo());
+      setTestimonialVideos(videos);
+  }, []);
+  
   return (
     <section id="testimonials" className="w-full py-20 md:py-32 bg-secondary/50">
         <div className="container px-4 md:px-6">
             <div className="text-center mb-12 opacity-0 animate-fade-in-up">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Lo que dicen mis clientes</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Lo que dicen mis clientes</h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">
                     La satisfacción de mis clientes es mi mejor carta de presentación.
                 </p>
@@ -51,8 +70,21 @@ export function Testimonials() {
                 <CarouselContent>
                     {testimonials.map((testimonial, index) => (
                         <CarouselItem key={index}>
-                            <Card className="border-0 shadow-none bg-transparent">
-                                <CardContent className="flex flex-col items-center justify-center p-6 text-center">
+                            <Card className="border-0 shadow-2xl bg-transparent overflow-hidden relative">
+                                {testimonialVideos[index] && (
+                                    <>
+                                        <video
+                                            src={testimonialVideos[index]!}
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                            className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+                                        />
+                                        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm -z-10" />
+                                    </>
+                                )}
+                                <CardContent className="flex flex-col items-center justify-center p-6 text-center z-10">
                                     <blockquote className="text-lg md:text-xl lg:text-2xl font-medium mb-6">
                                         "{testimonial.quote}"
                                     </blockquote>

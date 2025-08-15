@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -18,11 +18,26 @@ const formSchema = z.object({
   }),
 });
 
+// Videos from /public/assets/videosBackground
+const availableVideos = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
+
+const getRandomVideo = () => {
+    if (availableVideos.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * availableVideos.length);
+    return `/assets/videosBackground/${availableVideos[randomIndex]}`;
+}
+
+
 export function AiTool() {
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const [video, setVideo] = useState<string | null>(null);
+
+  useEffect(() => {
+    setVideo(getRandomVideo());
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,12 +78,25 @@ export function AiTool() {
   return (
     <section id="ai-tool" className="container py-20 md:py-24">
       <div className="text-center opacity-0 animate-fade-in-up">
-        <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Herramienta de Diseño IA</h2>
+        <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Herramienta de Diseño IA</h2>
         <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl mt-4">
           Describe tu idea para un logo o diseño, y la IA generará un prompt detallado para herramientas como DALL-E o Midjourney.
         </p>
       </div>
-      <Card className="max-w-3xl mx-auto mt-12 shadow-lg opacity-0 animate-fade-in-up [animation-delay:200ms]">
+      <Card className="max-w-3xl mx-auto mt-12 shadow-2xl opacity-0 animate-fade-in-up [animation-delay:200ms] overflow-hidden relative">
+        {video && (
+          <>
+            <video
+              src={video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+            />
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm -z-10" />
+          </>
+        )}
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline">
             <Wand2 className="text-accent" /> Generador de Prompts
@@ -91,6 +119,7 @@ export function AiTool() {
                         placeholder="Ej: Un logo para una cafetería moderna llamada 'AstroCafé', con un astronauta bebiendo café en el espacio, estilo minimalista y colores azules."
                         rows={5}
                         {...field}
+                        className="bg-background/80"
                       />
                     </FormControl>
                     <FormMessage />
@@ -118,7 +147,7 @@ export function AiTool() {
                 {generatedPrompt && !isLoading && (
                     <div className="opacity-0 animate-fade-in">
                         <h3 className="font-semibold mb-2">Prompt Generado:</h3>
-                        <div className="relative p-4 bg-muted rounded-md">
+                        <div className="relative p-4 bg-muted/80 rounded-md">
                         <p className="text-sm pr-10">{generatedPrompt}</p>
                         <Button
                             variant="ghost"

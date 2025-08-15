@@ -53,7 +53,7 @@ export function Portfolio() {
     <section id="portfolio" className="w-full py-20 md:py-32">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-12 opacity-0 animate-fade-in-up">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Portfolio</h2>
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Portfolio</h2>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mt-4">
             Una selección de mis proyectos más recientes.
           </p>
@@ -62,7 +62,7 @@ export function Portfolio() {
           {projects.map((project, index) => (
             <Card
               key={index}
-              className="overflow-hidden flex flex-col group transform transition-all duration-300 hover:scale-105 hover:shadow-2xl opacity-0 animate-fade-in-up"
+              className="overflow-hidden flex flex-col group transform transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-primary/40 opacity-0 animate-fade-in-up"
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
               <CardHeader className="p-0 relative h-48 overflow-hidden">
@@ -78,9 +78,9 @@ export function Portfolio() {
                 ) : (
                   <Image src={project.image} alt={project.title} width={600} height={400} className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-ai-hint={project.hint} />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               </CardHeader>
-              <div className="p-6 bg-background flex flex-col flex-grow relative z-10">
+              <div className="p-6 bg-background/80 backdrop-blur-sm flex flex-col flex-grow relative z-10">
                 <CardTitle className="font-headline text-xl mb-2">{project.title}</CardTitle>
                 <CardDescription>{project.description}</CardDescription>
                 <div className="flex flex-wrap gap-2 my-4">
