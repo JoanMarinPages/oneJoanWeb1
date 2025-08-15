@@ -2,31 +2,28 @@
 "use client"
 
 import React from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Stage, useGLTF } from '@react-three/drei'
+import { Canvas, extend, Object3DNode } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import { LumaSplatsThree, LumaSplatsSemantics } from "@lumaai/luma-web";
 
-// Este componente contiene todo el código de Three.js
-// y se carga de forma dinámica en splatting.tsx
+// Make LumaSplatsThree available to R3F
+extend( { LumaSplats: LumaSplatsThree } );
 
-// Es una buena práctica separar el componente del modelo
-function Model({ path }: { path: string }) {
-  const { scene } = useGLTF(path)
-  return <primitive object={scene} />
+// For typeScript support:
+declare module '@react-three/fiber' {
+  interface ThreeElements {
+    lumaSplats: Object3DNode<LumaSplatsThree, typeof LumaSplatsThree>
+  }
 }
 
-// La precarga de los modelos es útil para que estén listos cuando se necesiten.
-// Asegúrate de que las rutas a tus modelos en la carpeta `public` sean correctas.
-useGLTF.preload('/assets/models/shoe.glb')
-useGLTF.preload('/assets/models/headphone.glb')
-useGLTF.preload('/assets/models/vr-headset.glb')
-
-export function SplattingViewer({ path }: { path: string }) {
+export function SplattingViewer() {
   return (
-    <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ touchAction: 'none' }}>
-      <color attach="background" args={['#222631']} />
-      <Stage environment="city" intensity={0.6}>
-        <Model path={path} />
-      </Stage>
+    <Canvas dpr={[1, 2]} camera={{ fov: 45, position: [0, 0, 4] }} style={{ touchAction: 'none' }}>
+        <lumaSplats
+            semanticsMask={LumaSplatsSemantics.FOREGROUND}
+            source='https://lumalabs.ai/capture/822bac8d-70d6-404e-aaae-f89f46672c67'
+            scale={1.5}
+        />
       <OrbitControls autoRotate />
     </Canvas>
   )
