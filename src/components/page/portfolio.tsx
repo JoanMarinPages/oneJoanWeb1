@@ -31,13 +31,13 @@ const projects = [
   },
 ];
 
-// Supongamos que tienes estos videos en /public/assets/
+// Videos from /public/assets/videosBackground
 const availableVideos = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
 
 const getRandomVideo = () => {
     if (availableVideos.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * availableVideos.length);
-    return `/assets/${availableVideos[randomIndex]}`;
+    return `/assets/videosBackground/${availableVideos[randomIndex]}`;
 }
 
 export function Portfolio() {
