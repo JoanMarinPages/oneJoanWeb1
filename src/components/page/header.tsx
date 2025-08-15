@@ -2,29 +2,40 @@ import Link from 'next/link';
 import { Code2, Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+import { cn } from '@/lib/utils';
 
 const navLinks = [
-    { href: "#services", label: "Servicios" },
-    { href: "#portfolio", label: "Portfolio" },
-    { href: "#testimonials", label: "Testimonios" },
-    { href: "#ai-tool", label: "Herramienta IA" },
+    { href: "#real-estate", label: "Inmobiliaria" },
+    { href: "#splatting", label: "Visualización 3D" },
+    { href: "#industrial", label: "Industria" },
     { href: "#contact", label: "Contacto" },
 ]
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
             <Code2 className="h-7 w-7 text-primary" />
-            <span className="font-bold text-lg font-headline">OneJoan</span>
+            <span className="font-bold text-xl font-headline">OneJoan</span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {navLinks.map(link => (
-                <Link key={link.href} href={link.href} className="transition-colors hover:text-primary text-foreground/70">{link.label}</Link>
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            {navLinks.map((link, index) => (
+                <Link 
+                  key={link.href} 
+                  href={link.href} 
+                  className="relative text-foreground/70 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                  <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                </Link>
             ))}
         </nav>
+
+        <Button asChild className="hidden md:flex">
+            <Link href="#contact">Hablemos</Link>
+        </Button>
 
         <div className="md:hidden">
             <Sheet>
@@ -45,6 +56,9 @@ export function Header() {
                                 <Link key={link.href} href={link.href} className="text-lg font-medium hover:text-primary transition-colors">{link.label}</Link>
                             ))}
                         </nav>
+                         <Button asChild className="mt-4">
+                            <Link href="#contact">Hablemos</Link>
+                        </Button>
                     </div>
                 </SheetContent>
             </Sheet>
