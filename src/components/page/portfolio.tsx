@@ -35,7 +35,7 @@ const projects = [
 const availableVideos = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
 
 const getRandomVideo = () => {
-    if (availableVideos.length === 0) return null;
+    if (typeof window === "undefined" || availableVideos.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * availableVideos.length);
     return `/assets/videosBackground/${availableVideos[randomIndex]}`;
 }
@@ -44,7 +44,6 @@ export function Portfolio() {
   const [projectVideos, setProjectVideos] = useState<(string | null)[]>([]);
 
   useEffect(() => {
-    // Evitar mismatch de hidratación SSR/cliente con Math.random
     const videos = projects.map(() => getRandomVideo());
     setProjectVideos(videos);
   }, []);
