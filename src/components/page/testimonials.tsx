@@ -35,21 +35,19 @@ const testimonials = [
     }
 ]
 
-// Videos from /public/assets/videosBackground
-const availableVideos = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
+const availableVideos = ['/assets/videosBackground/video1.mp4', '/assets/videosBackground/video2.mp4', '/assets/videosBackground/video3.mp4'];
 
 const getRandomVideo = () => {
     if (typeof window === "undefined" || availableVideos.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * availableVideos.length);
-    return `/assets/videosBackground/${availableVideos[randomIndex]}`;
+    return availableVideos[randomIndex];
 }
 
 export function Testimonials() {
   const [testimonialVideos, setTestimonialVideos] = useState<(string | null)[]>([]);
 
   useEffect(() => {
-      const videos = testimonials.map(() => getRandomVideo());
-      setTestimonialVideos(videos);
+    setTestimonialVideos(testimonials.map(() => getRandomVideo()));
   }, []);
   
   return (
