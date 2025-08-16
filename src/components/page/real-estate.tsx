@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef, useState } from 'react';
@@ -19,7 +20,11 @@ const projects = [
   },
 ];
 
-export function RealEstate() {
+interface RealEstateProps {
+  backgroundVideoUrl: string;
+}
+
+export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [playingStates, setPlayingStates] = useState<{[key: number]: boolean}>({});
 
@@ -43,7 +48,7 @@ export function RealEstate() {
   const description = "Visualizaciones interactivas y experiencias inmersivas que dan vida a tus proyectos antes de construirlos.";
 
   return (
-    <Section id="real-estate" title={title} description={description}>
+    <Section id="real-estate" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <div
@@ -52,7 +57,7 @@ export function RealEstate() {
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
               <div 
-                className="relative overflow-hidden rounded-2xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer border"
+                className="relative overflow-hidden rounded-2xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer border-white/10 border"
                 onClick={() => togglePlay(index)}
               >
                 <video
@@ -75,8 +80,8 @@ export function RealEstate() {
                   {project.icon}
                 </div>
                 <div>
-                    <h3 className="text-xl font-bold font-headline">{project.title}</h3>
-                    <p className="text-muted-foreground mt-1">{project.description}</p>
+                    <h3 className="text-xl font-bold font-headline text-white">{project.title}</h3>
+                    <p className="text-white/80 mt-1">{project.description}</p>
                 </div>
               </div>
             </div>

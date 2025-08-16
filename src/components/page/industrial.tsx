@@ -5,7 +5,7 @@ import * as React from "react"
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Cell, YAxis } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, TrendingUp, Zap } from "lucide-react"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "../ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 
 const barChartData = [
@@ -26,7 +26,7 @@ const barChartConfig = {
     label: "Ventas Realizadas",
     color: "hsl(var(--primary))",
   },
-} satisfies ChartConfig
+}
 
 const lineChartData = [
   { month: 'Enero', oee: 65 },
@@ -42,7 +42,7 @@ const lineChartConfig = {
     label: "OEE",
     color: "hsl(var(--primary))",
   },
-} satisfies ChartConfig
+}
 
 const pieChartData = [
     { name: 'Producción', value: 400, fill: 'hsl(var(--chart-1))' },
@@ -71,9 +71,13 @@ const pieChartConfig = {
     label: "Calidad",
     color: "hsl(var(--chart-4))",
   },
-} satisfies ChartConfig
+}
 
-export function Industrial() {
+interface IndustrialProps {
+  backgroundVideoUrl: string;
+}
+
+export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
     const title = (
     <>
       Dashboard de <span className="animated-gradient-text">Analítica Industrial</span>
@@ -83,9 +87,9 @@ export function Industrial() {
   const description = "Optimiza procesos y predice resultados mediante la simulación de movimientos, análisis de datos y visualizaciones interactivas.";
 
   return (
-    <Section id="industrial" title={title} description={description}>
+    <Section id="industrial" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            <Card className="lg:col-span-2 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
+            <Card className="lg:col-span-2 fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
                 <CardHeader>
                     <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
                     <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
@@ -105,7 +109,7 @@ export function Industrial() {
                     </ChartContainer>
                 </CardContent>
             </Card>
-                <Card className="fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
+                <Card className="fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
                 <CardHeader>
                     <CardTitle>Eficiencia por Sector</CardTitle>
                         <CardDescription>Distribución de recursos y efectividad.</CardDescription>
@@ -136,7 +140,7 @@ export function Industrial() {
             </Card>
         </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="lg:col-span-1 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
+            <Card className="lg:col-span-1 fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
                 <CardHeader>
                     <CardTitle>Evolución OEE (%)</CardTitle>
                     <CardDescription>Overall Equipment Effectiveness</CardDescription>
@@ -156,7 +160,7 @@ export function Industrial() {
                 </CardContent>
             </Card>
             <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
-                <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
                     <div>
                         <h3 className="text-xl font-bold font-headline">Simulación de Procesos</h3>
@@ -165,7 +169,7 @@ export function Industrial() {
                         </p>
                     </div>
                 </Card>
-                    <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                    <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><Building2 className="h-7 w-7 text-primary"/></div>
                     <div>
                         <h3 className="text-xl font-bold font-headline">Gemelos Digitales</h3>
@@ -174,7 +178,7 @@ export function Industrial() {
                         </p>
                     </div>
                 </Card>
-                    <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                    <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><TrendingUp className="h-7 w-7 text-primary"/></div>
                     <div>
                         <h3 className="text-xl font-bold font-headline">Dashboards de Datos</h3>

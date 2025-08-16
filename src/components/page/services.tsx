@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Code, Bot, Orbit, Smartphone } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
@@ -23,17 +25,32 @@ const services = [
         title: "Simulación Industrial",
         description: "Creo gemelos digitales y simulaciones de procesos para optimizar la producción y reducir costes."
     }
-]
+];
+
+const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4";
 
 export function Services() {
     return (
-        <section id="services" className="w-full bg-secondary/50 py-20 md:py-32">
-            <div className="container">
-                <div className="text-center mb-12 fade-in-up">
+        <section id="services" className="relative w-full py-20 md:py-32 overflow-hidden">
+            <div className="absolute inset-0 z-0">
+                <video
+                    key={backgroundVideoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                >
+                    <source src={backgroundVideoUrl} type="video/mp4" />
+                </video>
+            </div>
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="container relative z-10">
+                <div className="text-center mb-12 fade-in-up text-white">
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
                         Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
                     </h2>
-                    <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">
+                    <p className="mx-auto max-w-[700px] text-white/80 md:text-xl/relaxed mt-4">
                         Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                     </p>
                 </div>
@@ -41,7 +58,7 @@ export function Services() {
                     {services.map((service, index) => (
                         <Card 
                             key={service.title} 
-                            className="p-6 text-center flex flex-col items-center gap-4 border-border/60 shadow-lg shadow-primary/5 hover:border-primary/50 hover:shadow-primary/10 transition-all duration-300 fade-in-up"
+                            className="p-6 text-center flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/10 hover:border-primary/50 transition-all duration-300 fade-in-up"
                             style={{ animationDelay: `${200 * (index + 1)}ms` }}
                         >
                             <div className="bg-primary/10 rounded-full p-4">
@@ -50,7 +67,7 @@ export function Services() {
                             <CardHeader className="p-0">
                                 <CardTitle className="text-xl font-headline">{service.title}</CardTitle>
                             </CardHeader>
-                            <CardDescription className="text-base">
+                            <CardDescription className="text-base text-muted-foreground">
                                 {service.description}
                             </CardDescription>
                         </Card>

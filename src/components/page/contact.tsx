@@ -35,7 +35,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function Contact() {
+interface ContactProps {
+  backgroundVideoUrl: string;
+}
+
+export function Contact({ backgroundVideoUrl }: ContactProps) {
   const { toast } = useToast();
 
   const form = useForm<FormData>({
@@ -71,14 +75,14 @@ export function Contact() {
   const description = "Si tienes un proyecto en mente o quieres saber más, no dudes en contactarme. Completa el formulario y empecemos a crear algo increíble juntos.";
 
   return (
-    <Section id="contact" title={title} description={description} className="pb-12 md:pb-20">
+    <Section id="contact" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl} className="pb-12 md:pb-20">
         <div className="grid md:grid-cols-12 gap-12 max-w-7xl mx-auto">
             <div className="md:col-span-4 space-y-8 fade-in-up" style={{animationDelay: '200ms'}}>
                     <ContactInfoCard />
                     <FollowMeCard />
                     <WhyMeCard />
             </div>
-            <div className="md:col-span-8 p-8 bg-card border rounded-2xl shadow-lg shadow-primary/5 fade-in-up" style={{animationDelay: '400ms'}}>
+            <div className="md:col-span-8 p-8 bg-card/80 backdrop-blur-sm border rounded-2xl border-white/10 shadow-lg shadow-primary/5 fade-in-up" style={{animationDelay: '400ms'}}>
                 <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-1">
@@ -268,7 +272,7 @@ export function Contact() {
 
 function ContactInfoCard() {
     return (
-        <Card className="p-6 shadow-lg shadow-primary/5">
+        <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <h3 className="text-xl font-bold font-headline mb-4">Información de Contacto</h3>
             <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -306,7 +310,7 @@ function ContactInfoCard() {
 
 function FollowMeCard() {
     return (
-        <Card className="p-6 shadow-lg shadow-primary/5">
+        <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <h3 className="text-xl font-bold font-headline mb-4">Sígueme</h3>
             <div className="flex gap-2">
                 <Button variant="outline" size="icon" asChild><a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><Linkedin /></a></Button>
@@ -326,7 +330,7 @@ function WhyMeCard() {
         { label: "Años experiencia", value: "5+" },
     ]
     return (
-            <Card className="p-6 shadow-lg shadow-primary/5">
+            <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <h3 className="text-xl font-bold font-headline mb-4">¿Por qué elegirme?</h3>
             <div className="space-y-3">
                 {whyMeData.map(item => (
