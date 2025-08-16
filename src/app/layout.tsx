@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from '@/components/providers';
 import { cn } from '@/lib/utils';
 import { Inter, Space_Grotesk } from 'next/font/google';
+import { AuthProvider } from '@/components/auth-provider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,7 +29,11 @@ export default function RootLayout({
   return (
     <html lang="es" className={cn(inter.variable, spaceGrotesk.variable, '!scroll-smooth')} suppressHydrationWarning>
       <body className="font-body antialiased bg-background text-foreground">
-        <Providers>{children}</Providers>
+        <Providers>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -17,7 +17,7 @@ export default function Home() {
         <Services />
         <RealEstate backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runi52OdJstLhY_--ar_12869_--video_1_d5e997a6-1fa4-4a07-b786-86cf65bd9476_2.mp4" />
         <Industrial backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runkqY7g-97hV4_--ar_12869_--video_1_48f32b7d-5daf-4bfe-b468-4628943ac79a_1.mp4" />
-        <Ecommerce />
+        <Ecommerce backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" />
         <Contact backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runvGCn32u5cHM_--ar_12869_--video_1_db1350cf-9e75-4647-af40-dfcd3d87446b_3.mp4" />
       </main>
       <Footer />

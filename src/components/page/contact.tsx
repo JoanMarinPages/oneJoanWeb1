@@ -2,14 +2,18 @@
 "use client";
 
 import * as React from "react";
-import { Bot, User, Send, Loader2, Sparkles, Briefcase, DollarSign, Calendar } from 'lucide-react';
+import { Bot, User, Send, Loader2, Sparkles, Briefcase, DollarSign, Calendar, Contact as ContactIcon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { salesAssistantAction } from "@/app/actions";
-import type { SalesAssistantOutput } from "@/ai/schemas/sales-assistant-schemas";
+import { salesAssistantAction, saveProposalAction } from "@/app/actions";
+import type { SalesAssistantOutput, SalesAssistantInput } from "@/ai/schemas/sales-assistant-schemas";
 import { cn } from "@/lib/utils";
 import { Section } from "./section";
+import { useAuth } from "../auth-provider";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
+
 
 type Message = {
     role: 'user' | 'model';
@@ -111,7 +115,7 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
                                             : "bg-muted text-muted-foreground rounded-bl-none"
                                     )}>
                                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                                        {message.proposal && <ProposalCard proposal={message.proposal} />}
+                                        {message.proposal && <ProposalCard proposal={message.proposal} conversationHistory={messages} />}
                                     </div>
                                     {message.role === 'user' && (
                                         <div className="bg-muted p-2.5 rounded-full">
@@ -155,7 +159,53 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
     );
 }
 
-function ProposalCard({ proposal }: { proposal: NonNullable<SalesAssistantOutput['proposal']> }) {
+function ProposalCard({ proposal, conversationHistory }: { proposal: NonNullable<SalesAssistantOutput['proposal']>, conversationHistory: Message[] }) {
+    const { user } = useAuth();
+    const { toast } = useToast();
+    const [isSaving, setIsSaving] = React.useState(false);
+
+    const handleSaveProposal = async () => {
+        if (!user) return;
+        setIsSaving(true);
+        try {
+            const proposalToSave: SalesAssistantInput = {
+                history: conversationHistory.map(m => ({ role: m.role, content: m.content })),
+                message: ''
+            };
+            await saveProposalAction({
+                userId: user.uid,
+                userEmail: user.email!,
+                userName: user.displayName!,
+                proposal,
+                history: proposalToSave.history,
+            });
+            toast({
+                title: "¡Propuesta Guardada!",
+                description: "Gracias por tu interés. Me pondré en contacto contigo pronto.",
+            });
+        } catch (error) {
+            console.error("Error saving proposal:", error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "No se pudo guardar la propuesta. Por favor, inténtalo de nuevo.",
+            });
+        } finally {
+            setIsSaving(false);
+        }
+    };
+    
+    const contactButton = (
+        <Button 
+            className="w-full mt-4" 
+            onClick={handleSaveProposal} 
+            disabled={!user || isSaving}
+        >
+            {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ContactIcon className="mr-2 h-4 w-4" />}
+            {isSaving ? 'Guardando...' : 'Contactar para Contratar'}
+        </Button>
+    );
+
     return (
         <div className="mt-4 border-t border-primary/20 pt-4">
              <h4 className="flex items-center gap-2 font-bold text-base mb-4 text-foreground">
@@ -177,6 +227,20 @@ function ProposalCard({ proposal }: { proposal: NonNullable<SalesAssistantOutput
                         <p className="text-muted-foreground">{proposal.timeline.min}-{proposal.timeline.max} {proposal.timeline.unit}</p>
                     </div>
                 </div>
+                {!user ? (
+                     <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div className="w-full">{contactButton}</div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Debes iniciar sesión para contactar</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ) : (
+                    contactButton
+                )}
             </div>
         </div>
     );
