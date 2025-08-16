@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef, useState } from 'react';
@@ -9,13 +10,13 @@ const projects = [
   {
     title: "Villa de Lujo con Vistas al Mar",
     description: "Recorrido virtual por una villa moderna, mostrando su arquitectura y diseño interior.",
-    video: "https://storage.googleapis.com/studio-assets-prod/videos/video-real-estate-1.mp4",
+    video: "/assets/videos/video-real-estate-1.mp4",
     icon: <Home className="h-8 w-8 text-primary" />
   },
   {
     title: "Apartamento Urbano Inteligente",
     description: "Demostración de un apartamento en la ciudad con tecnología domótica integrada.",
-    video: "https://storage.googleapis.com/studio-assets-prod/videos/video-real-estate-2.mp4",
+    video: "/assets/videos/video-real-estate-2.mp4",
     icon: <Building className="h-8 w-8 text-primary" />
   },
 ];
@@ -79,7 +80,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
 
 export function RealEstate() {
   return (
-    <section id="real-estate" className="w-full py-20 md:py-32">
+    <section id="real-estate" className="w-full py-16 md:py-20 rounded-2xl bg-secondary/30">
       <div className="container">
         <div className="text-center mb-12 fade-in-up">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">

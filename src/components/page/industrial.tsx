@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -33,7 +34,7 @@ const pieChartData = [
 
 export function Industrial() {
   return (
-    <section id="industrial" className="w-full py-20 md:py-32 bg-secondary/30">
+    <section id="industrial" className="w-full py-16 md:py-20 rounded-2xl bg-secondary/30">
         <div className="container">
             <div className="text-center mb-12 fade-in-up">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">

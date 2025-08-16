@@ -1,3 +1,4 @@
+
 import { Header } from '@/components/page/header';
 import { Hero } from '@/components/page/hero';
 import { RealEstate } from '@/components/page/real-estate';
@@ -11,9 +12,13 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
-        <RealEstate />
-        <Industrial />
-        <Contact />
+        <div className="container py-12 md:py-20">
+          <div className="flex flex-col gap-12 md:gap-20">
+            <RealEstate />
+            <Industrial />
+            <Contact />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
