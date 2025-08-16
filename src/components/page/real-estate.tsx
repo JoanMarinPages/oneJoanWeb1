@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRef, useState } from 'react';
@@ -9,13 +8,13 @@ const projects = [
   {
     title: "Villa de Lujo con Vistas al Mar",
     description: "Recorrido virtual por una villa moderna, mostrando su arquitectura y diseño interior.",
-    video: "/assets/videos/video-real-estate-1.mp4",
+    video: "/assets/ondesVideo/video-real-estate-1.mp4",
     icon: <Home className="h-8 w-8 text-primary" />
   },
   {
     title: "Apartamento Urbano Inteligente",
     description: "Demostración de un apartamento en la ciudad con tecnología domótica integrada.",
-    video: "/assets/videos/video-real-estate-2.mp4",
+    video: "/assets/ondesVideo/video-real-estate-2.mp4",
     icon: <Building className="h-8 w-8 text-primary" />
   },
 ];

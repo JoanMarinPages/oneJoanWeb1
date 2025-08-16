@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "../ui/button";
@@ -9,7 +8,7 @@ export function About() {
   return (
     <section id="about" className="relative w-full py-24 md:py-40 overflow-hidden">
       <video
-        src="/assets/videos/video-real-estate-1.mp4"
+        src="/assets/ondesVideo/video-real-estate-1.mp4"
         autoPlay
         loop
         muted
