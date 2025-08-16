@@ -22,66 +22,23 @@ const projects = [
   },
 ];
 
-const VideoPlayer = ({ src, className }: { src: string, className?: string }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const togglePlay = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setIsPlaying(true);
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  const handleSeek = (e: React.MouseEvent, rate: number) => {
-    e.stopPropagation();
-    if (videoRef.current) {
-      videoRef.current.playbackRate = rate;
-      if (videoRef.current.paused) {
-         videoRef.current.play();
-         setIsPlaying(true);
-      }
-    }
-  };
-
-  return (
-    <div className={cn("relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10", className)}>
-      <video
-        ref={videoRef}
-        src={src}
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        autoPlay
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-      <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm p-2 rounded-full">
-          <Button variant="ghost" size="icon" onClick={(e) => handleSeek(e, 0.5)} className="text-white hover:bg-white/20 rounded-full h-9 w-9">
-            <Rewind />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={togglePlay} className="h-12 w-12 text-white hover:bg-white/20 rounded-full">
-            {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-          </Button>
-          <Button variant="ghost" size="icon" onClick={(e) => handleSeek(e, 2)} className="text-white hover:bg-white/20 rounded-full h-9 w-9">
-            <FastForward />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export function RealEstate() {
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [playingStates, setPlayingStates] = useState<{[key: number]: boolean}>({});
+
+  const togglePlay = (index: number) => {
+    const video = videoRefs.current[index];
+    if (video) {
+        if (video.paused) {
+            video.play();
+            setPlayingStates(prev => ({...prev, [index]: true}));
+        } else {
+            video.pause();
+            setPlayingStates(prev => ({...prev, [index]: false}));
+        }
+    }
+  }
+
   return (
     <section id="real-estate" className="w-full">
       <div className="container">
@@ -100,7 +57,25 @@ export function RealEstate() {
               className="fade-in-up"
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
-              <VideoPlayer src={project.video} />
+              <div 
+                className="relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer"
+                onClick={() => togglePlay(index)}
+              >
+                <video
+                  ref={el => videoRefs.current[index] = el}
+                  src={project.video}
+                  loop
+                  muted
+                  playsInline
+                  className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onPlay={() => setPlayingStates(prev => ({...prev, [index]: true}))}
+                  onPause={() => setPlayingStates(prev => ({...prev, [index]: false}))}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity" />
+                 <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {playingStates[index] ? <Pause className="h-12 w-12 text-white/80" /> : <Play className="h-12 w-12 text-white/80" />}
+                </div>
+              </div>
               <div className="mt-6 flex items-start gap-4">
                 <div className="bg-primary/10 text-primary p-3 rounded-full mt-1 shrink-0">
                   {project.icon}
