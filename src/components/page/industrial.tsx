@@ -36,8 +36,8 @@ export function Industrial() {
     <section id="industrial" className="w-full py-20 md:py-32 bg-secondary/30">
         <div className="container">
             <div className="text-center mb-12 fade-in-up">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline animated-gradient-text">
-                    Dashboard de Analítica Industrial
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
+                    Dashboard de <span className="animated-gradient-text">Analítica Industrial</span>
                 </h2>
                 <p className="mx-auto max-w-[800px] text-muted-foreground md:text-xl/relaxed mt-4">
                     Optimiza procesos y predice resultados mediante la simulación de movimientos, análisis de datos y visualizaciones interactivas.
