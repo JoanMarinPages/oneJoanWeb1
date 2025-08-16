@@ -2,10 +2,7 @@
 "use client";
 
 import { useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Play, Pause, Rewind, FastForward, Home, Building } from "lucide-react";
-import { cn } from '@/lib/utils';
-import { Card } from '../ui/card';
+import { Play, Pause, Home, Building } from "lucide-react";
 
 const projects = [
   {
@@ -31,10 +28,8 @@ export function RealEstate() {
     if (video) {
         if (video.paused) {
             video.play();
-            setPlayingStates(prev => ({...prev, [index]: true}));
         } else {
             video.pause();
-            setPlayingStates(prev => ({...prev, [index]: false}));
         }
     }
   }
@@ -58,7 +53,7 @@ export function RealEstate() {
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
               <div 
-                className="relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer"
+                className="relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer border"
                 onClick={() => togglePlay(index)}
               >
                 <video
@@ -71,7 +66,7 @@ export function RealEstate() {
                   onPlay={() => setPlayingStates(prev => ({...prev, [index]: true}))}
                   onPause={() => setPlayingStates(prev => ({...prev, [index]: false}))}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {playingStates[index] ? <Pause className="h-12 w-12 text-white/80" /> : <Play className="h-12 w-12 text-white/80" />}
                 </div>
