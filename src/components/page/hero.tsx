@@ -34,25 +34,39 @@ export function Hero() {
   return (
     <section id="hero" className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center bg-hero-dark overflow-hidden">
       <div className="absolute inset-0 z-0">
-        {/* Animated Shapes */}
         <motion.div
           className="absolute top-[10%] left-[5%] h-48 w-48 bg-indigo-500/10 rounded-full blur-2xl backdrop-blur-md border border-indigo-500/20 animate-shape-float-1"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
         />
         <motion.div
           className="absolute top-[20%] right-[10%] h-40 w-64 bg-rose-500/10 rounded-2xl blur-2xl backdrop-blur-md border border-rose-500/20 animate-shape-float-2"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
         />
         <motion.div
           className="absolute bottom-[15%] left-[20%] h-32 w-32 bg-violet-500/10 rounded-full blur-2xl backdrop-blur-md border border-violet-500/20 animate-shape-float-3"
+           initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
         />
          <motion.div
           className="absolute bottom-[25%] right-[25%] h-24 w-24 bg-amber-500/10 rounded-full blur-2xl backdrop-blur-md border border-amber-500/20 animate-shape-float-1"
+           initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
         />
          <motion.div
           className="hidden md:block absolute top-[50%] left-[30%] h-20 w-20 bg-cyan-500/10 rounded-lg blur-2xl backdrop-blur-md border border-cyan-500/20 animate-shape-float-2"
+           initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 1 }}
         />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"

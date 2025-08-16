@@ -16,7 +16,7 @@ export function Section({ id, title, description, children, className, backgroun
   const textShadowStyle = backgroundVideoUrl ? { textShadow: '0 2px 4px rgba(0,0,0,0.5)' } : {};
 
   return (
-    <section id={id} className={cn("w-full py-12 md:py-16", className)}>
+    <section id={id} className={cn("w-full py-12 md:py-16 px-4 sm:px-6 lg:px-8", className)}>
        <div className="container relative z-10 mx-auto w-full lg:w-3/5 overflow-hidden rounded-2xl shadow-2xl border">
           {backgroundVideoUrl && (
             <div className="absolute inset-0 z-0">

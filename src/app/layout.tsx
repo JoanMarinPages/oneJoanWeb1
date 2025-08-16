@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={cn(inter.variable, spaceGrotesk.variable, '!scroll-smooth')} suppressHydrationWarning>
-      <body className="font-body antialiased bg-background text-foreground px-4 sm:px-6 lg:px-8">
+      <body className="font-body antialiased bg-background text-foreground">
         <Providers>{children}</Providers>
       </body>
     </html>
