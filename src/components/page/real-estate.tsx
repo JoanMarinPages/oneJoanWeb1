@@ -47,7 +47,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-lg group aspect-video">
+    <div className="relative overflow-hidden rounded-lg group aspect-video shadow-2xl">
       <video
         ref={videoRef}
         src={src}
@@ -59,7 +59,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
         onPause={() => setIsPlaying(false)}
         autoPlay
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center gap-4 bg-black/30 backdrop-blur-sm p-2 rounded-full">
           <Button variant="ghost" size="icon" onClick={() => handleSeek(0.5)} className="text-white hover:bg-white/20 rounded-full">
             <Rewind />
@@ -95,7 +96,7 @@ export function RealEstate() {
               className="fade-in-up"
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
-              <Card className="overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all duration-300 shadow-xl hover:shadow-2xl bg-card">
+              <Card className="overflow-hidden bg-transparent border-0 shadow-none">
                 <CardContent className="p-0">
                   <VideoPlayer src={project.video} />
                 </CardContent>
