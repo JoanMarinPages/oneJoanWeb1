@@ -4,6 +4,8 @@
 import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Rewind, FastForward, Home, Building } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { Card } from '../ui/card';
 
 const projects = [
   {
@@ -20,11 +22,12 @@ const projects = [
   },
 ];
 
-const VideoPlayer = ({ src }: { src: string }) => {
+const VideoPlayer = ({ src, className }: { src: string, className?: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const togglePlay = () => {
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play();
@@ -36,7 +39,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
     }
   };
 
-  const handleSeek = (rate: number) => {
+  const handleSeek = (e: React.MouseEvent, rate: number) => {
+    e.stopPropagation();
     if (videoRef.current) {
       videoRef.current.playbackRate = rate;
       if (videoRef.current.paused) {
@@ -47,7 +51,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-lg group aspect-video shadow-2xl">
+    <div className={cn("relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10", className)}>
       <video
         ref={videoRef}
         src={src}
@@ -61,14 +65,14 @@ const VideoPlayer = ({ src }: { src: string }) => {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="flex items-center gap-4 bg-black/30 backdrop-blur-sm p-2 rounded-full">
-          <Button variant="ghost" size="icon" onClick={() => handleSeek(0.5)} className="text-white hover:bg-white/20 rounded-full">
+        <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm p-2 rounded-full">
+          <Button variant="ghost" size="icon" onClick={(e) => handleSeek(e, 0.5)} className="text-white hover:bg-white/20 rounded-full h-9 w-9">
             <Rewind />
           </Button>
           <Button variant="ghost" size="icon" onClick={togglePlay} className="h-12 w-12 text-white hover:bg-white/20 rounded-full">
             {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => handleSeek(2)} className="text-white hover:bg-white/20 rounded-full">
+          <Button variant="ghost" size="icon" onClick={(e) => handleSeek(e, 2)} className="text-white hover:bg-white/20 rounded-full h-9 w-9">
             <FastForward />
           </Button>
         </div>
@@ -79,7 +83,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
 
 export function RealEstate() {
   return (
-    <section id="real-estate" className="w-full py-16 md:py-20 rounded-2xl bg-secondary/30">
+    <section id="real-estate" className="w-full">
       <div className="container">
         <div className="text-center mb-12 fade-in-up">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
@@ -98,12 +102,12 @@ export function RealEstate() {
             >
               <VideoPlayer src={project.video} />
               <div className="mt-6 flex items-start gap-4">
-                <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
+                <div className="bg-primary/10 text-primary p-3 rounded-full mt-1 shrink-0">
                   {project.icon}
                 </div>
                 <div>
                     <h3 className="text-xl font-bold font-headline">{project.title}</h3>
-                    <p className="text-muted-foreground">{project.description}</p>
+                    <p className="text-muted-foreground mt-1">{project.description}</p>
                 </div>
               </div>
             </div>

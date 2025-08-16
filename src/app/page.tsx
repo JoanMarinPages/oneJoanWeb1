@@ -12,12 +12,10 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
-        <div className="container py-12 md:py-20">
-          <div className="flex flex-col items-center gap-12 md:gap-20">
-            <RealEstate />
-            <Industrial />
-            <Contact />
-          </div>
+        <div className="container py-12 md:py-20 space-y-20 md:space-y-32">
+          <RealEstate />
+          <Industrial />
+          <Contact />
         </div>
       </main>
       <Footer />

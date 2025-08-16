@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Code2, Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Button } from '../ui/button';
 
 export function Footer() {
   const [year, setYear] = useState<number | null>(null);
@@ -12,10 +13,10 @@ export function Footer() {
   }, []);
 
   return (
-    <footer id="contact-footer" className="w-full border-t bg-background">
+    <footer id="contact-footer" className="w-full border-t bg-card">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="flex flex-col gap-4 md:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2">
                 <Code2 className="h-7 w-7 text-primary" />
                 <span className="font-bold text-xl font-headline">OneJoan</span>
@@ -23,19 +24,27 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">
               Soluciones digitales de alto impacto para llevar tu negocio al siguiente nivel.
             </p>
-            <div className="flex gap-4 mt-2">
-              <Link href="https://github.com" target="_blank" aria-label="Github profile" className="text-muted-foreground hover:text-primary transition-colors">
-                <Github className="h-5 w-5" />
-              </Link>
-              <Link href="https://linkedin.com" target="_blank" aria-label="LinkedIn profile" className="text-muted-foreground hover:text-primary transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link href="https://twitter.com" target="_blank" aria-label="Twitter profile" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
-              </Link>
-               <Link href="mailto:joanmarinpages@gmail.com" aria-label="Email contact" className="text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="h-5 w-5" />
-              </Link>
+            <div className="flex gap-2 mt-2">
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://github.com" target="_blank" aria-label="Github profile" className="text-muted-foreground hover:text-primary">
+                    <Github className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://linkedin.com" target="_blank" aria-label="LinkedIn profile" className="text-muted-foreground hover:text-primary">
+                    <Linkedin className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://twitter.com" target="_blank" aria-label="Twitter profile" className="text-muted-foreground hover:text-primary">
+                    <Twitter className="h-5 w-5" />
+                </Link>
+              </Button>
+               <Button variant="ghost" size="icon" asChild>
+                <Link href="mailto:joanmarinpages@gmail.com" aria-label="Email contact" className="text-muted-foreground hover:text-primary">
+                    <Mail className="h-5 w-5" />
+                </Link>
+              </Button>
             </div>
           </div>
           
@@ -44,8 +53,8 @@ export function Footer() {
             <ul className="space-y-2">
               <li><Link href="#real-estate" className="text-sm text-muted-foreground hover:text-primary transition-colors">Inmobiliaria y Arquitectura</Link></li>
               <li><Link href="#industrial" className="text-sm text-muted-foreground hover:text-primary transition-colors">Simulación Industrial</Link></li>
-              <li><span className="text-sm text-muted-foreground/50">Desarrollo Web y Apps (Próximamente)</span></li>
-              <li><span className="text-sm text-muted-foreground/50">Inteligencia Artificial (Próximamente)</span></li>
+              <li><span className="text-sm text-muted-foreground/50">Desarrollo Web y Apps</span></li>
+              <li><span className="text-sm text-muted-foreground/50">Inteligencia Artificial</span></li>
             </ul>
           </div>
 

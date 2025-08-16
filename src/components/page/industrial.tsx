@@ -5,6 +5,7 @@ import * as React from "react"
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, TrendingUp, Zap } from "lucide-react"
+import { ChartTooltipContent } from "../ui/chart"
 
 const barChartData = [
   { date: "Ene", "Nuevos Contactos": 186, "Ventas Realizadas": 80 },
@@ -25,15 +26,32 @@ const lineChartData = [
 ];
 
 const pieChartData = [
-    { name: 'Producción', value: 400, color: 'hsl(var(--chart-1))' },
-    { name: 'Logística', value: 300, color: 'hsl(var(--chart-2))' },
-    { name: 'Mantenimiento', value: 200, color: 'hsl(var(--chart-3))' },
-    { name: 'Calidad', value: 278, color: 'hsl(var(--chart-4))' },
+    { name: 'Producción', value: 400, fill: 'hsl(var(--chart-1))' },
+    { name: 'Logística', value: 300, fill: 'hsl(var(--chart-2))' },
+    { name: 'Mantenimiento', value: 200, fill: 'hsl(var(--chart-3))' },
+    { name: 'Calidad', value: 278, fill: 'hsl(var(--chart-4))' },
 ];
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="p-2 bg-card border rounded-lg shadow-lg">
+        <p className="label font-bold">{`${label}`}</p>
+        {payload.map((pld: any, index: number) => (
+          <div key={index} style={{ color: pld.fill }}>
+            <p className="intro">{`${pld.name}: ${pld.value}`}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export function Industrial() {
   return (
-    <section id="industrial" className="w-full py-16 md:py-20 rounded-2xl bg-secondary/30">
+    <section id="industrial" className="w-full">
         <div className="container">
             <div className="text-center mb-12 fade-in-up">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
@@ -45,7 +63,7 @@ export function Industrial() {
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                <Card className="lg:col-span-2 fade-in-up" style={{animationDelay: '200ms'}}>
+                <Card className="lg:col-span-2 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
                     <CardHeader>
                         <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
                         <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
@@ -53,15 +71,12 @@ export function Industrial() {
                     <CardContent>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={barChartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                <XAxis dataKey="date" />
-                                <YAxis />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                                <XAxis dataKey="date" tickLine={false} axisLine={false} />
+                                <YAxis tickLine={false} axisLine={false} />
                                 <Tooltip
-                                    contentStyle={{
-                                        background: "hsl(var(--background))",
-                                        borderColor: "hsl(var(--border))",
-                                        borderRadius: "var(--radius)"
-                                    }}
+                                    cursor={{fill: 'hsl(var(--accent) / 0.1)'}}
+                                    content={<ChartTooltipContent />}
                                 />
                                 <Legend />
                                 <Bar dataKey="Nuevos Contactos" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
@@ -70,7 +85,7 @@ export function Industrial() {
                         </ResponsiveContainer>
                     </CardContent>
                 </Card>
-                 <Card className="fade-in-up" style={{animationDelay: '400ms'}}>
+                 <Card className="fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
                     <CardHeader>
                         <CardTitle>Eficiencia por Sector</CardTitle>
                          <CardDescription>Distribución de recursos y efectividad.</CardDescription>
@@ -83,20 +98,15 @@ export function Industrial() {
                                     cx="50%"
                                     cy="50%"
                                     labelLine={false}
-                                    outerRadius={80}
-                                    fill="#8884d8"
+                                    outerRadius={100}
                                     dataKey="value"
                                 >
                                     {pieChartData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell key={`cell-${index}`} fill={entry.fill} stroke={entry.fill} />
                                     ))}
                                 </Pie>
                                 <Tooltip
-                                     contentStyle={{
-                                        background: "hsl(var(--background))",
-                                        borderColor: "hsl(var(--border))",
-                                        borderRadius: "var(--radius)"
-                                    }}
+                                     content={<ChartTooltipContent />}
                                 />
                                 <Legend />
                             </PieChart>
@@ -105,57 +115,54 @@ export function Industrial() {
                 </Card>
             </div>
              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <Card className="lg:col-span-1 fade-in-up" style={{animationDelay: '600ms'}}>
+                <Card className="lg:col-span-1 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
                     <CardHeader>
-                        <CardTitle>Evolución OEE</CardTitle>
+                        <CardTitle>Evolución OEE (%)</CardTitle>
                         <CardDescription>Overall Equipment Effectiveness</CardDescription>
                     </CardHeader>
                     <CardContent>
                          <ResponsiveContainer width="100%" height={300}>
                             <LineChart data={lineChartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false}/>
-                                <XAxis dataKey="month" />
-                                <YAxis domain={[60, 90]} />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)"/>
+                                <XAxis dataKey="month" tickLine={false} axisLine={false}/>
+                                <YAxis domain={[60, 90]} tickLine={false} axisLine={false}/>
                                 <Tooltip 
-                                    contentStyle={{
-                                        background: "hsl(var(--background))",
-                                        borderColor: "hsl(var(--border))",
-                                        borderRadius: "var(--radius)"
-                                    }}
+                                    cursor={{stroke: 'hsl(var(--primary))', strokeWidth: 1.5, strokeDasharray: '3 3'}}
+                                    content={<ChartTooltipContent />}
                                 />
-                                <Line type="monotone" dataKey="oee" stroke="hsl(var(--primary))" strokeWidth={2} name="OEE (%)" />
+                                <Line type="monotone" dataKey="oee" stroke="hsl(var(--primary))" strokeWidth={3} name="OEE" dot={{ r: 5, fill: 'hsl(var(--primary))' }} activeDot={{ r: 8 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </CardContent>
                 </Card>
                 <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
-                    <div className="flex items-start gap-4 p-4 rounded-lg bg-card border">
-                        <Zap className="h-8 w-8 text-primary mt-1"/>
+                    <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                        <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
                         <div>
                             <h3 className="text-xl font-bold font-headline">Simulación de Procesos</h3>
-                            <p className="text-muted-foreground">
+                            <p className="text-muted-foreground mt-1">
                                 Visualiza y optimiza cadenas de montaje, flujos logísticos o cualquier proceso industrial para identificar cuellos de botella y mejorar la eficiencia antes de la implementación física.
                             </p>
                         </div>
-                    </div>
-                     <div className="flex items-start gap-4 p-4 rounded-lg bg-card border">
-                        <Building2 className="h-8 w-8 text-primary mt-1"/>
+                    </Card>
+                     <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                        <div className="p-3 bg-primary/10 rounded-full"><Building2 className="h-7 w-7 text-primary"/></div>
                         <div>
                             <h3 className="text-xl font-bold font-headline">Gemelos Digitales</h3>
-                            <p className="text-muted-foreground">
+                            <p className="text-muted-foreground mt-1">
                                 Crea réplicas virtuales de tus activos para monitorización en tiempo real, mantenimiento predictivo y pruebas de escenarios sin riesgo para la producción.
                             </p>
                         </div>
-                    </div>
-                     <div className="flex items-start gap-4 p-4 rounded-lg bg-card border">
-                        <TrendingUp className="h-8 w-8 text-primary mt-1"/>
+                    </Card>
+                     <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                        <div className="p-3 bg-primary/10 rounded-full"><TrendingUp className="h-7 w-7 text-primary"/></div>
                         <div>
                             <h3 className="text-xl font-bold font-headline">Dashboards de Datos</h3>
-                            <p className="text-muted-foreground">
+                            <p className="text-muted-foreground mt-1">
                                 Transforma datos brutos de sensores y maquinaria en insights accionables a través de dashboards interactivos que muestran KPIs clave de tu operación.
                             </p>
                         </div>
-                    </div>
+                    </Card>
                 </div>
             </div>
         </div>

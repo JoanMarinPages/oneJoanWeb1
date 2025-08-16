@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 221 44% 45%; /* #3F51B5 */
+    --primary: 221 83% 53%; /* Intense Blue */
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
@@ -22,7 +22,7 @@
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 188 100% 42%; /* #00BCD4 */
+    --accent: 188 88% 40%; /* Bright Cyan */
     --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -30,13 +30,13 @@
 
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --ring: 221 83% 53%;
 
-    --chart-1: 221 44% 45%; /* primary */
-    --chart-2: 188 100% 42%; /* accent */
-    --chart-3: 12 87% 67%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 221 83% 53%; /* primary */
+    --chart-2: 188 88% 40%; /* accent */
+    --chart-3: 28 100% 67%;
+    --chart-4: 330 84% 60%;
+    --chart-5: 160 70% 50%;
 
     --radius: 0.75rem;
   }
@@ -86,6 +86,13 @@
     animation: tilt 10s infinite linear;
   }
 
+  .bg-grid-pattern {
+    background-image:
+        linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+        linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+  }
+
   @keyframes gradient-animation {
     0% {
       background-position: 0% 50%;
@@ -105,17 +112,17 @@
       transform: rotate(0deg);
     }
     25% {
-      transform: rotate(0.5deg);
+      transform: rotate(1deg);
     }
     75% {
-      transform: rotate(-0.5deg);
+      transform: rotate(-1deg);
     }
   }
 
   @keyframes fade-in-up {
     from {
       opacity: 0;
-      transform: translateY(1rem);
+      transform: translateY(1.5rem);
     }
     to {
       opacity: 1;
@@ -125,6 +132,7 @@
 
   .fade-in-up {
     opacity: 0;
-    animation: fade-in-up 0.7s ease-out forwards;
+    animation: fade-in-up 0.8s ease-out forwards;
+    animation-fill-mode: forwards;
   }
 }
