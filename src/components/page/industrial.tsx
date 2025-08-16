@@ -2,10 +2,11 @@
 "use client"
 
 import * as React from "react"
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell } from "recharts"
+import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Cell, YAxis } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, TrendingUp, Zap } from "lucide-react"
-import { ChartContainer, ChartTooltipContent, type ChartConfig } from "../ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "../ui/chart"
+import { Section } from "./section"
 
 const barChartData = [
   { date: "Ene", "Nuevos Contactos": 186, "Ventas Realizadas": 80 },
@@ -73,123 +74,119 @@ const pieChartConfig = {
 } satisfies ChartConfig
 
 export function Industrial() {
+    const title = (
+    <>
+      Dashboard de <span className="animated-gradient-text">Analítica Industrial</span>
+    </>
+  );
+
+  const description = "Optimiza procesos y predice resultados mediante la simulación de movimientos, análisis de datos y visualizaciones interactivas.";
+
   return (
-    <section id="industrial" className="w-full">
-        <div className="container">
-            <div className="text-center mb-12 fade-in-up">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                    Dashboard de <span className="animated-gradient-text">Analítica Industrial</span>
-                </h2>
-                <p className="mx-auto max-w-[800px] text-muted-foreground md:text-xl/relaxed mt-4">
-                    Optimiza procesos y predice resultados mediante la simulación de movimientos, análisis de datos y visualizaciones interactivas.
-                </p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                <Card className="lg:col-span-2 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
-                    <CardHeader>
-                        <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
-                        <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
-                            <BarChart data={barChartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
-                                <XAxis dataKey="date" tickLine={false} axisLine={false} />
-                                <YAxis tickLine={false} axisLine={false} />
-                                <Tooltip
-                                    cursor={{fill: 'hsl(var(--accent) / 0.1)'}}
-                                    content={<ChartTooltipContent />}
-                                />
-                                <Legend />
-                                <Bar dataKey="Nuevos Contactos" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
-                                <Bar dataKey="Ventas Realizadas" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ChartContainer>
-                    </CardContent>
+    <Section id="industrial" title={title} description={description}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <Card className="lg:col-span-2 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
+                <CardHeader>
+                    <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
+                    <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
+                        <BarChart data={barChartData}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                            <ChartTooltip
+                                cursor={{fill: 'hsl(var(--accent) / 0.1)'}}
+                                content={<ChartTooltipContent />}
+                            />
+                            <Legend />
+                            <Bar dataKey="Nuevos Contactos" fill="var(--color-Nuevos Contactos)" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="Ventas Realizadas" fill="var(--color-Ventas Realizadas)" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
+                <Card className="fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
+                <CardHeader>
+                    <CardTitle>Eficiencia por Sector</CardTitle>
+                        <CardDescription>Distribución de recursos y efectividad.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <ChartContainer config={pieChartConfig} className="min-h-[300px] w-full">
+                        <PieChart>
+                            <Pie
+                                data={pieChartData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                outerRadius={100}
+                                dataKey="value"
+                                nameKey="name"
+                            >
+                                {pieChartData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.fill} stroke={entry.fill} />
+                                ))}
+                            </Pie>
+                            <ChartTooltip
+                                    content={<ChartTooltipContent nameKey="name" />}
+                            />
+                            <Legend />
+                        </PieChart>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
+        </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <Card className="lg:col-span-1 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
+                <CardHeader>
+                    <CardTitle>Evolución OEE (%)</CardTitle>
+                    <CardDescription>Overall Equipment Effectiveness</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <ChartContainer config={lineChartConfig} className="min-h-[300px] w-full">
+                        <LineChart data={lineChartData} margin={{ left: -20, right: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)"/>
+                            <YAxis domain={[60, 90]} tickLine={false} axisLine={false}/>
+                            <ChartTooltip 
+                                cursor={{stroke: 'hsl(var(--primary))', strokeWidth: 1.5, strokeDasharray: '3 3'}}
+                                content={<ChartTooltipContent />}
+                            />
+                            <Line type="monotone" dataKey="oee" stroke="var(--color-oee)" strokeWidth={3} name="OEE" dot={{ r: 5, fill: 'var(--color-oee)' }} activeDot={{ r: 8 }} />
+                        </LineChart>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
+            <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
+                <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                    <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Simulación de Procesos</h3>
+                        <p className="text-muted-foreground mt-1">
+                            Visualiza y optimiza cadenas de montaje, flujos logísticos o cualquier proceso industrial para identificar cuellos de botella y mejorar la eficiencia antes de la implementación física.
+                        </p>
+                    </div>
                 </Card>
-                 <Card className="fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
-                    <CardHeader>
-                        <CardTitle>Eficiencia por Sector</CardTitle>
-                         <CardDescription>Distribución de recursos y efectividad.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                       <ChartContainer config={pieChartConfig} className="min-h-[300px] w-full">
-                            <PieChart>
-                                <Pie
-                                    data={pieChartData}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    outerRadius={100}
-                                    dataKey="value"
-                                    nameKey="name"
-                                >
-                                    {pieChartData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.fill} stroke={entry.fill} />
-                                    ))}
-                                </Pie>
-                                <Tooltip
-                                     content={<ChartTooltipContent nameKey="name" />}
-                                />
-                                <Legend />
-                            </PieChart>
-                        </ChartContainer>
-                    </CardContent>
-                </Card>
-            </div>
-             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <Card className="lg:col-span-1 fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
-                    <CardHeader>
-                        <CardTitle>Evolución OEE (%)</CardTitle>
-                        <CardDescription>Overall Equipment Effectiveness</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <ChartContainer config={lineChartConfig} className="min-h-[300px] w-full">
-                            <LineChart data={lineChartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)"/>
-                                <XAxis dataKey="month" tickLine={false} axisLine={false}/>
-                                <YAxis domain={[60, 90]} tickLine={false} axisLine={false}/>
-                                <Tooltip 
-                                    cursor={{stroke: 'hsl(var(--primary))', strokeWidth: 1.5, strokeDasharray: '3 3'}}
-                                    content={<ChartTooltipContent />}
-                                />
-                                <Line type="monotone" dataKey="oee" stroke="hsl(var(--primary))" strokeWidth={3} name="OEE" dot={{ r: 5, fill: 'hsl(var(--primary))' }} activeDot={{ r: 8 }} />
-                            </LineChart>
-                        </ChartContainer>
-                    </CardContent>
-                </Card>
-                <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
                     <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
-                        <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
-                        <div>
-                            <h3 className="text-xl font-bold font-headline">Simulación de Procesos</h3>
-                            <p className="text-muted-foreground mt-1">
-                                Visualiza y optimiza cadenas de montaje, flujos logísticos o cualquier proceso industrial para identificar cuellos de botella y mejorar la eficiencia antes de la implementación física.
-                            </p>
-                        </div>
-                    </Card>
-                     <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
-                        <div className="p-3 bg-primary/10 rounded-full"><Building2 className="h-7 w-7 text-primary"/></div>
-                        <div>
-                            <h3 className="text-xl font-bold font-headline">Gemelos Digitales</h3>
-                            <p className="text-muted-foreground mt-1">
-                                Crea réplicas virtuales de tus activos para monitorización en tiempo real, mantenimiento predictivo y pruebas de escenarios sin riesgo para la producción.
-                            </p>
-                        </div>
-                    </Card>
-                     <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
-                        <div className="p-3 bg-primary/10 rounded-full"><TrendingUp className="h-7 w-7 text-primary"/></div>
-                        <div>
-                            <h3 className="text-xl font-bold font-headline">Dashboards de Datos</h3>
-                            <p className="text-muted-foreground mt-1">
-                                Transforma datos brutos de sensores y maquinaria en insights accionables a través de dashboards interactivos que muestran KPIs clave de tu operación.
-                            </p>
-                        </div>
-                    </Card>
-                </div>
+                    <div className="p-3 bg-primary/10 rounded-full"><Building2 className="h-7 w-7 text-primary"/></div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Gemelos Digitales</h3>
+                        <p className="text-muted-foreground mt-1">
+                            Crea réplicas virtuales de tus activos para monitorización en tiempo real, mantenimiento predictivo y pruebas de escenarios sin riesgo para la producción.
+                        </p>
+                    </div>
+                </Card>
+                    <Card className="flex items-start gap-4 p-6 border-border/80 shadow-lg shadow-primary/5">
+                    <div className="p-3 bg-primary/10 rounded-full"><TrendingUp className="h-7 w-7 text-primary"/></div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Dashboards de Datos</h3>
+                        <p className="text-muted-foreground mt-1">
+                            Transforma datos brutos de sensores y maquinaria en insights accionables a través de dashboards interactivos que muestran KPIs clave de tu operación.
+                        </p>
+                    </div>
+                </Card>
             </div>
         </div>
-    </section>
+    </Section>
   )
 }
+
+    

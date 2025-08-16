@@ -11,14 +11,12 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 space-y-20 md:space-y-32">
         <Hero />
         <Services />
-        <div className="container py-12 md:py-20 space-y-20 md:space-y-32">
-          <RealEstate />
-          <Industrial />
-          <Contact />
-        </div>
+        <RealEstate />
+        <Industrial />
+        <Contact />
       </main>
       <Footer />
     </div>

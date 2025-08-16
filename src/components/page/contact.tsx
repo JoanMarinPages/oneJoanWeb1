@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Send, Clock, Linkedin, Twitter, Dribbble, Globe, Calendar, DollarSign } from "lucide-react";
 import { Card } from '../ui/card';
 import { Badge as UiBadge } from "@/components/ui/badge";
+import { Section } from './section';
 
 const services = [
   "Desarrollo Web", "Realidad Aumentada", "Inteligencia Artificial",
@@ -61,209 +62,207 @@ export function Contact() {
   const { watch, formState } = form;
   const messageValue = watch('message', '');
 
-  return (
-    <section id="contact" className="w-full">
-        <div className="container px-4 md:px-6">
-             <div className="text-center mb-12 fade-in-up">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                    ¿Hablamos?
-                </h2>
-                <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">
-                    Si tienes un proyecto en mente o quieres saber más, no dudes en contactarme. Completa el formulario y empecemos a crear algo increíble juntos.
-                </p>
-            </div>
-            <div className="grid md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-                <div className="md:col-span-4 space-y-8 fade-in-up" style={{animationDelay: '200ms'}}>
-                     <ContactInfoCard />
-                     <FollowMeCard />
-                     <WhyMeCard />
-                </div>
-                <div className="md:col-span-8 p-8 bg-card border rounded-2xl shadow-lg shadow-primary/5 fade-in-up" style={{animationDelay: '400ms'}}>
-                    <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="md:col-span-1">
-                            <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Nombre *</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Tu nombre completo" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                            />
-                        </div>
-                        <div className="md:col-span-1">
-                            <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Email *</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="tu@email.com" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                            />
-                        </div>
-                        <div className="md:col-span-1">
-                            <FormField
-                            control={form.control}
-                            name="company"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Empresa</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Nombre de tu empresa" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                            />
-                        </div>
-                         <div className="md:col-span-1">
-                            <FormField
-                            control={form.control}
-                            name="phone"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Teléfono</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="+34 600 123 456" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                            />
-                        </div>
+  const title = (
+    <>
+        ¿Hablamos?
+    </>
+  );
 
-                        <div className="md:col-span-2">
-                             <FormField
-                                control={form.control}
-                                name="services"
-                                render={() => (
-                                    <FormItem>
-                                        <FormLabel>Servicio de Interés *</FormLabel>
-                                        <FormControl>
-                                            <Controller
-                                                name="services"
-                                                control={form.control}
-                                                render={({ field }) => (
-                                                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-                                                        {services.map((service) => (
-                                                            <Button
-                                                                key={service}
-                                                                type="button"
-                                                                variant={field.value?.includes(service) ? "default" : "outline"}
-                                                                onClick={() => {
-                                                                    const newValue = field.value?.includes(service)
-                                                                        ? field.value.filter((s) => s !== service)
-                                                                        : [...(field.value || []), service];
-                                                                    field.onChange(newValue);
-                                                                }}
-                                                                className="w-full justify-center text-center h-auto py-2"
-                                                            >
-                                                                {service}
-                                                            </Button>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            />
-                                        </FormControl>
-                                        <FormMessage className="pt-1" />
-                                    </FormItem>
-                                )}
-                                />
-                        </div>
-                        
-                        <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
-                            <div>
-                                <FormField
-                                    control={form.control}
-                                    name="budget"
-                                    render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel>Presupuesto Estimado *</FormLabel>
-                                            <FormControl>
-                                                <div className="space-y-2">
-                                                {budgets.map(budget => (
-                                                     <Button key={budget} type="button" variant={field.value === budget ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(budget)}>
-                                                        <DollarSign className="text-muted-foreground" /> {budget}
-                                                    </Button>
-                                                ))}
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                             <div>
-                                <FormField
-                                    control={form.control}
-                                    name="timeline"
-                                    render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel>Timeline del Proyecto *</FormLabel>
-                                            <FormControl>
-                                                <div className="space-y-2">
-                                                    {timelines.map(timeline => (
-                                                        <Button key={timeline} type="button" variant={field.value === timeline ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(timeline)}>
-                                                            <Calendar className="h-4 w-4 text-muted-foreground" /> {timeline}
+  const description = "Si tienes un proyecto en mente o quieres saber más, no dudes en contactarme. Completa el formulario y empecemos a crear algo increíble juntos.";
+
+  return (
+    <Section id="contact" title={title} description={description} className="pb-12 md:pb-20">
+        <div className="grid md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+            <div className="md:col-span-4 space-y-8 fade-in-up" style={{animationDelay: '200ms'}}>
+                    <ContactInfoCard />
+                    <FollowMeCard />
+                    <WhyMeCard />
+            </div>
+            <div className="md:col-span-8 p-8 bg-card border rounded-2xl shadow-lg shadow-primary/5 fade-in-up" style={{animationDelay: '400ms'}}>
+                <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="md:col-span-1">
+                        <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Nombre *</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Tu nombre completo" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    </div>
+                    <div className="md:col-span-1">
+                        <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Email *</FormLabel>
+                            <FormControl>
+                                <Input placeholder="tu@email.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    </div>
+                    <div className="md:col-span-1">
+                        <FormField
+                        control={form.control}
+                        name="company"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Empresa</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Nombre de tu empresa" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    </div>
+                        <div className="md:col-span-1">
+                        <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Teléfono</FormLabel>
+                            <FormControl>
+                                <Input placeholder="+34 600 123 456" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    </div>
+
+                    <div className="md:col-span-2">
+                            <FormField
+                            control={form.control}
+                            name="services"
+                            render={() => (
+                                <FormItem>
+                                    <FormLabel>Servicio de Interés *</FormLabel>
+                                    <FormControl>
+                                        <Controller
+                                            name="services"
+                                            control={form.control}
+                                            render={({ field }) => (
+                                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                                                    {services.map((service) => (
+                                                        <Button
+                                                            key={service}
+                                                            type="button"
+                                                            variant={field.value?.includes(service) ? "default" : "outline"}
+                                                            onClick={() => {
+                                                                const newValue = field.value?.includes(service)
+                                                                    ? field.value.filter((s) => s !== service)
+                                                                    : [...(field.value || []), service];
+                                                                field.onChange(newValue);
+                                                            }}
+                                                            className="w-full justify-center text-center h-auto py-2"
+                                                        >
+                                                            {service}
                                                         </Button>
                                                     ))}
                                                 </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="md:col-span-2">
-                            <FormField
-                            control={form.control}
-                            name="message"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Mensaje *</FormLabel>
-                                <FormControl>
-                                    <Textarea
-                                    placeholder="Cuéntame sobre tu proyecto, objetivos y cualquier detalle relevante..."
-                                    rows={5}
-                                    {...field}
-                                    />
-                                </FormControl>
-                                 <div className="text-xs text-muted-foreground text-right pt-1">
-                                    {messageValue.length} / 500
-                                </div>
-                                <FormMessage />
+                                            )}
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="pt-1" />
                                 </FormItem>
                             )}
                             />
+                    </div>
+                    
+                    <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
+                        <div>
+                            <FormField
+                                control={form.control}
+                                name="budget"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-3">
+                                        <FormLabel>Presupuesto Estimado *</FormLabel>
+                                        <FormControl>
+                                            <div className="space-y-2">
+                                            {budgets.map(budget => (
+                                                    <Button key={budget} type="button" variant={field.value === budget ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(budget)}>
+                                                    <DollarSign className="text-muted-foreground" /> {budget}
+                                                </Button>
+                                            ))}
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
-                        <div className="md:col-span-2">
-                             <Button type="submit" size="lg" className="w-full" disabled={formState.isSubmitting}>
-                                Enviar Mensaje <Send className="ml-2 h-4 w-4" />
-                            </Button>
+                            <div>
+                            <FormField
+                                control={form.control}
+                                name="timeline"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-3">
+                                        <FormLabel>Timeline del Proyecto *</FormLabel>
+                                        <FormControl>
+                                            <div className="space-y-2">
+                                                {timelines.map(timeline => (
+                                                    <Button key={timeline} type="button" variant={field.value === timeline ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(timeline)}>
+                                                        <Calendar className="h-4 w-4 text-muted-foreground" /> {timeline}
+                                                    </Button>
+                                                ))}
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
-                        <div className="md:col-span-2 text-center">
-                            <p className="text-xs text-muted-foreground">
-                                Al enviar este formulario, aceptas que me ponga en contacto contigo para discutir tu proyecto. Tu información será tratada con total confidencialidad.
-                            </p>
-                        </div>
-                    </form>
-                    </Form>
-                </div>
+                    </div>
+
+                    <div className="md:col-span-2">
+                        <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Mensaje *</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                placeholder="Cuéntame sobre tu proyecto, objetivos y cualquier detalle relevante..."
+                                rows={5}
+                                {...field}
+                                />
+                            </FormControl>
+                                <div className="text-xs text-muted-foreground text-right pt-1">
+                                {messageValue.length} / 500
+                            </div>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    </div>
+                    <div className="md:col-span-2">
+                            <Button type="submit" size="lg" className="w-full" disabled={formState.isSubmitting}>
+                            Enviar Mensaje <Send className="ml-2 h-4 w-4" />
+                        </Button>
+                    </div>
+                    <div className="md:col-span-2 text-center">
+                        <p className="text-xs text-muted-foreground">
+                            Al enviar este formulario, aceptas que me ponga en contacto contigo para discutir tu proyecto. Tu información será tratada con total confidencialidad.
+                        </p>
+                    </div>
+                </form>
+                </Form>
             </div>
-      </div>
-    </section>
+        </div>
+    </Section>
   );
 }
 
@@ -280,7 +279,7 @@ function ContactInfoCard() {
                     </div>
                 </div>
                 <div className="flex items-start gap-4">
-                     <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><Phone className="h-5 w-5" /></div>
+                        <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><Phone className="h-5 w-5" /></div>
                     <div>
                         <p className="font-semibold">Teléfono</p>
                         <a href="tel:+34666777888" className="text-sm text-muted-foreground hover:text-primary transition-colors">(+34) 666 777 888</a>
@@ -327,7 +326,7 @@ function WhyMeCard() {
         { label: "Años experiencia", value: "5+" },
     ]
     return (
-         <Card className="p-6 shadow-lg shadow-primary/5">
+            <Card className="p-6 shadow-lg shadow-primary/5">
             <h3 className="text-xl font-bold font-headline mb-4">¿Por qué elegirme?</h3>
             <div className="space-y-3">
                 {whyMeData.map(item => (

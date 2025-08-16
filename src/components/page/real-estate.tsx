@@ -3,6 +3,7 @@
 
 import { useRef, useState } from 'react';
 import { Play, Pause, Home, Building } from "lucide-react";
+import { Section } from './section';
 
 const projects = [
   {
@@ -34,17 +35,16 @@ export function RealEstate() {
     }
   }
 
+  const title = (
+    <>
+      Soluciones para <span className="animated-gradient-text">Inmobiliaria y Arquitectura</span>
+    </>
+  );
+
+  const description = "Visualizaciones interactivas y experiencias inmersivas que dan vida a tus proyectos antes de construirlos.";
+
   return (
-    <section id="real-estate" className="w-full">
-      <div className="container">
-        <div className="text-center mb-12 fade-in-up">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-            Soluciones para <span className="animated-gradient-text">Inmobiliaria y Arquitectura</span>
-          </h2>
-          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">
-            Visualizaciones interactivas y experiencias inmersivas que dan vida a tus proyectos antes de construirlos.
-          </p>
-        </div>
+    <Section id="real-estate" title={title} description={description}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <div
@@ -83,7 +83,6 @@ export function RealEstate() {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }
