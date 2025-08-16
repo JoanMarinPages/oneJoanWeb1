@@ -55,12 +55,11 @@ export function Services() {
                                 Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                             </p>
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto fade-in-up" style={{animationDelay: '200ms'}}>
                             {services.map((service, index) => (
                                 <Card 
                                     key={service.title} 
-                                    className="p-6 text-center flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/10 hover:border-primary/50 transition-all duration-300 fade-in-up"
-                                    style={{ animationDelay: `${200 * (index + 1)}ms` }}
+                                    className="p-6 text-center flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/10 hover:border-primary/50 transition-all duration-300"
                                 >
                                     <div className="bg-primary/10 rounded-full p-4">
                                         {service.icon}

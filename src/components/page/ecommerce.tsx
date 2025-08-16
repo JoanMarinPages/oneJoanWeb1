@@ -95,7 +95,6 @@ export function Ecommerce() {
     return allProducts.filter(p => p.category === activeFilter);
   }, [activeFilter]);
   
-  // Duplicamos la lista para que el scroll sea infinito y suave
   const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts];
 
   const title = (
@@ -111,7 +110,6 @@ export function Ecommerce() {
       <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-radial-gradient fade-in-up">
         <div className="absolute inset-0 flex p-8 gap-8">
           
-          {/* Columna de filtros y productos con scroll */}
           <div className="h-full w-[35%] flex flex-col">
             <div className="flex-shrink-0 mb-4 fade-in-up" style={{animationDelay: '200ms'}}>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -154,7 +152,6 @@ export function Ecommerce() {
             </div>
           </div>
 
-          {/* Producto destacado */}
           <div className="w-[65%] h-full fade-in-up" style={{animationDelay: '600ms'}}>
              <Card className="h-full w-full flex flex-col p-6 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-lg border-white/20">
                 <div className="flex-grow flex items-center justify-center">
@@ -179,7 +176,6 @@ export function Ecommerce() {
           </div>
         </div>
 
-        {/* Carrito lateral animado */}
         <div
           className={cn(
             "absolute top-0 right-0 h-full w-96 bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
@@ -259,5 +255,3 @@ function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: Reac
         </Button>
     )
 }
-
-    
