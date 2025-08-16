@@ -53,7 +53,7 @@ export function RealEstate() {
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
               <div 
-                className="relative overflow-hidden rounded-xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer border"
+                className="relative overflow-hidden rounded-2xl group aspect-video shadow-2xl shadow-primary/10 cursor-pointer border"
                 onClick={() => togglePlay(index)}
               >
                 <video
