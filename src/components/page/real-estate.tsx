@@ -9,13 +9,13 @@ const projects = [
   {
     title: "Villa de Lujo con Vistas al Mar",
     description: "Recorrido virtual por una villa moderna, mostrando su arquitectura y diseño interior.",
-    video: "/assets/videosBackground/video1.mp4",
+    video: "https://storage.googleapis.com/studio-assets-prod/videos/video-real-estate-1.mp4",
     icon: <Home className="h-8 w-8 text-primary" />
   },
   {
     title: "Apartamento Urbano Inteligente",
     description: "Demostración de un apartamento en la ciudad con tecnología domótica integrada.",
-    video: "/assets/videosBackground/video2.mp4",
+    video: "https://storage.googleapis.com/studio-assets-prod/videos/video-real-estate-2.mp4",
     icon: <Building className="h-8 w-8 text-primary" />
   },
 ];
@@ -47,7 +47,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-lg group">
+    <div className="relative overflow-hidden rounded-lg group aspect-video">
       <video
         ref={videoRef}
         src={src}
@@ -57,16 +57,17 @@ const VideoPlayer = ({ src }: { src: string }) => {
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        autoPlay
       />
       <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => handleSeek(0.5)} className="text-white hover:bg-white/20">
+          <Button variant="ghost" size="icon" onClick={() => handleSeek(0.5)} className="text-white hover:bg-white/20 rounded-full">
             <Rewind />
           </Button>
-          <Button variant="ghost" size="icon" onClick={togglePlay} className="h-16 w-16 text-white hover:bg-white/20">
+          <Button variant="ghost" size="icon" onClick={togglePlay} className="h-16 w-16 text-white hover:bg-white/20 rounded-full">
             {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => handleSeek(2)} className="text-white hover:bg-white/20">
+          <Button variant="ghost" size="icon" onClick={() => handleSeek(2)} className="text-white hover:bg-white/20 rounded-full">
             <FastForward />
           </Button>
         </div>
@@ -79,7 +80,7 @@ export function RealEstate() {
   return (
     <section id="real-estate" className="w-full py-20 md:py-32">
       <div className="container">
-        <div className="text-center mb-12 opacity-0 animate-fade-in-up">
+        <div className="text-center mb-12 fade-in-up">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline animated-gradient-text">
             Soluciones para Inmobiliaria y Arquitectura
           </h2>
@@ -91,16 +92,18 @@ export function RealEstate() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="opacity-0 animate-fade-in-up"
+              className="fade-in-up"
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
-              <Card className="overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all duration-300 shadow-2xl">
+              <Card className="overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all duration-300 shadow-xl hover:shadow-2xl bg-card">
                 <CardContent className="p-0">
                   <VideoPlayer src={project.video} />
                 </CardContent>
               </Card>
               <div className="mt-6 flex items-start gap-4">
-                {project.icon}
+                <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
+                  {project.icon}
+                </div>
                 <div>
                     <h3 className="text-xl font-bold font-headline">{project.title}</h3>
                     <p className="text-muted-foreground">{project.description}</p>

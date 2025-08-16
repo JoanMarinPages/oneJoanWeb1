@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
@@ -29,8 +29,6 @@ export function Contact() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Aquí iría la lógica para enviar el formulario.
-    // Por ahora, solo mostramos una notificación.
     console.log(values);
     toast({
       title: "¡Mensaje Enviado!",
@@ -40,21 +38,52 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="w-full py-20 md:py-32">
+    <section id="contact" className="w-full py-20 md:py-32 bg-secondary/50">
       <div className="container">
-        <div className="text-center mb-12 opacity-0 animate-fade-in-up">
+        <div className="text-center mb-12 fade-in-up">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline animated-gradient-text">
             ¿Hablamos?
           </h2>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed mt-4">
-            Si tienes un proyecto en mente o quieres saber más, no dudes en escribirme.
+            Si tienes un proyecto en mente o quieres saber más, no dudes en contactarme. Estoy disponible para nuevos desafíos.
           </p>
         </div>
         
-        <div className="max-w-2xl mx-auto opacity-0 animate-fade-in-up [animation-delay:200ms]">
-            <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-2xl blur-lg opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative bg-card p-8 rounded-2xl border border-border">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="space-y-8 fade-in-up" style={{ animationDelay: '200ms' }}>
+                <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 text-primary p-3 rounded-full">
+                        <Mail className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Email</h3>
+                        <p className="text-muted-foreground">Escríbeme para consultas o propuestas.</p>
+                        <a href="mailto:joanmarinpages@gmail.com" className="text-primary hover:underline">joanmarinpages@gmail.com</a>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 text-primary p-3 rounded-full">
+                        <Phone className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Teléfono</h3>
+                        <p className="text-muted-foreground">Llámame para una respuesta más rápida.</p>
+                        <a href="tel:+34666777888" className="text-primary hover:underline">(+34) 666 777 888</a>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 text-primary p-3 rounded-full">
+                        <MapPin className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold font-headline">Ubicación</h3>
+                        <p className="text-muted-foreground">Disponible para proyectos en todo el mundo.</p>
+                        <span className="text-primary">Barcelona, España</span>
+                    </div>
+                </div>
+            </div>
+            <div className="fade-in-up" style={{ animationDelay: '400ms' }}>
+                 <div className="bg-card p-8 rounded-2xl shadow-lg border">
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FormField

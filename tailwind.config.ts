@@ -17,9 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Space Grotesk', 'sans-serif'],
-        code: ['monospace'],
+        body: ['var(--font-inter)', 'sans-serif'],
+        headline: ['var(--font-space-grotesk)', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -95,11 +94,23 @@ export default {
                 transform: 'translateY(0)'
             },
         },
+        "gradient-animation": {
+          "0%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+          "100%": { "background-position": "0% 50%" }
+        },
+         "tilt": {
+          "0%, 50%, 100%": { "transform": "rotate(0deg)" },
+          "25%": { "transform": "rotate(0.5deg)" },
+          "75%": { "transform": "rotate(-0.5deg)" }
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
+        'gradient-animation': 'gradient-animation 5s ease-in-out infinite',
+        'tilt': 'tilt 10s infinite linear'
       },
     },
   },
