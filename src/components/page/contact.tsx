@@ -9,14 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Send, Clock, Linkedin, Twitter, Dribbble, Globe, Calendar, Briefcase, Bot, Code, BarChartBig, DollarSign, Badge, Star, Users } from "lucide-react";
-import { cn } from '@/lib/utils';
+import { Mail, Phone, MapPin, Send, Clock, Linkedin, Twitter, Dribbble, Globe, Calendar, DollarSign } from "lucide-react";
 import { Card } from '../ui/card';
 import { Badge as UiBadge } from "@/components/ui/badge";
 
 const services = [
   "Desarrollo Web", "Realidad Aumentada", "Inteligencia Artificial",
-  "Aplicaciones Móviles", "Consultoría Técnica", "Simulaciones Industriales"
+  "Aplicaciones Móviles", "Consultoría Técnica", "Simulaciones Industriales",
+  "Android", "Python"
 ];
 const budgets = ["< €10,000", "€10,000 - €25,000", "€25,000 - €50,000", "€50,000 - €100,000", "> €100,000"];
 const timelines = ["1-2 semanas", "1 mes", "2-3 meses", "3-6 meses", "6+ meses"];
@@ -154,7 +154,7 @@ export function Contact() {
                                                 name="services"
                                                 control={form.control}
                                                 render={({ field }) => (
-                                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                                                         {services.map((service) => (
                                                             <Button
                                                                 key={service}

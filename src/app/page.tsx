@@ -5,6 +5,7 @@ import { RealEstate } from '@/components/page/real-estate';
 import { Industrial } from '@/components/page/industrial';
 import { Contact } from '@/components/page/contact';
 import { Footer } from '@/components/page/footer';
+import { Services } from '@/components/page/services';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <Services />
         <div className="container py-12 md:py-20 space-y-20 md:space-y-32">
           <RealEstate />
           <Industrial />

@@ -1,10 +1,11 @@
+
 import Link from 'next/link';
 import { Code2, Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { cn } from '@/lib/utils';
 
 const navLinks = [
+    { href: "#services", label: "Servicios" },
     { href: "#real-estate", label: "Inmobiliaria" },
     { href: "#industrial", label: "Industria" },
     { href: "#contact", label: "Contacto" },
