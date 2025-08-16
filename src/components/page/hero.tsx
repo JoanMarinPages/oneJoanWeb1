@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Code2, Download, ExternalLink, Sparkles } from 'lucide-react';
+import { Code2, Download, ExternalLink, Sparkles } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { Card } from '../ui/card';
 
