@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Home, Building } from "lucide-react";
@@ -5,23 +6,25 @@ import { Section } from './section';
 
 const projects = [
   {
-    video: "/assets/ondesVideo/video-real-estate-1.mp4",
+    video: "/assets/videosCasa/new hero.mp4",
     icon: <Home className="h-8 w-8 text-primary" />,
     overlay: (
       <>
         <div className="absolute top-8 left-8">
-          <h3 className="text-4xl md:text-5xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+          <h3 className="text-5xl md:text-6xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
             Luce tu<br />espacio
           </h3>
-          <p className="mt-2 text-lg text-white/90" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
-            Crea vistas profesionales
-          </p>
+        </div>
+        <div className="absolute bottom-8 right-8 text-right">
+            <p className="mt-2 text-xl md:text-2xl text-white/90" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+                Crea vistas profesionales
+            </p>
         </div>
       </>
     )
   },
   {
-    video: "/assets/ondesVideo/video-real-estate-2.mp4",
+    video: "/assets/videosCasa/creator 1080 p 60 fps.mp4",
     icon: <Building className="h-8 w-8 text-primary" />,
     overlay: (
         <div className="absolute bottom-8 left-8 max-w-md">
