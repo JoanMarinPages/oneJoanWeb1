@@ -44,34 +44,36 @@ export function Services() {
                     <source src={backgroundVideoUrl} type="video/mp4" />
                 </video>
             </div>
-            <div className="container relative z-10 py-12 md:py-20 max-w-6xl mx-auto">
-                <div className="text-center mb-12 fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                        Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
-                    </h2>
-                    <p className="mx-auto max-w-[700px] text-white/90 md:text-xl/relaxed mt-4">
-                        Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
-                    </p>
-                </div>
-                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {services.map((service, index) => (
-                        <Card 
-                            key={service.title} 
-                            className="p-6 text-center flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/10 hover:border-primary/50 transition-all duration-300 fade-in-up"
-                            style={{ animationDelay: `${200 * (index + 1)}ms` }}
-                        >
-                            <div className="bg-primary/10 rounded-full p-4">
-                                {service.icon}
-                            </div>
-                            <CardHeader className="p-0">
-                                <CardTitle className="text-xl font-headline">{service.title}</CardTitle>
-                            </CardHeader>
-                            <CardDescription className="text-base text-muted-foreground">
-                                {service.description}
-                            </CardDescription>
-                        </Card>
-                    ))}
-                </div>
+            <div className="container relative z-10 py-12 md:py-20 mx-auto w-full lg:w-3/5">
+                 <Card className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-lg border-white/10 p-8">
+                    <div className="text-center mb-12 fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
+                            Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
+                        </h2>
+                        <p className="mx-auto max-w-[700px] text-white/90 md:text-xl/relaxed mt-4">
+                            Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {services.map((service, index) => (
+                            <Card 
+                                key={service.title} 
+                                className="p-6 text-center flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/10 hover:border-primary/50 transition-all duration-300 fade-in-up"
+                                style={{ animationDelay: `${200 * (index + 1)}ms` }}
+                            >
+                                <div className="bg-primary/10 rounded-full p-4">
+                                    {service.icon}
+                                </div>
+                                <CardHeader className="p-0">
+                                    <CardTitle className="text-xl font-headline text-white">{service.title}</CardTitle>
+                                </CardHeader>
+                                <CardDescription className="text-base text-white/80">
+                                    {service.description}
+                                </CardDescription>
+                            </Card>
+                        ))}
+                    </div>
+                 </Card>
             </div>
         </section>
     )

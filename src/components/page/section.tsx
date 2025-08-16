@@ -33,22 +33,24 @@ export function Section({ id, title, description, children, className, backgroun
             </div>
          </>
       )}
-      <div className="container relative z-10 max-w-6xl mx-auto">
-        <div className="text-center mb-12 fade-in-up" style={textShadowStyle}>
-          <h2 className={cn(
-              "text-3xl font-bold tracking-tighter sm:text-5xl font-headline",
-              textColorClass
-          )}>
-            {title}
-          </h2>
-          <p className={cn(
-              "mx-auto max-w-[800px] md:text-xl/relaxed mt-4",
-               backgroundVideoUrl ? "text-white/90" : "text-muted-foreground"
-          )}>
-            {description}
-          </p>
-        </div>
-        {children}
+      <div className="container relative z-10 mx-auto w-full lg:w-3/5">
+        <Card className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-lg border-white/10 p-8">
+            <div className="text-center mb-12 fade-in-up" style={textShadowStyle}>
+              <h2 className={cn(
+                  "text-3xl font-bold tracking-tighter sm:text-5xl font-headline",
+                  textColorClass
+              )}>
+                {title}
+              </h2>
+              <p className={cn(
+                  "mx-auto max-w-[800px] md:text-xl/relaxed mt-4",
+                   backgroundVideoUrl ? "text-white/90" : "text-muted-foreground"
+              )}>
+                {description}
+              </p>
+            </div>
+            {children}
+        </Card>
       </div>
     </section>
   );
