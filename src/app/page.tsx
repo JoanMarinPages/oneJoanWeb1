@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header />
-      <main className="flex-1 space-y-16 md:space-y-20 py-12 md:py-16">
+      <main className="flex-1 py-12 md:py-16">
         <Hero />
         <Services />
         <RealEstate backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runi52OdJstLhY_--ar_12869_--video_1_d5e997a6-1fa4-4a07-b786-86cf65bd9476_2.mp4" />
