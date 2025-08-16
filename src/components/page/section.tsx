@@ -33,7 +33,7 @@ export function Section({ id, title, description, children, className, backgroun
             </div>
          </>
       )}
-      <div className="container relative z-10 max-w-7xl mx-auto">
+      <div className="container relative z-10 max-w-6xl mx-auto">
         <div className="text-center mb-12 fade-in-up" style={textShadowStyle}>
           <h2 className={cn(
               "text-3xl font-bold tracking-tighter sm:text-5xl font-headline",

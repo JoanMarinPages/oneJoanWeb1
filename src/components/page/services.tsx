@@ -44,7 +44,7 @@ export function Services() {
                     <source src={backgroundVideoUrl} type="video/mp4" />
                 </video>
             </div>
-            <div className="container relative z-10 py-20 md:py-24 max-w-7xl mx-auto">
+            <div className="container relative z-10 py-12 md:py-20 max-w-6xl mx-auto">
                 <div className="text-center mb-12 fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
                         Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
