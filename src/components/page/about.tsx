@@ -14,9 +14,9 @@ export function About() {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+        className="absolute top-0 left-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/60 -z-10" />
+      <div className="absolute inset-0 bg-black/60" />
       <div className="container relative z-10 text-center text-white flex flex-col items-center">
         <div className="fade-in-up max-w-4xl">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-white">
