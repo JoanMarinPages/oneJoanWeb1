@@ -10,13 +10,32 @@ const projects = [
     title: "Villa de Lujo con Vistas al Mar",
     description: "Recorrido virtual por una villa moderna, mostrando su arquitectura y diseño interior.",
     video: "/assets/ondesVideo/video-real-estate-1.mp4",
-    icon: <Home className="h-8 w-8 text-primary" />
+    icon: <Home className="h-8 w-8 text-primary" />,
+    overlay: (
+      <>
+        <div className="absolute top-8 left-8">
+          <h3 className="text-4xl md:text-5xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+            Luce tu<br />espacio
+          </h3>
+          <p className="mt-2 text-lg text-white/90" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+            Crea vistas profesionales
+          </p>
+        </div>
+      </>
+    )
   },
   {
     title: "Apartamento Urbano Inteligente",
     description: "Demostración de un apartamento en la ciudad con tecnología domótica integrada.",
     video: "/assets/ondesVideo/video-real-estate-2.mp4",
-    icon: <Building className="h-8 w-8 text-primary" />
+    icon: <Building className="h-8 w-8 text-primary" />,
+    overlay: (
+        <div className="absolute bottom-8 left-8 max-w-md">
+            <h3 className="text-2xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+                World's most advanced<br/>3D Generative NeRF Technology
+            </h3>
+        </div>
+    )
   },
 ];
 
@@ -49,7 +68,7 @@ export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
 
   return (
     <Section id="real-estate" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <div
               key={index}
@@ -70,7 +89,11 @@ export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
                   onPlay={() => setPlayingStates(prev => ({...prev, [index]: true}))}
                   onPause={() => setPlayingStates(prev => ({...prev, [index]: false}))}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                
+                {/* Text Overlay */}
+                {project.overlay}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {playingStates[index] ? <Pause className="h-12 w-12 text-white/80" /> : <Play className="h-12 w-12 text-white/80" />}
                 </div>
