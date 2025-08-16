@@ -152,6 +152,26 @@
     animation: fade-in-up 0.8s ease-out forwards;
     animation-fill-mode: forwards;
   }
-}
 
-    
+  @keyframes shape-float-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(20px, 40px) rotate(20deg); }
+  }
+  .animate-shape-float-1 {
+    animation: shape-float-1 15s ease-in-out infinite;
+  }
+  @keyframes shape-float-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-30px, 10px) rotate(-15deg); }
+  }
+  .animate-shape-float-2 {
+    animation: shape-float-2 18s ease-in-out infinite;
+  }
+  @keyframes shape-float-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(10px, -30px) rotate(10deg); }
+  }
+  .animate-shape-float-3 {
+    animation: shape-float-3 12s ease-in-out infinite;
+  }
+}

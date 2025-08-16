@@ -2,92 +2,98 @@
 "use client";
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Code2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Code2, Download, ExternalLink, Sparkles } from 'lucide-react';
-import { Badge } from '../ui/badge';
-import { Card } from '../ui/card';
-
-const technologies = ["React", "Three.js", "AI/ML", "AR/VR", "Node.js", "Android", "Python"];
-const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runh7MjLcwTwHA_--ar_12869_--video_1_442d8aca-6c97-4502-8eb1-81a48a741b26_1.mp4";
+import { Badge } from '@/components/ui/badge';
 
 export function Hero() {
-  return (
-    <section id="hero" className="w-full flex items-center py-12 md:py-20">
-      <div className="container relative z-10 mx-auto w-full lg:w-3/5 overflow-hidden rounded-2xl shadow-2xl border">
-         <div className="absolute inset-0 z-0">
-             <video
-                key={backgroundVideoUrl}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              >
-                <source src={backgroundVideoUrl} type="video/mp4" />
-            </video>
-        </div>
-        
-        <div className="relative z-10 p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-                <div className="flex flex-col gap-6 items-start text-left fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                    <Badge variant="outline" className="border-primary/30 text-primary font-semibold bg-primary/10 py-1 px-3">
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        Desarrollador Premium
-                    </Badge>
-                    <h1 className="font-headline text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl">
-                        Innovación en <span className="animated-gradient-text">RA & IA</span>
-                    </h1>
-                    <p className="max-w-lg text-lg text-white/90">
-                        Especialista en Realidad Aumentada, Inteligencia Artificial, desarrollo web y soluciones software que transforman ideas en experiencias digitales extraordinarias.
-                    </p>
-                    <div className="flex gap-4">
-                        <Button size="lg" asChild>
-                            <Link href="#real-estate">Ver Proyectos <ExternalLink className="ml-2" /></Link>
-                        </Button>
-                        <Button size="lg" variant="outline" asChild>
-                            <Link href="#">Descargar CV <Download className="ml-2" /></Link>
-                        </Button>
-                    </div>
-                    <div className="flex gap-8 mt-6 pt-6 border-t border-white/20 w-full">
-                        <div>
-                            <p className="text-3xl font-bold animated-gradient-text">50+</p>
-                            <p className="text-white/80">Proyectos</p>
-                        </div>
-                        <div>
-                            <p className="text-3xl font-bold animated-gradient-text">5+</p>
-                            <p className="text-white/80">Años Exp.</p>
-                        </div>
-                        <div>
-                            <p className="text-3xl font-bold animated-gradient-text">100%</p>
-                            <p className="text-white/80">Satisfacción</p>
-                        </div>
-                    </div>
-                </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
-                <div className="relative group hidden md:flex justify-center fade-in-up" style={{animationDelay: '200ms'}}>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                    <Card className="relative p-8 flex flex-col items-center gap-4 bg-card/80 backdrop-blur-sm rounded-2xl shadow-2xl border-border/20 w-full max-w-md">
-                        <div className="relative">
-                            <div className="h-28 w-28 rounded-full bg-primary/10 flex items-center justify-center">
-                                <Code2 className="h-14 w-14 text-primary" />
-                            </div>
-                            <div className="absolute bottom-0 right-0 h-8 w-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center border-4 border-card">
-                                <Sparkles className="h-5 w-5"/>
-                            </div>
-                        </div>
-                        <div className="text-center mt-2">
-                            <h2 className="text-2xl font-bold font-headline">Desarrollador Premium</h2>
-                            <p className="text-muted-foreground mt-1">Especialista en tecnologías emergentes con enfoque en crear soluciones que marquen la diferencia.</p>
-                        </div>
-                        <div className="flex flex-wrap gap-2 justify-center mt-4">
-                            {technologies.map(tech => (
-                                <Badge key={tech} variant="secondary" className="text-sm">{tech}</Badge>
-                            ))}
-                        </div>
-                    </Card>
-                </div>
-            </div>
-        </div>
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+      },
+    },
+  };
+
+  return (
+    <section id="hero" className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center bg-hero-dark overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        {/* Animated Shapes */}
+        <motion.div
+          className="absolute top-[10%] left-[5%] h-48 w-48 bg-indigo-500/10 rounded-full blur-2xl backdrop-blur-md border border-indigo-500/20 animate-shape-float-1"
+        />
+        <motion.div
+          className="absolute top-[20%] right-[10%] h-40 w-64 bg-rose-500/10 rounded-2xl blur-2xl backdrop-blur-md border border-rose-500/20 animate-shape-float-2"
+        />
+        <motion.div
+          className="absolute bottom-[15%] left-[20%] h-32 w-32 bg-violet-500/10 rounded-full blur-2xl backdrop-blur-md border border-violet-500/20 animate-shape-float-3"
+        />
+         <motion.div
+          className="absolute bottom-[25%] right-[25%] h-24 w-24 bg-amber-500/10 rounded-full blur-2xl backdrop-blur-md border border-amber-500/20 animate-shape-float-1"
+        />
+         <motion.div
+          className="hidden md:block absolute top-[50%] left-[30%] h-20 w-20 bg-cyan-500/10 rounded-lg blur-2xl backdrop-blur-md border border-cyan-500/20 animate-shape-float-2"
+        />
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center text-center gap-8"
+        >
+          <motion.div variants={itemVariants}>
+            <Badge variant="outline" className="py-2 px-4 rounded-full bg-white/5 border-white/10 text-white backdrop-blur-sm">
+                <Code2 className="h-5 w-5 text-primary mr-2" />
+                <span className="font-bold font-headline text-lg">OneJoan</span>
+            </Badge>
+          </motion.div>
+
+          <motion.h1
+            variants={itemVariants}
+            className="font-headline text-5xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl"
+          >
+            Elevate Your <span className="animated-gradient-text">Digital Vision</span>
+          </motion.h1>
+
+          <motion.p
+            variants={itemVariants}
+            className="max-w-3xl text-lg text-white/70 md:text-xl"
+          >
+            Crafting immersive and intelligent digital experiences. I specialize in building high-performance web applications, integrating advanced AI, and creating stunning visual solutions that captivate and engage.
+          </motion.p>
+
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4"
+          >
+            <Button size="lg" asChild>
+              <Link href="#services">
+                Explore Services <ArrowRight className="ml-2" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="bg-white/5 border-white/20 text-white hover:bg-white/10">
+              <Link href="#contact">Get in Touch</Link>
+            </Button>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

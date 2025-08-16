@@ -22,6 +22,7 @@ export default {
         headline: ['var(--font-space-grotesk)', 'sans-serif'],
       },
       colors: {
+        'hero-dark': '#030303',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -109,6 +110,18 @@ export default {
           '0%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-50%)' },
           '100%': { transform: 'translateY(0)' },
+        },
+        "shape-float-1": {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(20px, 40px) rotate(20deg)" }
+        },
+        "shape-float-2": {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(-30px, 10px) rotate(-15deg)" }
+        },
+        "shape-float-3": {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(10px, -30px) rotate(10deg)" }
         }
       },
       animation: {
@@ -117,7 +130,10 @@ export default {
         'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
         'gradient-animation': 'gradient-animation 5s ease-in-out infinite',
         'tilt': 'tilt 10s infinite linear',
-        'scroll-y': 'scroll-y 20s linear infinite',
+        'scroll-y': 'scroll-y 30s linear infinite',
+        'shape-float-1': 'shape-float-1 15s ease-in-out infinite',
+        'shape-float-2': 'shape-float-2 18s ease-in-out infinite',
+        'shape-float-3': 'shape-float-3 12s ease-in-out infinite',
       },
     },
   },
