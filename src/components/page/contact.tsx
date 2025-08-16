@@ -1,345 +1,183 @@
 
 "use client";
 
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import * as React from "react";
+import { Bot, User, Send, Loader2, Sparkles, Briefcase, DollarSign, Calendar } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Send, Clock, Linkedin, Twitter, Dribbble, Globe, Calendar, DollarSign } from "lucide-react";
-import { Card } from '../ui/card';
-import { Badge as UiBadge } from "@/components/ui/badge";
-import { Section } from './section';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { salesAssistantAction } from "@/app/actions";
+import type { SalesAssistantOutput } from "@/ai/schemas/sales-assistant-schemas";
+import { cn } from "@/lib/utils";
+import { Section } from "./section";
 
-const services = [
-  "Desarrollo Web", "Realidad Aumentada", "Inteligencia Artificial",
-  "Aplicaciones Móviles", "Consultoría Técnica", "Simulaciones Industriales",
-  "Android", "Python"
-];
-const budgets = ["< €10,000", "€10,000 - €25,000", "€25,000 - €50,000", "€50,000 - €100,000", "> €100,000"];
-const timelines = ["1-2 semanas", "1 mes", "2-3 meses", "3-6 meses", "6+ meses"];
-
-const formSchema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
-  email: z.string().email("Por favor, introduce un email válido."),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  services: z.array(z.string()).min(1, "Selecciona al menos un servicio de interés."),
-  budget: z.string({ required_error: "Por favor, selecciona un presupuesto." }),
-  timeline: z.string({ required_error: "Por favor, selecciona un timeline." }),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres.").max(500, "El mensaje no puede superar los 500 caracteres."),
-});
-
-type FormData = z.infer<typeof formSchema>;
+type Message = {
+    role: 'user' | 'model';
+    content: string;
+    proposal?: SalesAssistantOutput['proposal'];
+};
 
 interface ContactProps {
   backgroundVideoUrl: string;
 }
 
 export function Contact({ backgroundVideoUrl }: ContactProps) {
-  const { toast } = useToast();
+    const [messages, setMessages] = React.useState<Message[]>([]);
+    const [input, setInput] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(false);
+    const scrollAreaRef = React.useRef<HTMLDivElement>(null);
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      services: [],
-      message: "",
-    },
-  });
+    React.useEffect(() => {
+        // Start the conversation with a greeting from the assistant
+        setMessages([
+            { role: 'model', content: "¡Hola! Soy el asistente virtual de OneJoan. Estoy aquí para ayudarte a perfilar tu proyecto y ofrecerte una propuesta inicial. Para empezar, ¿cuál es tu nombre y en qué tipo de proyecto estás pensando?" }
+        ]);
+    }, []);
 
-  async function onSubmit(values: FormData) {
-    console.log(values);
-    toast({
-      title: "¡Mensaje Enviado!",
-      description: "Gracias por contactar. Te responderé lo antes posible.",
-    });
-    form.reset();
-  }
+    React.useEffect(() => {
+        // Scroll to the bottom whenever messages change
+        if (scrollAreaRef.current) {
+            scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+        }
+    }, [messages]);
 
-  const { watch, formState } = form;
-  const messageValue = watch('message', '');
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim() || isLoading) return;
 
-  const title = (
-    <>
-        ¿Hablamos?
-    </>
-  );
+        const userMessage: Message = { role: 'user', content: input };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        setIsLoading(true);
 
-  const description = "Si tienes un proyecto en mente o quieres saber más, no dudes en contactarme. Completa el formulario y empecemos a crear algo increíble juntos.";
+        try {
+            const history = messages.map(m => ({ role: m.role, content: m.content }));
+            const response = await salesAssistantAction({ history, message: input });
+            
+            const assistantMessage: Message = {
+                role: 'model',
+                content: response.response,
+                proposal: response.proposal,
+            };
+            setMessages(prev => [...prev, assistantMessage]);
 
-  return (
-    <Section id="contact" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl} className="pb-12 md:pb-20">
-        <div className="grid md:grid-cols-12 gap-12 max-w-6xl mx-auto">
-            <div className="md:col-span-4 space-y-8 fade-in-up" style={{animationDelay: '200ms'}}>
-                    <ContactInfoCard />
-                    <FollowMeCard />
-                    <WhyMeCard />
-            </div>
-            <div className="md:col-span-8 p-8 bg-card/80 backdrop-blur-sm border rounded-2xl border-white/10 shadow-lg shadow-primary/5 fade-in-up" style={{animationDelay: '400ms'}}>
-                <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="md:col-span-1">
-                        <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Nombre *</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Tu nombre completo" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                    </div>
-                    <div className="md:col-span-1">
-                        <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Email *</FormLabel>
-                            <FormControl>
-                                <Input placeholder="tu@email.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                    </div>
-                    <div className="md:col-span-1">
-                        <FormField
-                        control={form.control}
-                        name="company"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Empresa</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Nombre de tu empresa" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                    </div>
-                        <div className="md:col-span-1">
-                        <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Teléfono</FormLabel>
-                            <FormControl>
-                                <Input placeholder="+34 600 123 456" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                    </div>
+        } catch (error) {
+            console.error("Error calling sales assistant action:", error);
+            const errorMessage: Message = {
+                role: 'model',
+                content: "Lo siento, ha ocurrido un error y no puedo responder en este momento. Por favor, inténtalo de nuevo más tarde."
+            };
+            setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-                    <div className="md:col-span-2">
-                            <FormField
-                            control={form.control}
-                            name="services"
-                            render={() => (
-                                <FormItem>
-                                    <FormLabel>Servicio de Interés *</FormLabel>
-                                    <FormControl>
-                                        <Controller
-                                            name="services"
-                                            control={form.control}
-                                            render={({ field }) => (
-                                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-                                                    {services.map((service) => (
-                                                        <Button
-                                                            key={service}
-                                                            type="button"
-                                                            variant={field.value?.includes(service) ? "default" : "outline"}
-                                                            onClick={() => {
-                                                                const newValue = field.value?.includes(service)
-                                                                    ? field.value.filter((s) => s !== service)
-                                                                    : [...(field.value || []), service];
-                                                                field.onChange(newValue);
-                                                            }}
-                                                            className="w-full justify-center text-center h-auto py-2"
-                                                        >
-                                                            {service}
-                                                        </Button>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="pt-1" />
-                                </FormItem>
+    const title = (
+        <>
+            Hablemos de tu <span className="animated-gradient-text">Proyecto</span>
+        </>
+    );
+
+    const description = "Chatea con mi asistente de IA para definir tus necesidades y obtener una propuesta preliminar en minutos.";
+
+
+    return (
+        <Section id="contact" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
+            <div className="max-w-3xl mx-auto fade-in-up">
+                <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Bot className="text-primary"/>
+                            <span>Asistente de Ventas IA</span>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div 
+                            ref={scrollAreaRef}
+                            className="h-[450px] overflow-y-auto pr-4 space-y-6"
+                        >
+                            {messages.map((message, index) => (
+                                <div key={index} className={cn("flex items-start gap-4", message.role === 'user' ? 'justify-end' : 'justify-start')}>
+                                    {message.role === 'model' && (
+                                        <div className="bg-primary/10 text-primary p-2.5 rounded-full">
+                                            <Bot className="h-5 w-5" />
+                                        </div>
+                                    )}
+                                    <div className={cn(
+                                        "max-w-[80%] p-4 rounded-2xl",
+                                        message.role === 'user' 
+                                            ? "bg-primary text-primary-foreground rounded-br-none" 
+                                            : "bg-muted text-muted-foreground rounded-bl-none"
+                                    )}>
+                                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                        {message.proposal && <ProposalCard proposal={message.proposal} />}
+                                    </div>
+                                    {message.role === 'user' && (
+                                        <div className="bg-muted p-2.5 rounded-full">
+                                            <User className="h-5 w-5" />
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            {isLoading && (
+                                <div className="flex items-start gap-4 justify-start">
+                                    <div className="bg-primary/10 text-primary p-2.5 rounded-full">
+                                        <Bot className="h-5 w-5" />
+                                    </div>
+                                    <div className="max-w-[80%] p-4 rounded-2xl bg-muted text-muted-foreground rounded-bl-none">
+                                        <div className="flex items-center gap-2">
+                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                            <span className="text-sm italic">Pensando...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
-                            />
-                    </div>
-                    
-                    <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
-                        <div>
-                            <FormField
-                                control={form.control}
-                                name="budget"
-                                render={({ field }) => (
-                                    <FormItem className="space-y-3">
-                                        <FormLabel>Presupuesto Estimado *</FormLabel>
-                                        <FormControl>
-                                            <div className="space-y-2">
-                                            {budgets.map(budget => (
-                                                    <Button key={budget} type="button" variant={field.value === budget ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(budget)}>
-                                                    <DollarSign className="text-muted-foreground" /> {budget}
-                                                </Button>
-                                            ))}
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
                         </div>
-                            <div>
-                            <FormField
-                                control={form.control}
-                                name="timeline"
-                                render={({ field }) => (
-                                    <FormItem className="space-y-3">
-                                        <FormLabel>Timeline del Proyecto *</FormLabel>
-                                        <FormControl>
-                                            <div className="space-y-2">
-                                                {timelines.map(timeline => (
-                                                    <Button key={timeline} type="button" variant={field.value === timeline ? 'default' : 'outline'} className="w-full justify-start gap-2 font-normal" onClick={() => field.onChange(timeline)}>
-                                                        <Calendar className="h-4 w-4 text-muted-foreground" /> {timeline}
-                                                    </Button>
-                                                ))}
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
+                    </CardContent>
+                    <CardFooter>
+                        <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
+                            <Input
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="Escribe tu mensaje aquí..."
+                                disabled={isLoading}
+                                className="flex-1"
                             />
-                        </div>
-                    </div>
+                            <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+                                <Send className="h-4 w-4" />
+                            </Button>
+                        </form>
+                    </CardFooter>
+                </Card>
+            </div>
+        </Section>
+    );
+}
 
-                    <div className="md:col-span-2">
-                        <FormField
-                        control={form.control}
-                        name="message"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Mensaje *</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                placeholder="Cuéntame sobre tu proyecto, objetivos y cualquier detalle relevante..."
-                                rows={5}
-                                {...field}
-                                />
-                            </FormControl>
-                                <div className="text-xs text-muted-foreground text-right pt-1">
-                                {messageValue.length} / 500
-                            </div>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
+function ProposalCard({ proposal }: { proposal: NonNullable<SalesAssistantOutput['proposal']> }) {
+    return (
+        <div className="mt-4 border-t border-primary/20 pt-4">
+             <h4 className="flex items-center gap-2 font-bold text-base mb-4 text-foreground">
+                <Sparkles className="h-5 w-5 text-primary"/>
+                Propuesta Preliminar
+            </h4>
+            <div className="space-y-4 text-sm">
+                <div className="p-3 rounded-lg bg-background/50">
+                    <h5 className="font-semibold flex items-center gap-2 mb-1"><Briefcase className="h-4 w-4 text-primary"/>Resumen del Proyecto</h5>
+                    <p className="text-muted-foreground">{proposal.summary}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                     <div className="p-3 rounded-lg bg-background/50">
+                        <h5 className="font-semibold flex items-center gap-2 mb-1"><DollarSign className="h-4 w-4 text-primary"/>Presupuesto</h5>
+                        <p className="text-muted-foreground">€{proposal.budget.min.toLocaleString()} - €{proposal.budget.max.toLocaleString()}</p>
                     </div>
-                    <div className="md:col-span-2">
-                            <Button type="submit" size="lg" className="w-full" disabled={formState.isSubmitting}>
-                            Enviar Mensaje <Send className="ml-2 h-4 w-4" />
-                        </Button>
+                     <div className="p-3 rounded-lg bg-background/50">
+                        <h5 className="font-semibold flex items-center gap-2 mb-1"><Calendar className="h-4 w-4 text-primary"/>Timeline</h5>
+                        <p className="text-muted-foreground">{proposal.timeline.min}-{proposal.timeline.max} {proposal.timeline.unit}</p>
                     </div>
-                    <div className="md:col-span-2 text-center">
-                        <p className="text-xs text-muted-foreground">
-                            Al enviar este formulario, aceptas que me ponga en contacto contigo para discutir tu proyecto. Tu información será tratada con total confidencialidad.
-                        </p>
-                    </div>
-                </form>
-                </Form>
+                </div>
             </div>
         </div>
-    </Section>
-  );
-}
-
-function ContactInfoCard() {
-    return (
-        <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
-            <h3 className="text-xl font-bold font-headline mb-4">Información de Contacto</h3>
-            <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><Mail className="h-5 w-5" /></div>
-                    <div>
-                        <p className="font-semibold">Email</p>
-                        <a href="mailto:joanmarinpages@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">joanmarinpages@gmail.com</a>
-                    </div>
-                </div>
-                <div className="flex items-start gap-4">
-                        <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><Phone className="h-5 w-5" /></div>
-                    <div>
-                        <p className="font-semibold">Teléfono</p>
-                        <a href="tel:+34666777888" className="text-sm text-muted-foreground hover:text-primary transition-colors">(+34) 666 777 888</a>
-                    </div>
-                </div>
-                <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><MapPin className="h-5 w-5" /></div>
-                    <div>
-                        <p className="font-semibold">Ubicación</p>
-                        <span className="text-sm text-muted-foreground">Barcelona, España</span>
-                    </div>
-                </div>
-                <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 text-primary p-2.5 rounded-lg mt-1"><Clock className="h-5 w-5" /></div>
-                    <div>
-                        <p className="font-semibold">Horario</p>
-                        <span className="text-sm text-muted-foreground">Lun - Vie: 9:00 - 18:00</span>
-                    </div>
-                </div>
-            </div>
-        </Card>
-    )
-}
-
-function FollowMeCard() {
-    return (
-        <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
-            <h3 className="text-xl font-bold font-headline mb-4">Sígueme</h3>
-            <div className="flex gap-2">
-                <Button variant="outline" size="icon" asChild><a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><Linkedin /></a></Button>
-                <Button variant="outline" size="icon" asChild><a href="https://dribbble.com" target="_blank" aria-label="Dribbble"><Dribbble /></a></Button>
-                <Button variant="outline" size="icon" asChild><a href="https://twitter.com" target="_blank" aria-label="Twitter"><Twitter /></a></Button>
-                <Button variant="outline" size="icon" asChild><a href="#" target="_blank" aria-label="Website"><Globe /></a></Button>
-            </div>
-        </Card>
-    )
-}
-
-function WhyMeCard() {
-    const whyMeData = [
-        { label: "Respuesta rápida", value: "< 24h" },
-        { label: "Proyectos completados", value: "50+" },
-        { label: "Satisfacción cliente", value: "100%" },
-        { label: "Años experiencia", value: "5+" },
-    ]
-    return (
-            <Card className="p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
-            <h3 className="text-xl font-bold font-headline mb-4">¿Por qué elegirme?</h3>
-            <div className="space-y-3">
-                {whyMeData.map(item => (
-                    <div key={item.label} className="flex justify-between items-center text-sm">
-                        <span className="text-muted-foreground">{item.label}</span>
-                        <UiBadge variant="secondary" className="font-bold text-sm">{item.value}</UiBadge>
-                    </div>
-                ))}
-            </div>
-        </Card>
-    )
+    );
 }
