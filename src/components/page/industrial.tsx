@@ -5,7 +5,7 @@ import * as React from "react"
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, TrendingUp, Zap } from "lucide-react"
-import { ChartTooltipContent } from "../ui/chart"
+import { ChartContainer, ChartTooltipContent, type ChartConfig } from "../ui/chart"
 
 const barChartData = [
   { date: "Ene", "Nuevos Contactos": 186, "Ventas Realizadas": 80 },
@@ -16,6 +16,17 @@ const barChartData = [
   { date: "Jun", "Nuevos Contactos": 214, "Ventas Realizadas": 140 },
 ]
 
+const barChartConfig = {
+  "Nuevos Contactos": {
+    label: "Nuevos Contactos",
+    color: "hsl(var(--accent))",
+  },
+  "Ventas Realizadas": {
+    label: "Ventas Realizadas",
+    color: "hsl(var(--primary))",
+  },
+} satisfies ChartConfig
+
 const lineChartData = [
   { month: 'Enero', oee: 65 },
   { month: 'Febrero', oee: 72 },
@@ -25,6 +36,13 @@ const lineChartData = [
   { month: 'Junio', oee: 85 },
 ];
 
+const lineChartConfig = {
+  oee: {
+    label: "OEE",
+    color: "hsl(var(--primary))",
+  },
+} satisfies ChartConfig
+
 const pieChartData = [
     { name: 'Producción', value: 400, fill: 'hsl(var(--chart-1))' },
     { name: 'Logística', value: 300, fill: 'hsl(var(--chart-2))' },
@@ -32,22 +50,27 @@ const pieChartData = [
     { name: 'Calidad', value: 278, fill: 'hsl(var(--chart-4))' },
 ];
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="p-2 bg-card border rounded-lg shadow-lg">
-        <p className="label font-bold">{`${label}`}</p>
-        {payload.map((pld: any, index: number) => (
-          <div key={index} style={{ color: pld.fill }}>
-            <p className="intro">{`${pld.name}: ${pld.value}`}</p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  return null;
-};
+const pieChartConfig = {
+  value: {
+    label: "Value",
+  },
+  Producción: {
+    label: "Producción",
+    color: "hsl(var(--chart-1))",
+  },
+  Logística: {
+    label: "Logística",
+    color: "hsl(var(--chart-2))",
+  },
+  Mantenimiento: {
+    label: "Mantenimiento",
+    color: "hsl(var(--chart-3))",
+  },
+  Calidad: {
+    label: "Calidad",
+    color: "hsl(var(--chart-4))",
+  },
+} satisfies ChartConfig
 
 export function Industrial() {
   return (
@@ -69,7 +92,7 @@ export function Industrial() {
                         <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <ResponsiveContainer width="100%" height={300}>
+                        <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
                             <BarChart data={barChartData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
                                 <XAxis dataKey="date" tickLine={false} axisLine={false} />
@@ -82,7 +105,7 @@ export function Industrial() {
                                 <Bar dataKey="Nuevos Contactos" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
                                 <Bar dataKey="Ventas Realizadas" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                             </BarChart>
-                        </ResponsiveContainer>
+                        </ChartContainer>
                     </CardContent>
                 </Card>
                  <Card className="fade-in-up border-border/80 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
@@ -91,7 +114,7 @@ export function Industrial() {
                          <CardDescription>Distribución de recursos y efectividad.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                       <ResponsiveContainer width="100%" height={300}>
+                       <ChartContainer config={pieChartConfig} className="min-h-[300px] w-full">
                             <PieChart>
                                 <Pie
                                     data={pieChartData}
@@ -100,17 +123,18 @@ export function Industrial() {
                                     labelLine={false}
                                     outerRadius={100}
                                     dataKey="value"
+                                    nameKey="name"
                                 >
                                     {pieChartData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.fill} stroke={entry.fill} />
                                     ))}
                                 </Pie>
                                 <Tooltip
-                                     content={<ChartTooltipContent />}
+                                     content={<ChartTooltipContent nameKey="name" />}
                                 />
                                 <Legend />
                             </PieChart>
-                        </ResponsiveContainer>
+                        </ChartContainer>
                     </CardContent>
                 </Card>
             </div>
@@ -121,7 +145,7 @@ export function Industrial() {
                         <CardDescription>Overall Equipment Effectiveness</CardDescription>
                     </CardHeader>
                     <CardContent>
-                         <ResponsiveContainer width="100%" height={300}>
+                        <ChartContainer config={lineChartConfig} className="min-h-[300px] w-full">
                             <LineChart data={lineChartData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)"/>
                                 <XAxis dataKey="month" tickLine={false} axisLine={false}/>
@@ -132,7 +156,7 @@ export function Industrial() {
                                 />
                                 <Line type="monotone" dataKey="oee" stroke="hsl(var(--primary))" strokeWidth={3} name="OEE" dot={{ r: 5, fill: 'hsl(var(--primary))' }} activeDot={{ r: 8 }} />
                             </LineChart>
-                        </ResponsiveContainer>
+                        </ChartContainer>
                     </CardContent>
                 </Card>
                 <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
