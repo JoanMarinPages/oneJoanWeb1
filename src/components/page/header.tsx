@@ -5,7 +5,6 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 
 const navLinks = [
     { href: "#real-estate", label: "Inmobiliaria" },
-    { href: "#splatting", label: "Visualización 3D" },
     { href: "#industrial", label: "Industria" },
     { href: "#contact", label: "Contacto" },
 ]
