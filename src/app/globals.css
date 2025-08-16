@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -93,6 +94,11 @@
     background-size: 4rem 4rem;
   }
 
+  .bg-radial-gradient {
+      background-color: hsl(var(--muted) / 0.5);
+      background-image: radial-gradient(circle at 50% 50%, hsl(var(--background)), hsl(var(--muted)));
+  }
+
   @keyframes gradient-animation {
     0% {
       background-position: 0% 50%;
@@ -129,6 +135,17 @@
       transform: translateY(0);
     }
   }
+  
+  @keyframes scroll-y {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(calc(-100% + 600px)); } /* 600px es la altura visible aprox */
+      100% { transform: translateY(0); }
+  }
+  
+  .animate-scroll-y {
+      animation: scroll-y 30s linear infinite;
+  }
+
 
   .fade-in-up {
     opacity: 0;
@@ -136,3 +153,5 @@
     animation-fill-mode: forwards;
   }
 }
+
+    

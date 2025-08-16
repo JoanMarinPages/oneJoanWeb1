@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ShoppingCart, X, Plus, Minus, Trash2 } from "lucide-react";
+import { ShoppingCart, X, Plus, Minus, Trash2, MemoryStick, Cpu, HardDrive, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,81 +12,73 @@ import { Section } from "./section";
 
 const products = [
   {
-    name: "Zapatilla Nébula",
-    price: "120.00€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
-    colors: ["#3b82f6", "#10b981", "#ef4444"],
+    name: "QuantumBook Pro",
+    category: "Portátil",
+    price: "2,499.00€",
+    description: "Potencia redefinida con el nuevo chip M4.",
+    image: "https://placehold.co/400x300.png",
+    hint: "laptop computer",
+    colors: ["#808080", "#C0C0C0", "#000000"],
   },
   {
-    name: "Zapatilla Corredor",
-    price: "95.50€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
+    name: "AI-Mouse Ergonómico",
+    category: "Periférico",
+    price: "129.50€",
+    description: "Precisión y confort con seguimiento ocular.",
+    image: "https://placehold.co/400x300.png",
+    hint: "computer mouse",
     colors: ["#f97316", "#8b5cf6", "#ec4899"],
   },
   {
-    name: "Estilo Urbano Max",
-    price: "150.00€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
+    name: "Pantalla Holográfica",
+    category: "Monitor",
+    price: "1,800.00€",
+    description: "Visualización 3D inmersiva para creativos.",
+    image: "https://placehold.co/400x300.png",
+    hint: "monitor screen",
     colors: ["#14b8a6", "#6366f1", "#d946ef"],
   },
   {
-    name: "Clásica de Piel",
-    price: "110.75€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
+    name: "Teclado Mecánico Aura",
+    category: "Periférico",
+    price: "210.75€",
+    description: "Switches personalizables y RGB inmersivo.",
+    image: "https://placehold.co/400x300.png",
+    hint: "keyboard computer",
     colors: ["#6b7280", "#000000", "#ffffff"],
   },
   {
-    name: "Zapatilla Vortex",
-    price: "135.00€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
-    colors: ["#84cc16", "#22d3ee", "#facc15"],
+    name: "QuantumBook Pro", // Duplicado para scroll
+    category: "Portátil",
+    price: "2,499.00€",
+    description: "Potencia redefinida con el nuevo chip M4.",
+    image: "https://placehold.co/400x300.png",
+    hint: "laptop computer",
+    colors: ["#808080", "#C0C0C0", "#000000"],
   },
   {
-    name: "Aventura Trail",
-    price: "145.25€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
-    colors: ["#f59e0b", "#16a34a", "#4f46e5"],
-  },
-  // Duplicamos para el efecto de scroll infinito
-   {
-    name: "Zapatilla Nébula",
-    price: "120.00€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
-    colors: ["#3b82f6", "#10b981", "#ef4444"],
-  },
-  {
-    name: "Zapatilla Corredor",
-    price: "95.50€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
+    name: "AI-Mouse Ergonómico", // Duplicado para scroll
+    category: "Periférico",
+    price: "129.50€",
+    description: "Precisión y confort con seguimiento ocular.",
+    image: "https://placehold.co/400x300.png",
+    hint: "computer mouse",
     colors: ["#f97316", "#8b5cf6", "#ec4899"],
-  },
-  {
-    name: "Estilo Urbano Max",
-    price: "150.00€",
-    image: "https://placehold.co/300x300.png",
-    hint: "shoe sneaker",
-    colors: ["#14b8a6", "#6366f1", "#d946ef"],
   },
 ];
 
+const featuredProduct = products[0];
+
 export function Ecommerce() {
   const [cartOpen, setCartOpen] = React.useState(false);
-  const cartProduct = products[0];
+  const [activeConfig, setActiveConfig] = React.useState({ ram: "16GB", storage: "1TB", cpu: "M4 Pro" });
+  const cartProduct = products[1];
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCartOpen((prev) => !prev);
-    }, 7000); // Se abre y cierra cada 7 segundos
+    }, 7000);
 
-    // Abre el carrito la primera vez
     setTimeout(() => setCartOpen(true), 1000);
 
     return () => clearInterval(interval);
@@ -102,39 +94,52 @@ export function Ecommerce() {
 
   return (
     <Section id="ecommerce" title={title} description={description}>
-      <div className="relative h-[600px] w-full overflow-hidden rounded-2xl bg-grid-pattern fade-in-up">
+      <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-radial-gradient fade-in-up">
         <div className="absolute inset-0 flex p-8 gap-8">
+          
           {/* Columna de productos con scroll */}
-          <div className="h-full w-1/3 overflow-hidden">
-            <div className="animate-scroll-y">
-              <div className="space-y-4">
-                {products.map((product, index) => (
-                  <Card key={index} className="p-4 flex items-center gap-4 bg-card/90 backdrop-blur-sm">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={80}
-                      height={80}
-                      className="rounded-lg"
-                      data-ai-hint={product.hint}
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{product.name}</h4>
-                      <p className="text-muted-foreground">{product.price}</p>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+          <div className="h-full w-[35%] overflow-hidden">
+            <div className="animate-scroll-y space-y-4">
+              {products.map((product, index) => (
+                <Card key={index} className="p-4 flex items-center gap-4 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-md border-white/20">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={80}
+                    height={80}
+                    className="rounded-lg object-cover"
+                    data-ai-hint={product.hint}
+                  />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground">{product.name}</h4>
+                    <p className="text-muted-foreground text-sm">{product.category}</p>
+                    <p className="text-foreground font-bold mt-1">{product.price}</p>
+                  </div>
+                </Card>
+              ))}
             </div>
           </div>
 
-          {/* Área principal (puede contener un producto destacado, etc.) */}
-          <div className="w-2/3 h-full">
-             <Card className="h-full w-full flex items-center justify-center p-8 bg-card/90 backdrop-blur-sm">
-                <div className="text-center">
-                    <ShoppingCart className="mx-auto h-24 w-24 text-primary/20" />
-                    <h3 className="mt-4 text-2xl font-bold font-headline">Tu Próxima Tienda Online</h3>
-                    <p className="mt-2 text-muted-foreground">Diseño elegante, animaciones fluidas y una experiencia de usuario inolvidable.</p>
+          {/* Producto destacado */}
+          <div className="w-[65%] h-full">
+             <Card className="h-full w-full flex flex-col p-6 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-lg border-white/20">
+                <div className="flex-grow flex items-center justify-center">
+                    <Image src="https://placehold.co/800x600.png" alt={featuredProduct.name} width={450} height={350} className="rounded-lg object-cover" data-ai-hint={featuredProduct.hint}/>
+                </div>
+                <div className="flex-shrink-0 pt-6">
+                    <div className="text-center mb-4">
+                        <h3 className="text-2xl font-bold font-headline text-foreground">{featuredProduct.name}</h3>
+                        <p className="text-muted-foreground">{featuredProduct.description}</p>
+                        <p className="text-3xl font-bold text-primary mt-2">{featuredProduct.price}</p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 mb-6 text-sm">
+                        <ConfigOption icon={<MemoryStick/>} label="Memoria RAM" value="16GB" activeValue={activeConfig.ram} onClick={() => setActiveConfig({...activeConfig, ram: "16GB"})}/>
+                        <ConfigOption icon={<Cpu/>} label="Procesador" value="M4 Pro" activeValue={activeConfig.cpu} onClick={() => setActiveConfig({...activeConfig, cpu: "M4 Pro"})}/>
+                        <ConfigOption icon={<HardDrive/>} label="Almacenamiento" value="1TB SSD" activeValue={activeConfig.storage} onClick={() => setActiveConfig({...activeConfig, storage: "1TB SSD"})}/>
+                    </div>
+                    <Button size="lg" className="w-full">
+                        <Sparkles className="mr-2 h-4 w-4"/> Comprar Ahora
+                    </Button>
                 </div>
             </Card>
           </div>
@@ -143,12 +148,12 @@ export function Ecommerce() {
         {/* Carrito lateral animado */}
         <div
           className={cn(
-            "absolute top-0 right-0 h-full w-96 bg-card/95 backdrop-blur-lg border-l border-border shadow-2xl transform transition-transform duration-700 ease-in-out",
+            "absolute top-0 right-0 h-full w-96 bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
             cartOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b">
+            <div className="flex items-center justify-between p-6 border-b border-border/20">
               <h3 className="text-xl font-bold font-headline flex items-center gap-2">
                 <ShoppingCart className="h-6 w-6 text-primary" />
                 Tu Carrito
@@ -158,35 +163,34 @@ export function Ecommerce() {
               </Button>
             </div>
             <div className="flex-1 p-6 space-y-6 overflow-y-auto">
-              {/* Producto en el carrito */}
               <div className="flex gap-4">
                 <Image
                   src={cartProduct.image}
                   alt={cartProduct.name}
-                  width={100}
-                  height={100}
-                  className="rounded-lg"
+                  width={90}
+                  height={90}
+                  className="rounded-lg object-cover"
                   data-ai-hint={cartProduct.hint}
                 />
                 <div className="flex-1">
                   <h4 className="font-semibold">{cartProduct.name}</h4>
-                  <p className="text-muted-foreground text-sm">Talla: 42 - Color: Azul</p>
+                  <p className="text-muted-foreground text-sm">{cartProduct.description}</p>
                   <p className="font-bold mt-1">{cartProduct.price}</p>
                   <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-2 border rounded-md p-1">
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><Minus /></Button>
-                      <span className="font-bold text-sm">1</span>
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><Plus /></Button>
+                    <div className="flex items-center gap-1 border rounded-md p-0.5">
+                      <Button variant="ghost" size="icon" className="h-6 w-6"><Minus className="h-4 w-4" /></Button>
+                      <span className="font-bold text-sm px-1">1</span>
+                      <Button variant="ghost" size="icon" className="h-6 w-6"><Plus className="h-4 w-4" /></Button>
                     </div>
                     <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive h-8 w-8">
-                      <Trash2 />
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
               </div>
-               <Badge className="w-full justify-center py-1">¡Solo quedan 3 en stock!</Badge>
+               <Badge variant="secondary" className="w-full justify-center py-1">¡Solo quedan 3 en stock!</Badge>
             </div>
-            <div className="p-6 border-t mt-auto space-y-4">
+            <div className="p-6 border-t border-border/20 mt-auto space-y-4">
                 <div className="flex justify-between font-medium">
                     <span>Subtotal</span>
                     <span>{cartProduct.price}</span>
@@ -195,7 +199,7 @@ export function Ecommerce() {
                     <span>Envío</span>
                     <span>Gratis</span>
                 </div>
-                <div className="flex justify-between font-bold text-lg border-t pt-4">
+                <div className="flex justify-between font-bold text-lg border-t border-border/20 pt-4 mt-4">
                     <span>Total</span>
                     <span>{cartProduct.price}</span>
                 </div>
@@ -207,3 +211,19 @@ export function Ecommerce() {
     </Section>
   );
 }
+
+
+function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: React.ReactNode, label: string, value: string, activeValue: string, onClick: () => void }) {
+    const isActive = value.split(" ")[0] === activeValue;
+    return (
+        <Button variant={isActive ? "default" : "outline"} className="flex flex-col h-auto py-3" onClick={onClick}>
+            <div className="flex items-center gap-2 mb-1">
+                {icon}
+                <span className="font-semibold">{label}</span>
+            </div>
+            <span className="text-muted-foreground">{value}</span>
+        </Button>
+    )
+}
+
+    
