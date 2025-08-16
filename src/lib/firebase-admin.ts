@@ -1,5 +1,8 @@
 
 import * as admin from 'firebase-admin';
+import { config } from 'dotenv';
+config({ path: '.env.local' });
+
 
 const hasFirebaseAdminConfig = 
     process.env.FIREBASE_PROJECT_ID &&
