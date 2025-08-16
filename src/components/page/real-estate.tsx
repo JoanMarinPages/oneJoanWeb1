@@ -16,7 +16,7 @@ const projects = [
           </h3>
         </div>
         <div className="absolute bottom-8 left-8 text-left">
-            <p className="mt-2 text-xl md:text-2xl text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+            <p className="mt-2 text-xl md:text-2xl text-white">
                 Crea vistas profesionales
             </p>
         </div>
