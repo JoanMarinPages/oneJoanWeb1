@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -103,6 +104,11 @@ export default {
           "0%, 50%, 100%": { "transform": "rotate(0deg)" },
           "25%": { "transform": "rotate(0.5deg)" },
           "75%": { "transform": "rotate(-0.5deg)" }
+        },
+        'scroll-y': {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-50%)' },
+          '100%': { transform: 'translateY(0)' },
         }
       },
       animation: {
@@ -110,7 +116,8 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
         'gradient-animation': 'gradient-animation 5s ease-in-out infinite',
-        'tilt': 'tilt 10s infinite linear'
+        'tilt': 'tilt 10s infinite linear',
+        'scroll-y': 'scroll-y 20s linear infinite',
       },
     },
   },
