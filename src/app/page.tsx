@@ -13,7 +13,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <div className="container py-12 md:py-20">
-          <div className="flex flex-col gap-12 md:gap-20">
+          <div className="flex flex-col items-center gap-12 md:gap-20">
             <RealEstate />
             <Industrial />
             <Contact />
