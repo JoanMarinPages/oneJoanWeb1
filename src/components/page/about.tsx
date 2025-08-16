@@ -4,18 +4,29 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runffbT6tpcgM8_--ar_12869_--video_1_75bd7d44-3ee6-4656-9c57-9982706e90cd_3.mp4";
+
 export function About() {
   return (
     <section id="about" className="relative w-full py-24 md:py-40 overflow-hidden">
-      <video
-        src="/assets/ondesVideo/video-real-estate-1.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      />
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          key={backgroundVideoUrl}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={backgroundVideoUrl} type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/60" />
+      
+      {/* Content */}
       <div className="container relative z-10 text-center text-white flex flex-col items-center">
         <div className="fade-in-up max-w-4xl">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-white">
