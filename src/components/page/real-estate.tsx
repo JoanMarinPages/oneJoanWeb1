@@ -73,7 +73,6 @@ export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
                 
                 {project.overlay}
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
               </div>
             </div>
           ))}
