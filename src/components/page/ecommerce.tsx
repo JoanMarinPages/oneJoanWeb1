@@ -10,8 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Section } from "./section";
 
-const products = [
+const allProducts = [
   {
+    id: 1,
     name: "QuantumBook Pro",
     category: "Portátil",
     price: "2,499.00€",
@@ -21,6 +22,7 @@ const products = [
     colors: ["#808080", "#C0C0C0", "#000000"],
   },
   {
+    id: 2,
     name: "AI-Mouse Ergonómico",
     category: "Periférico",
     price: "129.50€",
@@ -30,6 +32,7 @@ const products = [
     colors: ["#f97316", "#8b5cf6", "#ec4899"],
   },
   {
+    id: 3,
     name: "Pantalla Holográfica",
     category: "Monitor",
     price: "1,800.00€",
@@ -39,6 +42,7 @@ const products = [
     colors: ["#14b8a6", "#6366f1", "#d946ef"],
   },
   {
+    id: 4,
     name: "Teclado Mecánico Aura",
     category: "Periférico",
     price: "210.75€",
@@ -48,41 +52,51 @@ const products = [
     colors: ["#6b7280", "#000000", "#ffffff"],
   },
   {
-    name: "QuantumBook Pro", // Duplicado para scroll
+    id: 5,
+    name: "QuantumBook Air",
     category: "Portátil",
-    price: "2,499.00€",
-    description: "Potencia redefinida con el nuevo chip M4.",
+    price: "1,599.00€",
+    description: "Portabilidad y rendimiento sin concesiones.",
     image: "https://placehold.co/400x300.png",
-    hint: "laptop computer",
-    colors: ["#808080", "#C0C0C0", "#000000"],
+    hint: "silver laptop",
+    colors: ["#C0C0C0", "#F0E68C"],
   },
-  {
-    name: "AI-Mouse Ergonómico", // Duplicado para scroll
-    category: "Periférico",
-    price: "129.50€",
-    description: "Precisión y confort con seguimiento ocular.",
+   {
+    id: 6,
+    name: "Monitor UltraWide 4K",
+    category: "Monitor",
+    price: "950.00€",
+    description: "Productividad y color sin límites.",
     image: "https://placehold.co/400x300.png",
-    hint: "computer mouse",
-    colors: ["#f97316", "#8b5cf6", "#ec4899"],
+    hint: "ultrawide monitor",
+    colors: ["#000000", "#ffffff"],
   },
 ];
 
-const featuredProduct = products[0];
+const featuredProduct = allProducts[0];
+const cartProduct = allProducts[1];
+const categories = ["Todos", "Portátil", "Periférico", "Monitor"];
 
 export function Ecommerce() {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [activeConfig, setActiveConfig] = React.useState({ ram: "16GB", storage: "1TB", cpu: "M4 Pro" });
-  const cartProduct = products[1];
+  const [activeFilter, setActiveFilter] = React.useState("Todos");
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCartOpen((prev) => !prev);
     }, 7000);
-
-    setTimeout(() => setCartOpen(true), 1000);
-
+    setTimeout(() => setCartOpen(true), 2000);
     return () => clearInterval(interval);
   }, []);
+
+  const filteredProducts = React.useMemo(() => {
+    if (activeFilter === "Todos") return allProducts;
+    return allProducts.filter(p => p.category === activeFilter);
+  }, [activeFilter]);
+  
+  // Duplicamos la lista para que el scroll sea infinito y suave
+  const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts];
 
   const title = (
     <>
@@ -97,31 +111,51 @@ export function Ecommerce() {
       <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-radial-gradient fade-in-up">
         <div className="absolute inset-0 flex p-8 gap-8">
           
-          {/* Columna de productos con scroll */}
-          <div className="h-full w-[35%] overflow-hidden">
-            <div className="animate-scroll-y space-y-4">
-              {products.map((product, index) => (
-                <Card key={index} className="p-4 flex items-center gap-4 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-md border-white/20">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={80}
-                    height={80}
-                    className="rounded-lg object-cover"
-                    data-ai-hint={product.hint}
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground">{product.name}</h4>
-                    <p className="text-muted-foreground text-sm">{product.category}</p>
-                    <p className="text-foreground font-bold mt-1">{product.price}</p>
-                  </div>
-                </Card>
-              ))}
+          {/* Columna de filtros y productos con scroll */}
+          <div className="h-full w-[35%] flex flex-col">
+            <div className="flex-shrink-0 mb-4 fade-in-up" style={{animationDelay: '200ms'}}>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {categories.map((category) => (
+                        <Button
+                            key={category}
+                            variant={activeFilter === category ? 'default' : 'outline'}
+                            size="sm"
+                            className="w-full text-xs h-8"
+                            onClick={() => setActiveFilter(category)}
+                        >
+                            {category}
+                        </Button>
+                    ))}
+                </div>
+            </div>
+            <div className="h-full overflow-hidden flex-grow fade-in-up" style={{animationDelay: '400ms'}}>
+                <div className="animate-scroll-y space-y-4">
+                    {displayProducts.map((product, index) => (
+                        <Card key={`${product.id}-${index}`} className="p-4 flex items-center gap-4 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-md border-white/20">
+                            <Image
+                                src={product.image}
+                                alt={product.name}
+                                width={80}
+                                height={80}
+                                className="rounded-lg object-cover"
+                                data-ai-hint={product.hint}
+                            />
+                            <div className="flex-1">
+                                <h4 className="font-semibold text-foreground text-sm">{product.name}</h4>
+                                <p className="text-muted-foreground text-xs">{product.category}</p>
+                                <p className="text-foreground font-bold mt-1">{product.price}</p>
+                            </div>
+                            <Button size="icon" variant="ghost" className="h-9 w-9 shrink-0 rounded-full bg-primary/10 hover:bg-primary/20 text-primary">
+                                <ShoppingCart className="h-4 w-4" />
+                            </Button>
+                        </Card>
+                    ))}
+                </div>
             </div>
           </div>
 
           {/* Producto destacado */}
-          <div className="w-[65%] h-full">
+          <div className="w-[65%] h-full fade-in-up" style={{animationDelay: '600ms'}}>
              <Card className="h-full w-full flex flex-col p-6 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-lg border-white/20">
                 <div className="flex-grow flex items-center justify-center">
                     <Image src="https://placehold.co/800x600.png" alt={featuredProduct.name} width={450} height={350} className="rounded-lg object-cover" data-ai-hint={featuredProduct.hint}/>
