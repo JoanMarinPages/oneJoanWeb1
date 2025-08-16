@@ -106,19 +106,24 @@ export function Ecommerce() {
   const description = "Desde catálogos animados hasta carritos de compra interactivos, creo experiencias de compra online que convierten visitantes en clientes.";
 
   return (
-    <Section id="ecommerce" title={title} description={description}>
-      <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-radial-gradient fade-in-up">
+    <Section 
+      id="ecommerce" 
+      title={title} 
+      description={description}
+      backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4"
+    >
+      <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
         <div className="absolute inset-0 flex p-8 gap-8">
           
           <div className="h-full w-[35%] flex flex-col">
-            <div className="flex-shrink-0 mb-4 fade-in-up" style={{animationDelay: '200ms'}}>
+            <div className="flex-shrink-0 mb-4">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {categories.map((category) => (
                         <Button
                             key={category}
                             variant={activeFilter === category ? 'default' : 'outline'}
                             size="sm"
-                            className="w-full text-xs h-8"
+                            className="w-full text-xs h-8 bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm"
                             onClick={() => setActiveFilter(category)}
                         >
                             {category}
@@ -126,7 +131,7 @@ export function Ecommerce() {
                     ))}
                 </div>
             </div>
-            <div className="h-full overflow-hidden flex-grow fade-in-up" style={{animationDelay: '400ms'}}>
+            <div className="h-full overflow-hidden flex-grow">
                 <div className="animate-scroll-y space-y-4">
                     {displayProducts.map((product, index) => (
                         <Card key={`${product.id}-${index}`} className="p-4 flex items-center gap-4 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-md border-white/20">
@@ -152,7 +157,7 @@ export function Ecommerce() {
             </div>
           </div>
 
-          <div className="w-[65%] h-full fade-in-up" style={{animationDelay: '600ms'}}>
+          <div className="w-[65%] h-full">
              <Card className="h-full w-full flex flex-col p-6 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-lg border-white/20">
                 <div className="flex-grow flex items-center justify-center">
                     <Image src="https://placehold.co/800x600.png" alt={featuredProduct.name} width={450} height={350} className="rounded-lg object-cover" data-ai-hint={featuredProduct.hint}/>

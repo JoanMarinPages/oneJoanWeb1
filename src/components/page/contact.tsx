@@ -88,7 +88,7 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
 
     return (
         <Section id="contact" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
-            <div className="max-w-3xl mx-auto fade-in-up">
+            <div className="max-w-3xl mx-auto">
                 <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">

@@ -89,7 +89,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
   return (
     <Section id="industrial" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            <Card className="lg:col-span-2 fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '200ms'}}>
+            <Card className="lg:col-span-2 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
                     <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
                     <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
@@ -109,7 +109,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                     </ChartContainer>
                 </CardContent>
             </Card>
-                <Card className="fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '400ms'}}>
+                <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
                     <CardTitle>Eficiencia por Sector</CardTitle>
                         <CardDescription>Distribución de recursos y efectividad.</CardDescription>
@@ -140,7 +140,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
             </Card>
         </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="lg:col-span-1 fade-in-up bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5" style={{animationDelay: '600ms'}}>
+            <Card className="lg:col-span-1 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
                     <CardTitle>Evolución OEE (%)</CardTitle>
                     <CardDescription>Overall Equipment Effectiveness</CardDescription>
@@ -159,7 +159,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                     </ChartContainer>
                 </CardContent>
             </Card>
-            <div className="lg:col-span-2 space-y-6 fade-in-up" style={{animationDelay: '800ms'}}>
+            <div className="lg:col-span-2 space-y-6">
                 <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
                     <div>

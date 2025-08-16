@@ -55,8 +55,6 @@ export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="fade-in-up"
-              style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
               <div 
                 className="relative overflow-hidden rounded-2xl group aspect-video shadow-2xl shadow-primary/10 border-white/10 border"

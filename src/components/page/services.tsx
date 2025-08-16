@@ -47,7 +47,7 @@ export function Services() {
                 </div>
                  <div className="relative z-10 bg-black/10">
                     <Card className="bg-transparent backdrop-blur-sm rounded-2xl p-8 md:p-12 border-0">
-                        <div className="text-center mb-12 fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        <div className="text-center mb-12 text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
                                 Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
                             </h2>
@@ -55,7 +55,7 @@ export function Services() {
                                 Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                             </p>
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto fade-in-up" style={{animationDelay: '200ms'}}>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                             {services.map((service, index) => (
                                 <Card 
                                     key={service.title} 
