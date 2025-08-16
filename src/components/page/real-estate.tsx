@@ -2,7 +2,6 @@
 "use client";
 
 import { useRef, useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Rewind, FastForward, Home, Building } from "lucide-react";
 
@@ -55,7 +54,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
         loop
         muted
         playsInline
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         autoPlay
@@ -97,11 +96,7 @@ export function RealEstate() {
               className="fade-in-up"
               style={{ animationDelay: `${200 * (index + 1)}ms` }}
             >
-              <Card className="overflow-hidden bg-transparent border-0 shadow-none">
-                <CardContent className="p-0">
-                  <VideoPlayer src={project.video} />
-                </CardContent>
-              </Card>
+              <VideoPlayer src={project.video} />
               <div className="mt-6 flex items-start gap-4">
                 <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
                   {project.icon}
