@@ -28,7 +28,7 @@ const projects = [
     icon: <Building className="h-8 w-8 text-primary" />,
     overlay: (
         <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
-            <h3 className="text-5xl md:text-6xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
+            <h3 className="text-3xl md:text-4xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
                 La tecnología de generación 3D NeRF<br/>más avanzada del mundo
             </h3>
         </div>
