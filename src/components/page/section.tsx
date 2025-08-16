@@ -42,7 +42,7 @@ export function Section({ id, title, description, children, className, backgroun
                     {title}
                   </h2>
                   <p className={cn(
-                      "mx-auto max-w-[800px] md:text-xl/relaxed mt-4",
+                      "mx-auto max-w-6xl md:text-xl/relaxed mt-4",
                        backgroundVideoUrl ? "text-white/90" : "text-muted-foreground"
                   )}>
                     {description}

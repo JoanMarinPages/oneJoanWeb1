@@ -51,11 +51,11 @@ export function Services() {
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
                                 Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
                             </h2>
-                            <p className="mx-auto max-w-[700px] text-white/90 md:text-xl/relaxed mt-4">
+                            <p className="mx-auto max-w-6xl text-white/90 md:text-xl/relaxed mt-4">
                                 Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                             </p>
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                             {services.map((service, index) => (
                                 <Card 
                                     key={service.title} 

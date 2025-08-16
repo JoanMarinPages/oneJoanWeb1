@@ -28,7 +28,7 @@ export function Hero() {
         </div>
         
         <div className="relative z-10 p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
                 <div className="flex flex-col gap-6 items-start text-left fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     <Badge variant="outline" className="border-primary/30 text-primary font-semibold bg-primary/10 py-1 px-3">
                         <Sparkles className="mr-2 h-4 w-4" />

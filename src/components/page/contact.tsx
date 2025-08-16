@@ -76,7 +76,7 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
 
   return (
     <Section id="contact" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl} className="pb-12 md:pb-20">
-        <div className="grid md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-12 gap-12 max-w-6xl mx-auto">
             <div className="md:col-span-4 space-y-8 fade-in-up" style={{animationDelay: '200ms'}}>
                     <ContactInfoCard />
                     <FollowMeCard />
