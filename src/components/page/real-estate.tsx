@@ -15,7 +15,7 @@ const projects = [
             Luce tu<br />espacio
           </h3>
         </div>
-        <div className="absolute bottom-8 right-8 text-right">
+        <div className="absolute bottom-8 left-8 text-left">
             <p className="mt-2 text-xl md:text-2xl text-white/90" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
                 Crea vistas profesionales
             </p>
@@ -27,7 +27,7 @@ const projects = [
     video: "/assets/videosCasa/creator 1080 p 60 fps.mp4",
     icon: <Building className="h-8 w-8 text-primary" />,
     overlay: (
-        <div className="absolute bottom-8 left-8 max-w-md">
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
             <h3 className="text-2xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
                 La tecnología de generación 3D NeRF<br/>más avanzada del mundo
             </h3>
