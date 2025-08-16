@@ -16,7 +16,7 @@ export function Section({ id, title, description, children, className, backgroun
   const textShadowStyle = backgroundVideoUrl ? { textShadow: '0 2px 4px rgba(0,0,0,0.5)' } : {};
 
   return (
-    <section id={id} className={cn("relative w-full overflow-hidden", className)}>
+    <section id={id} className={cn("relative w-full overflow-hidden py-12 md:py-16", className)}>
        {backgroundVideoUrl && (
          <>
             <div className="absolute inset-0 z-0">
@@ -33,7 +33,7 @@ export function Section({ id, title, description, children, className, backgroun
             </div>
          </>
       )}
-      <div className="container relative z-10">
+      <div className="container relative z-10 max-w-7xl mx-auto">
         <div className="text-center mb-12 fade-in-up" style={textShadowStyle}>
           <h2 className={cn(
               "text-3xl font-bold tracking-tighter sm:text-5xl font-headline",
