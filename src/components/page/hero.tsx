@@ -12,7 +12,7 @@ const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runh7MjL
 
 export function Hero() {
   return (
-    <section id="hero" className="relative w-full min-h-[calc(100vh-5rem)] flex items-center overflow-hidden">
+    <section id="hero" className="relative w-full flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
              <video
                 key={backgroundVideoUrl}
@@ -25,9 +25,9 @@ export function Hero() {
                 <source src={backgroundVideoUrl} type="video/mp4" />
             </video>
         </div>
-        <div className="absolute inset-0 bg-black/50" />
+
         <div className="container relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            <div className="flex flex-col gap-6 items-start text-left fade-in-up text-white">
+            <div className="flex flex-col gap-6 items-start text-left fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                 <Badge variant="outline" className="border-primary/30 text-primary font-semibold bg-primary/10 py-1 px-3">
                     <Sparkles className="mr-2 h-4 w-4" />
                     Desarrollador Premium
@@ -35,7 +35,7 @@ export function Hero() {
                 <h1 className="font-headline text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl">
                     Innovación en <span className="animated-gradient-text">RA & IA</span>
                 </h1>
-                <p className="max-w-lg text-lg text-white/80">
+                <p className="max-w-lg text-lg text-white/90">
                     Especialista en Realidad Aumentada, Inteligencia Artificial, desarrollo web y soluciones software que transforman ideas en experiencias digitales extraordinarias.
                 </p>
                 <div className="flex gap-4">
@@ -84,14 +84,6 @@ export function Hero() {
                     </div>
                 </Card>
             </div>
-
-        </div>
-         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 mt-16 fade-in-up z-10" style={{ animationDelay: '800ms' }}>
-            <Button asChild variant="ghost" size="icon" className="h-12 w-12 rounded-full hover:bg-white/10">
-            <Link href="#services">
-                <ArrowDown className="h-6 w-6 text-white/80" />
-            </Link>
-            </Button>
         </div>
     </section>
   );

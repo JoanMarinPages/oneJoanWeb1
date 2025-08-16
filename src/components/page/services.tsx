@@ -31,7 +31,7 @@ const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pv
 
 export function Services() {
     return (
-        <section id="services" className="relative w-full py-20 md:py-32 overflow-hidden">
+        <section id="services" className="relative w-full overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <video
                     key={backgroundVideoUrl}
@@ -44,13 +44,12 @@ export function Services() {
                     <source src={backgroundVideoUrl} type="video/mp4" />
                 </video>
             </div>
-            <div className="absolute inset-0 bg-black/60" />
-            <div className="container relative z-10">
-                <div className="text-center mb-12 fade-in-up text-white">
+            <div className="container relative z-10 py-20 md:py-24">
+                <div className="text-center mb-12 fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
                         Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
                     </h2>
-                    <p className="mx-auto max-w-[700px] text-white/80 md:text-xl/relaxed mt-4">
+                    <p className="mx-auto max-w-[700px] text-white/90 md:text-xl/relaxed mt-4">
                         Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                     </p>
                 </div>
