@@ -113,6 +113,9 @@ export function Industrial() {
                 <CardContent>
                     <ChartContainer config={pieChartConfig} className="min-h-[300px] w-full">
                         <PieChart>
+                            <ChartTooltip
+                                    content={<ChartTooltipContent nameKey="name" />}
+                            />
                             <Pie
                                 data={pieChartData}
                                 cx="50%"
@@ -126,9 +129,6 @@ export function Industrial() {
                                     <Cell key={`cell-${index}`} fill={entry.fill} stroke={entry.fill} />
                                 ))}
                             </Pie>
-                            <ChartTooltip
-                                    content={<ChartTooltipContent nameKey="name" />}
-                            />
                             <Legend />
                         </PieChart>
                     </ChartContainer>
@@ -188,5 +188,3 @@ export function Industrial() {
     </Section>
   )
 }
-
-    
