@@ -12,8 +12,9 @@ const backgroundVideoUrl = "/assets/ondesVideo/social_yow_one_httpss.mj.runh7MjL
 
 export function Hero() {
   return (
-    <section id="hero" className="relative w-full flex items-center overflow-hidden py-12 md:py-20">
-        <div className="absolute inset-0 z-0">
+    <section id="hero" className="w-full flex items-center py-12 md:py-20">
+      <div className="container relative z-10 mx-auto w-full lg:w-3/5 overflow-hidden rounded-2xl shadow-2xl border">
+         <div className="absolute inset-0 z-0">
              <video
                 key={backgroundVideoUrl}
                 autoPlay
@@ -25,8 +26,8 @@ export function Hero() {
                 <source src={backgroundVideoUrl} type="video/mp4" />
             </video>
         </div>
-
-        <div className="container relative z-10 mx-auto w-full lg:w-3/5">
+        
+        <div className="relative z-10 p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="flex flex-col gap-6 items-start text-left fade-in-up text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     <Badge variant="outline" className="border-primary/30 text-primary font-semibold bg-primary/10 py-1 px-3">
@@ -87,6 +88,7 @@ export function Hero() {
                 </div>
             </div>
         </div>
+      </div>
     </section>
   );
 }
