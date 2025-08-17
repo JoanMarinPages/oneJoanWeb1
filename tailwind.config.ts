@@ -111,7 +111,10 @@ export default {
         "shape-float-3": {
           "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
           "50%": { transform: "translate(10px, -30px) rotate(10deg)" }
-        }
+        },
+        'car-success': { '100%': { motionOffset: '100%' } },
+        'car-fail-1': { '50%, 100%': { motionOffset: '50%' } },
+        'car-fail-2': { '75%, 100%': { motionOffset: '75%' } }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -122,6 +125,9 @@ export default {
         'shape-float-1': 'shape-float-1 15s ease-in-out infinite',
         'shape-float-2': 'shape-float-2 18s ease-in-out infinite',
         'shape-float-3': 'shape-float-3 12s ease-in-out infinite',
+        'car-success': 'car-success 10s linear infinite',
+        'car-fail-1': 'car-fail-1 8s linear infinite',
+        'car-fail-2': 'car-fail-2 12s linear infinite'
       },
     },
   },

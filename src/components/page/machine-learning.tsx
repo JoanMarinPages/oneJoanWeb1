@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 
@@ -70,7 +70,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
 
   return (
     <Section id="machine-learning" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -168,6 +168,54 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
             <div className="w-full">
                 <h4 className="font-semibold flex items-center gap-2 mb-2"><LineChartIcon className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
                 <p className="text-sm text-muted-foreground">El modelo de regresión aprende la relación entre el tamaño del motor y el consumo, generando una línea de tendencia (violeta) que puede predecir el consumo para vehículos no vistos en los datos originales.</p>
+             </div>
+          </CardFooter>
+        </Card>
+        
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <Award className="text-primary"/>
+                <span>RL: Conducción Autónoma</span>
+            </CardTitle>
+            <CardDescription>Entrenamiento de un agente para aprender a conducir en un circuito.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow flex items-center justify-center">
+            <div className="w-full max-w-[300px] aspect-square">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                {/* Track */}
+                <path d="M 50,10
+                         A 40,40 0 0 1 90,50
+                         A 40,40 0 0 1 50,90
+                         A 40,40 0 0 1 10,50
+                         A 40,40 0 0 1 50,10 Z"
+                      stroke="hsl(var(--border))" strokeWidth="16" fill="none" />
+                <path d="M 50,10
+                         A 40,40 0 0 1 90,50
+                         A 40,40 0 0 1 50,90
+                         A 40,40 0 0 1 10,50
+                         A 40,40 0 0 1 50,10 Z"
+                      stroke="hsl(var(--muted))" strokeWidth="14" fill="none" />
+                 {/* Finish Line */}
+                <line x1="50" y1="2" x2="50" y2="18" stroke="hsl(var(--foreground))" strokeWidth="1" strokeDasharray="2 2" />
+
+                {/* Cars */}
+                <circle cx="0" cy="0" r="2.5" fill="hsl(var(--chart-4))" className="animate-car-fail-1">
+                    <animateMotion dur="8s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90" />
+                </circle>
+                <circle cx="0" cy="0" r="2.5" fill="hsl(var(--chart-4))" className="animate-car-fail-2">
+                     <animateMotion dur="12s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90 A 40,40 0 0 1 10,50" />
+                </circle>
+                <circle cx="0" cy="0" r="3" fill="hsl(var(--chart-1))" className="animate-car-success">
+                     <animateMotion dur="10s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90 A 40,40 0 0 1 10,50 A 40,40 0 0 1 50,10 Z" />
+                </circle>
+              </svg>
+            </div>
+          </CardContent>
+          <CardFooter className="pt-6">
+            <div className="w-full">
+                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
+                <p className="text-sm text-muted-foreground">El agente (coche azul) aprende por prueba y error. Tras múltiples intentos fallidos (coches rojos), optimiza su ruta para maximizar la "recompensa" (avanzar) y completar el circuito, evitando penalizaciones.</p>
              </div>
           </CardFooter>
         </Card>
