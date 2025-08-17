@@ -8,6 +8,7 @@ import { Footer } from '@/components/page/footer';
 import { Services } from '@/components/page/services';
 import { Ecommerce } from '@/components/page/ecommerce';
 import { AnimatedSection } from '@/components/page/animated-section';
+import { MachineLearning } from '@/components/page/machine-learning';
 
 export default function Home() {
   return (
@@ -23,6 +24,9 @@ export default function Home() {
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
           <Industrial backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runkqY7g-97hV4_--ar_12869_--video_1_48f32b7d-5daf-4bfe-b468-4628943ac79a_1.mp4" />
+        </AnimatedSection>
+        <AnimatedSection delay={0.3}>
+          <MachineLearning backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" />
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
           <Ecommerce />
