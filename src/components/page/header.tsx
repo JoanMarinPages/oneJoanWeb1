@@ -2,23 +2,36 @@
 'use client';
 
 import Link from 'next/link';
-import { Code2, Menu, LogIn, LogOut, User } from 'lucide-react';
+import { Code2, Menu, LogIn, LogOut, User, Globe } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useAuth } from '../auth-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent } from '../ui/dropdown-menu';
+import { usePathname, useRouter } from 'next/navigation';
+import { useCurrentLocale } from '@/hooks/use-current-locale';
+
 
 const navLinks = [
     { href: "#services", label: "Servicios" },
     { href: "#real-estate", label: "Inmobiliaria" },
     { href: "#industrial", label: "Industria" },
     { href: "#ecommerce", label: "E-commerce" },
+    { href: "/blog", label: "Blog" },
     { href: "#contact", label: "Contacto" },
 ]
 
 export function Header() {
     const { user, logIn, logOut } = useAuth();
+    const pathname = usePathname();
+    const router = useRouter();
+    const currentLocale = useCurrentLocale();
+
+    const changeLocale = (locale: string) => {
+        const newPath = `/${locale}${pathname.replace(`/${currentLocale}`, '')}`;
+        router.replace(newPath);
+    };
+
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
@@ -41,6 +54,17 @@ export function Header() {
                 </nav>
 
                 <div className="hidden md:flex items-center gap-4">
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <Globe className="h-5 w-5" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => changeLocale('es')}>Español</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => changeLocale('en')}>English</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     {user ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -63,6 +87,12 @@ export function Header() {
                                     </div>
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
+                                 <DropdownMenuItem asChild>
+                                    <Link href="/dashboard">
+                                        <User className="mr-2 h-4 w-4" />
+                                        <span>Dashboard</span>
+                                    </Link>
+                                </DropdownMenuItem>
                                 <DropdownMenuItem onClick={logOut}>
                                     <LogOut className="mr-2 h-4 w-4" />
                                     <span>Cerrar sesión</span>
@@ -109,6 +139,7 @@ export function Header() {
                                                     <p className="text-xs text-muted-foreground">{user.email}</p>
                                                 </div>
                                             </div>
+                                             <Button asChild variant="outline"><Link href="/dashboard">Dashboard</Link></Button>
                                             <Button onClick={logOut} variant="outline">Cerrar Sesión</Button>
                                         </div>
                                      ) : (

@@ -1,8 +1,9 @@
 
+
 "use client"
 
 import * as React from "react"
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Cell, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Cell, YAxis, XAxis } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, TrendingUp, Zap } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
@@ -96,8 +97,10 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
-                        <BarChart data={barChartData}>
+                        <BarChart data={barChartData} margin={{ left: -20, right: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                            <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+                            <YAxis tickLine={false} axisLine={false} tickMargin={8} />
                             <ChartTooltip
                                 cursor={{fill: 'hsl(var(--accent) / 0.1)'}}
                                 content={<ChartTooltipContent />}

@@ -1,0 +1,14 @@
+
+{
+  "Header": {
+    "services": "Services",
+    "real_estate": "Real Estate",
+    "industry": "Industry",
+    "ecommerce": "E-commerce",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Login",
+    "logout": "Log Out",
+    "dashboard": "Dashboard"
+  }
+}

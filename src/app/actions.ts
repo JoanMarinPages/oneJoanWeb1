@@ -4,6 +4,8 @@
 import { runSalesAssistant } from '@/ai/flows/sales-assistant-flow';
 import type { SalesAssistantInput, SalesAssistantOutput } from '@/ai/schemas/sales-assistant-schemas';
 import { db } from '@/lib/firebase-admin';
+import { getDocs, query, where, collection } from 'firebase/firestore';
+
 
 export async function salesAssistantAction(input: SalesAssistantInput) {
     return await runSalesAssistant(input);
@@ -31,5 +33,27 @@ export async function saveProposalAction(payload: SaveProposalPayload) {
     } catch (error) {
         console.error("Error saving proposal to Firestore:", error);
         throw new Error("Could not save proposal.");
+    }
+}
+
+export async function getUserProposals(userId: string) {
+    try {
+        if (!db.collection) {
+            throw new Error("Firestore is not initialized.");
+        }
+        const proposalsRef = db.collection('proposals');
+        const q = query(proposalsRef, where('userId', '==', userId));
+        const querySnapshot = await getDocs(q);
+        
+        const proposals: any[] = [];
+        querySnapshot.forEach((doc) => {
+            proposals.push({ id: doc.id, ...doc.data() });
+        });
+        
+        return proposals;
+
+    } catch (error) {
+        console.error("Error getting user proposals:", error);
+        throw new Error("Could not retrieve proposals.");
     }
 }
