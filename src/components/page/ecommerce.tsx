@@ -123,7 +123,10 @@ export function Ecommerce() {
                             key={category}
                             variant={activeFilter === category ? 'default' : 'outline'}
                             size="sm"
-                            className="w-full text-xs h-8 bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm"
+                            className={cn(
+                                "w-full text-xs h-8 backdrop-blur-sm transition-colors",
+                                activeFilter !== category && "bg-white/20 border-white/30 text-white hover:bg-white/30"
+                            )}
                             onClick={() => setActiveFilter(category)}
                         >
                             {category}
