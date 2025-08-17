@@ -2,6 +2,9 @@
 "use client";
 
 import * as React from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Bot, User, Send, Loader2, Sparkles, Briefcase, DollarSign, Calendar, Contact as ContactIcon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +16,8 @@ import { Section } from "./section";
 import { useAuth } from "../auth-provider";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "../ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 
 
 type Message = {
@@ -161,11 +166,108 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
 
 function ProposalCard({ proposal, conversationHistory }: { proposal: NonNullable<SalesAssistantOutput['proposal']>, conversationHistory: Message[] }) {
     const { user } = useAuth();
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const contactButton = (
+        <Button 
+            className="w-full mt-4" 
+            onClick={handleOpenModal} 
+            disabled={!user}
+        >
+            <ContactIcon className="mr-2 h-4 w-4" />
+            Contactar para Contratar
+        </Button>
+    );
+
+    return (
+        <>
+            <div className="mt-4 border-t border-primary/20 pt-4">
+                <h4 className="flex items-center gap-2 font-bold text-base mb-4 text-foreground">
+                    <Sparkles className="h-5 w-5 text-primary"/>
+                    Propuesta Preliminar
+                </h4>
+                <div className="space-y-4 text-sm">
+                    <div className="p-3 rounded-lg bg-background/50">
+                        <h5 className="font-semibold flex items-center gap-2 mb-1"><Briefcase className="h-4 w-4 text-primary"/>Resumen del Proyecto</h5>
+                        <p className="text-muted-foreground">{proposal.summary}</p>
+                    </div>
+                    {proposal.budget && proposal.budget.min > 0 && (
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="p-3 rounded-lg bg-background/50">
+                                <h5 className="font-semibold flex items-center gap-2 mb-1"><DollarSign className="h-4 w-4 text-primary"/>Presupuesto</h5>
+                                <p className="text-muted-foreground">€{proposal.budget.min.toLocaleString()} - €{proposal.budget.max.toLocaleString()}</p>
+                            </div>
+                            {proposal.timeline && (
+                                <div className="p-3 rounded-lg bg-background/50">
+                                    <h5 className="font-semibold flex items-center gap-2 mb-1"><Calendar className="h-4 w-4 text-primary"/>Timeline</h5>
+                                    <p className="text-muted-foreground">{proposal.timeline.min}-{proposal.timeline.max} {proposal.timeline.unit}</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {!user ? (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className="w-full">{contactButton}</div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Debes iniciar sesión para contactar</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    ) : (
+                        contactButton
+                    )}
+                </div>
+            </div>
+            {user && (
+                <ContactFormModal
+                    isOpen={isModalOpen}
+                    setIsOpen={setIsModalOpen}
+                    proposal={proposal}
+                    conversationHistory={conversationHistory}
+                    user={user}
+                />
+            )}
+        </>
+    );
+}
+
+const ContactFormSchema = z.object({
+  userName: z.string().min(1, "El nombre es requerido."),
+  userEmail: z.string().email("Por favor, introduce un email válido."),
+});
+
+function ContactFormModal({
+    isOpen,
+    setIsOpen,
+    proposal,
+    conversationHistory,
+    user
+}: {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    proposal: NonNullable<SalesAssistantOutput['proposal']>;
+    conversationHistory: Message[];
+    user: NonNullable<ReturnType<typeof useAuth>['user']>;
+}) {
     const { toast } = useToast();
     const [isSaving, setIsSaving] = React.useState(false);
 
-    const handleSaveProposal = async () => {
-        if (!user) return;
+    const form = useForm<z.infer<typeof ContactFormSchema>>({
+        resolver: zodResolver(ContactFormSchema),
+        defaultValues: {
+            userName: user.displayName || "",
+            userEmail: user.email || "",
+        },
+    });
+
+    const onSubmit = async (values: z.infer<typeof ContactFormSchema>) => {
         setIsSaving(true);
         try {
             const proposalToSave: SalesAssistantInput = {
@@ -174,15 +276,15 @@ function ProposalCard({ proposal, conversationHistory }: { proposal: NonNullable
             };
             await saveProposalAction({
                 userId: user.uid,
-                userEmail: user.email!,
-                userName: user.displayName!,
+                ...values,
                 proposal,
                 history: proposalToSave.history,
             });
             toast({
                 title: "¡Propuesta Guardada!",
-                description: "Gracias por tu interés. Me pondré en contacto contigo pronto.",
+                description: "Gracias por tu interés. Me pondré en contacto contigo pronto a través de " + values.userEmail + ".",
             });
+            setIsOpen(false);
         } catch (error) {
             console.error("Error saving proposal:", error);
             toast({
@@ -194,54 +296,54 @@ function ProposalCard({ proposal, conversationHistory }: { proposal: NonNullable
             setIsSaving(false);
         }
     };
-    
-    const contactButton = (
-        <Button 
-            className="w-full mt-4" 
-            onClick={handleSaveProposal} 
-            disabled={!user || isSaving}
-        >
-            {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ContactIcon className="mr-2 h-4 w-4" />}
-            {isSaving ? 'Guardando...' : 'Contactar para Contratar'}
-        </Button>
-    );
 
     return (
-        <div className="mt-4 border-t border-primary/20 pt-4">
-             <h4 className="flex items-center gap-2 font-bold text-base mb-4 text-foreground">
-                <Sparkles className="h-5 w-5 text-primary"/>
-                Propuesta Preliminar
-            </h4>
-            <div className="space-y-4 text-sm">
-                <div className="p-3 rounded-lg bg-background/50">
-                    <h5 className="font-semibold flex items-center gap-2 mb-1"><Briefcase className="h-4 w-4 text-primary"/>Resumen del Proyecto</h5>
-                    <p className="text-muted-foreground">{proposal.summary}</p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                     <div className="p-3 rounded-lg bg-background/50">
-                        <h5 className="font-semibold flex items-center gap-2 mb-1"><DollarSign className="h-4 w-4 text-primary"/>Presupuesto</h5>
-                        <p className="text-muted-foreground">€{proposal.budget.min.toLocaleString()} - €{proposal.budget.max.toLocaleString()}</p>
-                    </div>
-                     <div className="p-3 rounded-lg bg-background/50">
-                        <h5 className="font-semibold flex items-center gap-2 mb-1"><Calendar className="h-4 w-4 text-primary"/>Timeline</h5>
-                        <p className="text-muted-foreground">{proposal.timeline.min}-{proposal.timeline.max} {proposal.timeline.unit}</p>
-                    </div>
-                </div>
-                {!user ? (
-                     <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div className="w-full">{contactButton}</div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Debes iniciar sesión para contactar</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ) : (
-                    contactButton
-                )}
-            </div>
-        </div>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Confirmar Contacto</DialogTitle>
+                    <DialogDescription>
+                        Estás a un paso de empezar tu proyecto. Por favor, confirma tus datos de contacto.
+                    </DialogDescription>
+                </DialogHeader>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <FormField
+                            control={form.control}
+                            name="userName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Nombre Completo</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Tu nombre" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="userEmail"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="tu@email.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <DialogFooter>
+                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)}>Cancelar</Button>
+                            <Button type="submit" disabled={isSaving}>
+                                {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                {isSaving ? 'Enviando...' : 'Enviar y Confirmar'}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
     );
 }

@@ -16,12 +16,12 @@ const ProposalSchema = z.object({
     budget: z.object({
         min: z.number(),
         max: z.number(),
-    }).describe("The estimated budget range for the project."),
+    }).describe("The estimated budget range for the project.").optional(),
     timeline: z.object({
         min: z.number(),
         unit: z.enum(['weeks', 'months']),
         max: z.number(),
-    }).describe("The estimated timeline for the project."),
+    }).describe("The estimated timeline for the project.").optional(),
 });
 
 export const SalesAssistantOutputSchema = z.object({
