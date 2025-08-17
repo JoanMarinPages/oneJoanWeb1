@@ -7,31 +7,30 @@ import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useAuth } from '../auth-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent } from '../ui/dropdown-menu';
-import { usePathname, useRouter } from 'next/navigation';
-import { useCurrentLocale } from '@/hooks/use-current-locale';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { usePathname } from 'next/navigation';
+import { i18n, type Locale } from '@/i18n-config';
 
 
 const navLinks = [
-    { href: "#services", label: "Servicios" },
-    { href: "#real-estate", label: "Inmobiliaria" },
-    { href: "#industrial", label: "Industria" },
-    { href: "#ecommerce", label: "E-commerce" },
-    { href: "/blog", label: "Blog" },
-    { href: "#contact", label: "Contacto" },
+    { href: "#services", labelKey: "services" },
+    { href: "#real-estate", labelKey: "real_estate" },
+    { href: "#industrial", labelKey: "industry" },
+    { href: "#ecommerce", labelKey: "ecommerce" },
+    { href: "/blog", labelKey: "blog" },
+    { href: "#contact", labelKey: "contact" },
 ]
 
-export function Header() {
+export function Header({ dictionary }: { dictionary: any }) {
     const { user, logIn, logOut } = useAuth();
     const pathname = usePathname();
-    const router = useRouter();
-    const currentLocale = useCurrentLocale();
-
-    const changeLocale = (locale: string) => {
-        const newPath = `/${locale}${pathname.replace(`/${currentLocale}`, '')}`;
-        router.replace(newPath);
-    };
-
+    
+    const getRedirectedPath = (locale: Locale) => {
+        if (!pathname) return '/';
+        const segments = pathname.split('/');
+        segments[1] = locale;
+        return segments.join('/');
+    }
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
@@ -45,10 +44,10 @@ export function Header() {
                     {navLinks.map((link) => (
                         <Link 
                             key={link.href} 
-                            href={link.href} 
+                            href={link.href.startsWith('/') ? getRedirectedPath(pathname.split('/')[1] as Locale) + link.href.substring(1) : link.href}
                             className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                         >
-                            {link.label}
+                            {dictionary[link.labelKey]}
                         </Link>
                     ))}
                 </nav>
@@ -61,8 +60,13 @@ export function Header() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => changeLocale('es')}>Español</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => changeLocale('en')}>English</DropdownMenuItem>
+                            {i18n.locales.map(locale => (
+                                <DropdownMenuItem key={locale} asChild>
+                                    <Link href={getRedirectedPath(locale)}>
+                                        {locale.toUpperCase()}
+                                    </Link>
+                                </DropdownMenuItem>
+                            ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
                     {user ? (
@@ -88,21 +92,21 @@ export function Header() {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                  <DropdownMenuItem asChild>
-                                    <Link href="/dashboard">
+                                    <Link href={getRedirectedPath(pathname.split('/')[1] as Locale) + 'dashboard'}>
                                         <User className="mr-2 h-4 w-4" />
-                                        <span>Dashboard</span>
+                                        <span>{dictionary.dashboard}</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={logOut}>
                                     <LogOut className="mr-2 h-4 w-4" />
-                                    <span>Cerrar sesión</span>
+                                    <span>{dictionary.logout}</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
                         <Button onClick={logIn}>
                             <LogIn className="mr-2 h-4 w-4" />
-                            Login
+                            {dictionary.login}
                         </Button>
                     )}
                 </div>
@@ -123,7 +127,7 @@ export function Header() {
                                 </Link>
                                 <nav className="flex flex-col gap-4">
                                     {navLinks.map(link => (
-                                        <Link key={link.href} href={link.href} className="text-lg font-medium hover:text-primary transition-colors">{link.label}</Link>
+                                        <Link key={link.href} href={link.href} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
                                     ))}
                                 </nav>
                                 <div className="mt-4">
@@ -139,13 +143,13 @@ export function Header() {
                                                     <p className="text-xs text-muted-foreground">{user.email}</p>
                                                 </div>
                                             </div>
-                                             <Button asChild variant="outline"><Link href="/dashboard">Dashboard</Link></Button>
-                                            <Button onClick={logOut} variant="outline">Cerrar Sesión</Button>
+                                             <Button asChild variant="outline"><Link href={getRedirectedPath(pathname.split('/')[1] as Locale) + 'dashboard'}>{dictionary.dashboard}</Link></Button>
+                                            <Button onClick={logOut} variant="outline">{dictionary.logout}</Button>
                                         </div>
                                      ) : (
                                          <Button onClick={logIn} className="w-full">
                                             <LogIn className="mr-2 h-4 w-4" />
-                                            Login
+                                            {dictionary.login}
                                          </Button>
                                      )}
                                 </div>

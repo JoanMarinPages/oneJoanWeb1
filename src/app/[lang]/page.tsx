@@ -1,5 +1,4 @@
 
-
 import { Header } from '@/components/page/header';
 import { Hero } from '@/components/page/hero';
 import { RealEstate } from '@/components/page/real-estate';
@@ -10,11 +9,16 @@ import { Services } from '@/components/page/services';
 import { Ecommerce } from '@/components/page/ecommerce';
 import { AnimatedSection } from '@/components/page/animated-section';
 import { MachineLearning } from '@/components/page/machine-learning';
+import { getDictionary } from '@/lib/get-dictionary';
+import { Locale } from '@/i18n-config';
 
-export default function Home() {
+
+export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
+  const dictionary = await getDictionary(lang);
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Header />
+      <Header dictionary={dictionary.Header} />
       <main className="flex-1">
         <Hero />
         <AnimatedSection delay={0.2}>

@@ -11,6 +11,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getDictionary } from '@/lib/get-dictionary';
+import { Locale } from '@/i18n-config';
+
 
 type Proposal = {
   id: string;
@@ -23,10 +26,19 @@ type Proposal = {
   createdAt: string;
 };
 
-export default function DashboardPage() {
+export default function DashboardPage({ params: { lang } }: { params: { lang: Locale } }) {
   const { user, loading: authLoading } = useAuth();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dictionary, setDictionary] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchDictionary = async () => {
+      const dict = await getDictionary(lang);
+      setDictionary(dict);
+    };
+    fetchDictionary();
+  }, [lang]);
 
   useEffect(() => {
     if (user) {
@@ -46,8 +58,15 @@ export default function DashboardPage() {
       setLoading(false);
     }
   }, [user, authLoading]);
+  
+  const logIn = () => {
+    const authProvider = (window as any).authProvider;
+    if (authProvider) {
+      authProvider.logIn();
+    }
+  }
 
-  if (authLoading || loading) {
+  if (authLoading || loading || !dictionary) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -58,28 +77,20 @@ export default function DashboardPage() {
   if (!user) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <Header dictionary={dictionary.Header}/>
         <main className="flex-1 flex flex-col items-center justify-center text-center">
             <h1 className="text-2xl font-bold mb-4">Acceso Denegado</h1>
             <p className="text-muted-foreground mb-4">Por favor, inicia sesión para ver tu dashboard.</p>
-             <Button onClick={() => { logIn() }}>Iniciar Sesión</Button>
+             <Button onClick={logIn}>{dictionary.Header.login}</Button>
         </main>
         <Footer />
       </div>
     );
   }
-  
-  const logIn = () => {
-    const authProvider = (window as any).authProvider;
-    if (authProvider) {
-      authProvider.logIn();
-    }
-  }
-
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header dictionary={dictionary.Header}/>
       <main className="flex-1 container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Tu Dashboard</h1>
         <Card>
