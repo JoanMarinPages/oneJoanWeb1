@@ -1,4 +1,3 @@
-
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -112,48 +111,20 @@ export default {
           "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
           "50%": { transform: "translate(10px, -30px) rotate(10deg)" }
         },
-        "rl-speed-bar": {
-          "0%, 100%": { width: "20%" },
-          "50%": { width: "95%" }
+        "car-success": {
+          "0%": { offsetPath: "path('M 60,11 C 115,11 115,60 95,60 C 75,60 75,80 95,80 C 115,80 115,109 60,109 C 5,109 5,80 25,80 C 45,80 45,60 25,60 C 5,60 5,11 60,11 Z')", motionRotation: "auto" },
         },
-        "rl-abs": {
-          "0%, 100%": { fillOpacity: "0.5" },
-          "50%": { fillOpacity: "1" }
+        "car-fail-1": {
+          "0%": { transform: 'translate(60px, 11px) rotate(0deg)' },
+          "20%": { transform: 'translate(100px, 30px) rotate(90deg)' },
+          "100%": { transform: 'translate(110px, 20px) rotate(100deg)' },
         },
-        "rl-steering": {
-          "0%, 100%": { transform: "translateX(500%)" },
-          "50%": { transform: "translateX(calc(100% - 500%))" }
+        "car-fail-2": {
+          "0%": { transform: 'translate(60px, 11px) rotate(0deg)' },
+          "40%": { transform: 'translate(95px, 80px) rotate(180deg)' },
+          "60%": { transform: 'translate(85px, 95px) rotate(220deg)' },
+          "100%": { transform: 'translate(80px, 105px) rotate(230deg)' },
         },
-        "rl-gyro": {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" }
-        },
-        "car-racing-path": {
-          "0%": { transform: "translate(50%, 10%)" },
-          "10%": { transform: "translate(85%, 25%)" },
-          "20%": { transform: "translate(90%, 50%)" },
-          "30%": { transform: "translate(70%, 60%)" },
-          "40%": { transform: "translate(85%, 80%)" },
-          "50%": { transform: "translate(50%, 90%)" },
-          "60%": { transform: "translate(15%, 80%)" },
-          "70%": { transform: "translate(30%, 60%)" },
-          "80%": { transform: "translate(10%, 50%)" },
-          "90%": { transform: "translate(15%, 25%)" },
-          "100%": { transform: "translate(50%, 10%)" }
-        },
-        "car-racing-rotation": {
-          "0%": { transform: "rotate(0deg)" },
-          "10%": { transform: "rotate(45deg)" },
-          "20%": { transform: "rotate(135deg)" },
-          "30%": { transform: "rotate(200deg)" },
-          "40%": { transform: "rotate(135deg)" },
-          "50%": { transform: "rotate(180deg)" },
-          "60%": { transform: "rotate(225deg)" },
-          "70%": { transform: "rotate(300deg)" },
-          "80%": { transform: "rotate(225deg)" },
-          "90%": { transform: "rotate(315deg)" },
-          "100%": { transform: "rotate(360deg)" }
-        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -164,15 +135,9 @@ export default {
         'shape-float-1': 'shape-float-1 15s ease-in-out infinite',
         'shape-float-2': 'shape-float-2 18s ease-in-out infinite',
         'shape-float-3': 'shape-float-3 12s ease-in-out infinite',
-        'rl-speed-bar': 'rl-speed-bar 3s ease-in-out infinite',
-        'rl-abs-1': 'rl-abs 0.5s linear infinite',
-        'rl-abs-2': 'rl-abs 0.7s linear infinite reverse',
-        'rl-abs-3': 'rl-abs 0.6s linear infinite',
-        'rl-abs-4': 'rl-abs 0.4s linear infinite reverse',
-        'rl-steering': 'rl-steering 5s ease-in-out infinite',
-        'rl-gyro': 'rl-gyro 10s linear infinite',
-        'car-racing-path': 'car-racing-path 12s linear infinite',
-        'car-racing-rotation': 'car-racing-rotation 12s linear infinite',
+        'car-success': 'car-success 12s linear infinite',
+        'car-fail-1': 'car-fail-1 5s ease-in-out infinite',
+        'car-fail-2': 'car-fail-2 8s ease-in-out infinite',
       },
     },
   },

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -179,7 +178,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
                 <Award className="text-primary"/>
                 <span>RL: Car Racing</span>
             </CardTitle>
-            <CardDescription>Entrenamiento de un agente para completar un circuito de carreras.</CardDescription>
+            <CardDescription>Entrenamiento de agentes para completar un circuito de carreras.</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex flex-col items-center justify-center gap-4">
             <div className="w-full max-w-[350px] aspect-square overflow-hidden relative">
@@ -194,46 +193,15 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
                     <animate attributeName="fill" values="hsl(var(--foreground));hsl(var(--primary));hsl(var(--foreground))" dur="1s" repeatCount="indefinite" />
                 </rect>
               </svg>
-               <div className="w-full h-full animate-car-racing-path">
-                 <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-destructive shadow-lg animate-car-racing-rotation">
-                    <div className="w-1 h-2 bg-destructive-foreground rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rotate-45"></div>
-                 </div>
-              </div>
-            </div>
-            <div className="w-full flex justify-center items-end gap-4 p-2 rounded-lg bg-background/50 text-xs text-muted-foreground">
-                <div className="text-center w-16">
-                    <p>Speed</p>
-                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden mt-1">
-                        <div className="h-full bg-green-500 animate-rl-speed-bar"></div>
-                    </div>
-                </div>
-                 <div className="text-center w-16">
-                    <p>ABS</p>
-                    <div className="flex justify-around mt-1">
-                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-1 fill-destructive" />
-                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-2 fill-destructive/50" />
-                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-3 fill-destructive" />
-                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-4 fill-destructive/50" />
-                    </div>
-                </div>
-                <div className="text-center w-16">
-                    <p>Steering</p>
-                    <div className="h-2 w-full bg-muted rounded-full mt-1 relative">
-                        <div className="h-2 w-1 bg-foreground absolute top-0 animate-rl-steering"></div>
-                    </div>
-                </div>
-                <div className="text-center w-16">
-                    <p>Gyro</p>
-                    <div className="w-6 h-6 mx-auto mt-1 border-2 border-muted rounded-full relative">
-                        <div className="w-px h-full bg-foreground absolute left-1/2 -translate-x-1/2 origin-center animate-rl-gyro"></div>
-                    </div>
-                </div>
+               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-destructive shadow-lg animate-car-success"></div>
+               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-muted-foreground shadow animate-car-fail-1"></div>
+               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-muted-foreground shadow animate-car-fail-2"></div>
             </div>
           </CardContent>
           <CardFooter className="pt-6">
             <div className="w-full">
                 <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
-                <p className="text-sm text-muted-foreground">El agente (coche rojo) aprende a navegar por la pista. Su objetivo es maximizar la recompensa, que se obtiene visitando todas las baldosas del circuito (+1000/N) mientras se penaliza cada paso de tiempo (-0.1), aprendiendo a completar la vuelta de la forma más rápida y eficiente posible.</p>
+                <p className="text-sm text-muted-foreground">La simulación muestra múltiples iteraciones. Los coches grises representan agentes "novatos" que fallan al salirse de la pista (penalización). El coche rojo es el agente "entrenado" que, tras miles de intentos, ha aprendido la ruta óptima para maximizar la recompensa completando el circuito.</p>
              </div>
           </CardFooter>
         </Card>
