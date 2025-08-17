@@ -125,7 +125,7 @@ export function Ecommerce() {
                             size="sm"
                             className={cn(
                                 "w-full text-xs h-8 backdrop-blur-sm transition-colors",
-                                activeFilter !== category && "bg-white/20 border-white/30 text-white hover:bg-white/30"
+                                activeFilter !== category && "bg-white/80 border-white/30 text-black hover:bg-white/90"
                             )}
                             onClick={() => setActiveFilter(category)}
                         >
