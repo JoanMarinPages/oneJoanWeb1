@@ -4,8 +4,6 @@
 import { runSalesAssistant } from '@/ai/flows/sales-assistant-flow';
 import type { SalesAssistantInput, SalesAssistantOutput } from '@/ai/schemas/sales-assistant-schemas';
 import { db } from '@/lib/firebase-admin';
-import { getDocs, query, where, collection } from 'firebase/firestore';
-
 
 export async function salesAssistantAction(input: SalesAssistantInput) {
     return await runSalesAssistant(input);
@@ -36,24 +34,16 @@ export async function saveProposalAction(payload: SaveProposalPayload) {
     }
 }
 
+
 export async function getUserProposals(userId: string) {
     try {
-        if (!db.collection) {
-            throw new Error("Firestore is not initialized.");
+        const snapshot = await db.collection('proposals').where('userId', '==', userId).orderBy('createdAt', 'desc').get();
+        if (snapshot.empty) {
+            return [];
         }
-        const proposalsRef = db.collection('proposals');
-        const q = query(proposalsRef, where('userId', '==', userId));
-        const querySnapshot = await getDocs(q);
-        
-        const proposals: any[] = [];
-        querySnapshot.forEach((doc) => {
-            proposals.push({ id: doc.id, ...doc.data() });
-        });
-        
-        return proposals;
-
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
-        console.error("Error getting user proposals:", error);
-        throw new Error("Could not retrieve proposals.");
+        console.error("Error fetching user proposals:", error);
+        throw new Error("Could not fetch proposals.");
     }
 }

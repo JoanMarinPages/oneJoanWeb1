@@ -49,10 +49,10 @@ export default function DashboardPage({ params: { lang } }: DashboardPageProps) 
     );
   }
   
-  return <DashboardClient dictionary={dictionary} />
+  return <DashboardClient dictionary={dictionary} lang={lang} />
 }
 
-function DashboardClient({ dictionary }: { dictionary: any }) {
+function DashboardClient({ dictionary, lang }: { dictionary: any, lang: Locale }) {
   const { user, loading: authLoading } = useAuth();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);

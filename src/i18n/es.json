@@ -8,7 +8,6 @@
     "blog": "Blog",
     "contact": "Contacto",
     "login": "Login",
-    "logout": "Cerrar sesión",
-    "dashboard": "Dashboard"
+    "logout": "Cerrar sesión"
   }
 }

@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Code2, Menu, LogIn, LogOut, User, Globe } from 'lucide-react';
+import { Code2, Menu, LogIn, LogOut, User, Globe, LayoutDashboard } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useAuth } from '../auth-provider';
@@ -13,12 +13,12 @@ import { i18n, type Locale } from '@/i18n-config';
 
 
 const navLinks = [
-    { href: "#services", labelKey: "services" },
-    { href: "#real-estate", labelKey: "real_estate" },
-    { href: "#industrial", labelKey: "industry" },
-    { href: "#ecommerce", labelKey: "ecommerce" },
+    { href: "/#services", labelKey: "services" },
+    { href: "/#real-estate", labelKey: "real_estate" },
+    { href: "/#industrial", labelKey: "industry" },
+    { href: "/#ecommerce", labelKey: "ecommerce" },
     { href: "/blog", labelKey: "blog" },
-    { href: "#contact", labelKey: "contact" },
+    { href: "/#contact", labelKey: "contact" },
 ]
 
 export function Header({ dictionary }: { dictionary: any }) {
@@ -50,7 +50,7 @@ export function Header({ dictionary }: { dictionary: any }) {
                 
                 <nav className="hidden md:flex items-center gap-1">
                     {navLinks.map((link) => {
-                        const href = link.href.startsWith('/') ? `/${currentLocale}${link.href}` : link.href;
+                        const href = link.href.startsWith('/') ? (link.href.startsWith('/#') ? `/${currentLocale}${link.href}` : `/${currentLocale}${link.href}`) : link.href;
                         return (
                             <Link 
                                 key={link.href} 
@@ -102,11 +102,11 @@ export function Header({ dictionary }: { dictionary: any }) {
                                     </div>
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                 <DropdownMenuItem asChild>
-                                    <Link href={`/${currentLocale}/dashboard`}>
-                                        <User className="mr-2 h-4 w-4" />
-                                        <span>{dictionary.dashboard}</span>
-                                    </Link>
+                                <DropdownMenuItem asChild>
+                                  <Link href={`/${currentLocale}/dashboard`}>
+                                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                                    <span>Dashboard</span>
+                                  </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={logOut}>
                                     <LogOut className="mr-2 h-4 w-4" />
@@ -138,7 +138,7 @@ export function Header({ dictionary }: { dictionary: any }) {
                                 </Link>
                                 <nav className="flex flex-col gap-4">
                                     {navLinks.map(link => {
-                                        const href = link.href.startsWith('/') ? `/${currentLocale}${link.href}` : link.href;
+                                        const href = link.href.startsWith('/') ? (link.href.startsWith('/#') ? `/${currentLocale}${link.href}` : `/${currentLocale}${link.href}`) : link.href;
                                         return (
                                            <Link key={link.href} href={href} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
                                         )
@@ -157,7 +157,9 @@ export function Header({ dictionary }: { dictionary: any }) {
                                                     <p className="text-xs text-muted-foreground">{user.email}</p>
                                                 </div>
                                             </div>
-                                             <Button asChild variant="outline"><Link href={`/${currentLocale}/dashboard`}>{dictionary.dashboard}</Link></Button>
+                                             <Button variant="outline" asChild>
+                                                <Link href={`/${currentLocale}/dashboard`}>Dashboard</Link>
+                                            </Button>
                                             <Button onClick={logOut} variant="outline">{dictionary.logout}</Button>
                                         </div>
                                      ) : (
