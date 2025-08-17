@@ -127,6 +127,32 @@ export default {
         "rl-gyro": {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" }
+        },
+        "car-racing-path": {
+          "0%": { transform: "translate(50%, 10%)" },
+          "10%": { transform: "translate(85%, 25%)" },
+          "20%": { transform: "translate(90%, 50%)" },
+          "30%": { transform: "translate(70%, 60%)" },
+          "40%": { transform: "translate(85%, 80%)" },
+          "50%": { transform: "translate(50%, 90%)" },
+          "60%": { transform: "translate(15%, 80%)" },
+          "70%": { transform: "translate(30%, 60%)" },
+          "80%": { transform: "translate(10%, 50%)" },
+          "90%": { transform: "translate(15%, 25%)" },
+          "100%": { transform: "translate(50%, 10%)" }
+        },
+        "car-racing-rotation": {
+          "0%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(45deg)" },
+          "20%": { transform: "rotate(135deg)" },
+          "30%": { transform: "rotate(200deg)" },
+          "40%": { transform: "rotate(135deg)" },
+          "50%": { transform: "rotate(180deg)" },
+          "60%": { transform: "rotate(225deg)" },
+          "70%": { transform: "rotate(300deg)" },
+          "80%": { transform: "rotate(225deg)" },
+          "90%": { transform: "rotate(315deg)" },
+          "100%": { transform: "rotate(360deg)" }
         }
       },
       animation: {
@@ -145,6 +171,8 @@ export default {
         'rl-abs-4': 'rl-abs 0.4s linear infinite reverse',
         'rl-steering': 'rl-steering 5s ease-in-out infinite',
         'rl-gyro': 'rl-gyro 10s linear infinite',
+        'car-racing-path': 'car-racing-path 12s linear infinite',
+        'car-racing-rotation': 'car-racing-rotation 12s linear infinite',
       },
     },
   },

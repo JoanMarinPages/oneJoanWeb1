@@ -1,12 +1,12 @@
+
 "use client"
 
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Cog, Gauge, Car, GitBranch } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
-import { cn } from "@/lib/utils"
 
 // Example data for Logistic Regression (Customer Churn)
 const churnData = [
@@ -182,30 +182,23 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
             <CardDescription>Entrenamiento de un agente para completar un circuito de carreras.</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex flex-col items-center justify-center gap-4">
-            <div className="w-full max-w-[350px] aspect-square">
-              <svg viewBox="0 0 120 120" className="w-full h-full">
+            <div className="w-full max-w-[350px] aspect-square overflow-hidden relative">
+              <svg viewBox="0 0 120 120" className="w-full h-full absolute top-0 left-0">
                  <path 
                     d="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z"
                     stroke="hsl(var(--border))" 
                     strokeWidth="12"
                     fill="hsl(var(--muted))" 
                 />
-                <path 
-                    d="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z"
-                    fill="none"
-                    id="race-track-rl"
-                />
-                
                 <rect x="55" y="-5" width="10" height="20" fill="hsl(var(--foreground))">
                     <animate attributeName="fill" values="hsl(var(--foreground));hsl(var(--primary));hsl(var(--foreground))" dur="1s" repeatCount="indefinite" />
                 </rect>
-
-                <g>
-                    <path d="M -2,-2 L 2,-2 L 3,0 L 2,2 L -2,2 L -3,0 Z" fill="hsl(var(--chart-4))" stroke="hsl(var(--destructive-foreground))" strokeWidth="0.5">
-                         <animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" path="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z" />
-                    </path>
-                </g>
               </svg>
+               <div className="w-full h-full animate-car-racing-path">
+                 <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-destructive shadow-lg animate-car-racing-rotation">
+                    <div className="w-1 h-2 bg-destructive-foreground rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rotate-45"></div>
+                 </div>
+              </div>
             </div>
             <div className="w-full flex justify-center items-end gap-4 p-2 rounded-lg bg-background/50 text-xs text-muted-foreground">
                 <div className="text-center w-16">
