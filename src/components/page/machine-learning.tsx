@@ -3,9 +3,10 @@
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Cog, Gauge, Car, GitBranch } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
+import { cn } from "@/lib/utils"
 
 // Example data for Logistic Regression (Customer Churn)
 const churnData = [
@@ -180,47 +181,66 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
             </CardTitle>
             <CardDescription>Entrenamiento de un agente para completar un circuito de carreras.</CardDescription>
           </CardHeader>
-          <CardContent className="flex-grow flex items-center justify-center">
-            <div className="w-full max-w-[300px] aspect-square">
+          <CardContent className="flex-grow flex flex-col items-center justify-center gap-4">
+            <div className="w-full max-w-[350px] aspect-square">
               <svg viewBox="0 0 120 120" className="w-full h-full">
-                <path 
-                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
+                 <path 
+                    d="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z"
                     stroke="hsl(var(--border))" 
-                    strokeWidth="18" 
-                    fill="none" 
+                    strokeWidth="12"
+                    fill="hsl(var(--muted))" 
                 />
                 <path 
-                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
-                    stroke="hsl(var(--muted))" 
-                    strokeWidth="16" 
-                    fill="none" 
-                    pathLength="1"
-                    strokeDasharray="1"
-                    strokeDashoffset="0"
-                />
-
-                <path 
-                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
+                    d="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z"
                     fill="none"
-                    id="race-track"
+                    id="race-track-rl"
                 />
                 
-                <rect x="55" y="0" width="10" height="20" fill="hsl(var(--foreground))">
+                <rect x="55" y="-5" width="10" height="20" fill="hsl(var(--foreground))">
                     <animate attributeName="fill" values="hsl(var(--foreground));hsl(var(--primary));hsl(var(--foreground))" dur="1s" repeatCount="indefinite" />
                 </rect>
 
-                <circle cx="0" cy="0" r="4" fill="hsl(var(--chart-1))">
-                    <animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
-                        <mpath href="#race-track" />
-                    </animateMotion>
-                </circle>
+                <g>
+                    <path d="M -2,-2 L 2,-2 L 3,0 L 2,2 L -2,2 L -3,0 Z" fill="hsl(var(--chart-4))" stroke="hsl(var(--destructive-foreground))" strokeWidth="0.5">
+                         <animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" path="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z" />
+                    </path>
+                </g>
               </svg>
+            </div>
+            <div className="w-full flex justify-center items-end gap-4 p-2 rounded-lg bg-background/50 text-xs text-muted-foreground">
+                <div className="text-center w-16">
+                    <p>Speed</p>
+                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden mt-1">
+                        <div className="h-full bg-green-500 animate-rl-speed-bar"></div>
+                    </div>
+                </div>
+                 <div className="text-center w-16">
+                    <p>ABS</p>
+                    <div className="flex justify-around mt-1">
+                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-1 fill-destructive" />
+                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-2 fill-destructive/50" />
+                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-3 fill-destructive" />
+                       <circle cx="4" cy="4" r="4" className="animate-rl-abs-4 fill-destructive/50" />
+                    </div>
+                </div>
+                <div className="text-center w-16">
+                    <p>Steering</p>
+                    <div className="h-2 w-full bg-muted rounded-full mt-1 relative">
+                        <div className="h-2 w-1 bg-foreground absolute top-0 animate-rl-steering"></div>
+                    </div>
+                </div>
+                <div className="text-center w-16">
+                    <p>Gyro</p>
+                    <div className="w-6 h-6 mx-auto mt-1 border-2 border-muted rounded-full relative">
+                        <div className="w-px h-full bg-foreground absolute left-1/2 -translate-x-1/2 origin-center animate-rl-gyro"></div>
+                    </div>
+                </div>
             </div>
           </CardContent>
           <CardFooter className="pt-6">
             <div className="w-full">
                 <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
-                <p className="text-sm text-muted-foreground">El agente (coche azul) aprende a navegar por circuitos generados proceduralmente. A través de la prueba y error, maximiza la recompensa, que consiste en visitar el mayor número de baldosas de la pista en el menor tiempo posible, demostrando una conducción óptima.</p>
+                <p className="text-sm text-muted-foreground">El agente (coche rojo) aprende a navegar por la pista. Su objetivo es maximizar la recompensa, que se obtiene visitando todas las baldosas del circuito (+1000/N) mientras se penaliza cada paso de tiempo (-0.1), aprendiendo a completar la vuelta de la forma más rápida y eficiente posible.</p>
              </div>
           </CardFooter>
         </Card>
