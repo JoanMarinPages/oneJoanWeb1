@@ -176,38 +176,43 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
                 <Award className="text-primary"/>
-                <span>RL: Conducción Autónoma</span>
+                <span>RL: Car Racing</span>
             </CardTitle>
-            <CardDescription>Entrenamiento de un agente para aprender a conducir en un circuito.</CardDescription>
+            <CardDescription>Entrenamiento de un agente para completar un circuito de carreras.</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex items-center justify-center">
             <div className="w-full max-w-[300px] aspect-square">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                {/* Track */}
-                <path d="M 50,10
-                         A 40,40 0 0 1 90,50
-                         A 40,40 0 0 1 50,90
-                         A 40,40 0 0 1 10,50
-                         A 40,40 0 0 1 50,10 Z"
-                      stroke="hsl(var(--border))" strokeWidth="16" fill="none" />
-                <path d="M 50,10
-                         A 40,40 0 0 1 90,50
-                         A 40,40 0 0 1 50,90
-                         A 40,40 0 0 1 10,50
-                         A 40,40 0 0 1 50,10 Z"
-                      stroke="hsl(var(--muted))" strokeWidth="14" fill="none" />
-                 {/* Finish Line */}
-                <line x1="50" y1="2" x2="50" y2="18" stroke="hsl(var(--foreground))" strokeWidth="1" strokeDasharray="2 2" />
+              <svg viewBox="0 0 120 120" className="w-full h-full">
+                <path 
+                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
+                    stroke="hsl(var(--border))" 
+                    strokeWidth="18" 
+                    fill="none" 
+                />
+                <path 
+                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
+                    stroke="hsl(var(--muted))" 
+                    strokeWidth="16" 
+                    fill="none" 
+                    pathLength="1"
+                    strokeDasharray="1"
+                    strokeDashoffset="0"
+                />
 
-                {/* Cars */}
-                <circle cx="0" cy="0" r="2.5" fill="hsl(var(--chart-4))" className="animate-car-fail-1">
-                    <animateMotion dur="8s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90" />
-                </circle>
-                <circle cx="0" cy="0" r="2.5" fill="hsl(var(--chart-4))" className="animate-car-fail-2">
-                     <animateMotion dur="12s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90 A 40,40 0 0 1 10,50" />
-                </circle>
-                <circle cx="0" cy="0" r="3" fill="hsl(var(--chart-1))" className="animate-car-success">
-                     <animateMotion dur="10s" repeatCount="indefinite" path="M 50,10 A 40,40 0 0 1 90,50 A 40,40 0 0 1 50,90 A 40,40 0 0 1 10,50 A 40,40 0 0 1 50,10 Z" />
+                <path 
+                    d="M 60,10 C 100,10 110,50 110,60 C 110,70 100,110 60,110 C 20,110 10,70 10,60 C 10,50 20,10 60,10 Z"
+                    fill="none"
+                    id="race-track"
+                />
+                
+                <rect x="55" y="0" width="10" height="20" fill="hsl(var(--foreground))">
+                    <animate attributeName="fill" values="hsl(var(--foreground));hsl(var(--primary));hsl(var(--foreground))" dur="1s" repeatCount="indefinite" />
+                </rect>
+
+                <circle cx="0" cy="0" r="4" fill="hsl(var(--chart-1))">
+                    <animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+                        <mpath href="#race-track" />
+                    </animateMotion>
                 </circle>
               </svg>
             </div>
@@ -215,7 +220,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
           <CardFooter className="pt-6">
             <div className="w-full">
                 <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
-                <p className="text-sm text-muted-foreground">El agente (coche azul) aprende por prueba y error. Tras múltiples intentos fallidos (coches rojos), optimiza su ruta para maximizar la "recompensa" (avanzar) y completar el circuito, evitando penalizaciones.</p>
+                <p className="text-sm text-muted-foreground">El agente (coche azul) aprende a navegar por circuitos generados proceduralmente. A través de la prueba y error, maximiza la recompensa, que consiste en visitar el mayor número de baldosas de la pista en el menor tiempo posible, demostrando una conducción óptima.</p>
              </div>
           </CardFooter>
         </Card>
