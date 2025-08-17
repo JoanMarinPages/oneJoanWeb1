@@ -1,10 +1,9 @@
-
 "use client"
 
 import * as React from "react"
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer } from "recharts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users } from "lucide-react"
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 
@@ -27,7 +26,7 @@ const churnChartConfig = {
     label: "Churn",
     color: "hsl(var(--chart-4))",
   },
-} satisfies React.ComponentProps<typeof ChartContainer>["config"]
+}
 
 // Example data for K-Means Clustering
 const kMeansData = Array.from({ length: 50 }, () => ({
@@ -35,12 +34,25 @@ const kMeansData = Array.from({ length: 50 }, () => ({
   y: Math.random() * 100,
 }));
 
-const kMeansChartConfig = {
-  data: {
-    label: "Data Points",
+// Example data for Linear Regression (Fuel Consumption)
+const fuelData = [
+  { engineSize: 1.6, mpg: 35 }, { engineSize: 2.0, mpg: 28 },
+  { engineSize: 1.4, mpg: 38 }, { engineSize: 2.5, mpg: 24 },
+  { engineSize: 3.0, mpg: 20 }, { engineSize: 1.8, mpg: 31 },
+  { engineSize: 2.2, mpg: 26 }, { engineSize: 3.5, mpg: 18 },
+  { engineSize: 1.0, mpg: 45 }, { engineSize: 4.0, mpg: 15 },
+];
+
+const fuelChartConfig = {
+  mpg: {
+    label: "MPG",
     color: "hsl(var(--chart-1))",
   },
-} satisfies React.ComponentProps<typeof ChartContainer>["config"]
+  prediction: {
+    label: "Predicción",
+    color: "hsl(var(--chart-3))",
+  },
+}
 
 
 interface MachineLearningProps {
@@ -58,16 +70,16 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
 
   return (
     <Section id="machine-learning" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
                 <BrainCircuit className="text-primary"/>
-                <span>Clasificación de Clientes (Regresión Logística)</span>
+                <span>Clasificación de Clientes</span>
             </CardTitle>
-            <CardDescription>Predicción de abandono (churn) de clientes según su antigüedad y el coste de su plan.</CardDescription>
+            <CardDescription>Predicción de abandono (churn) de clientes usando Regresión Logística.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-grow">
             <ChartContainer config={churnChartConfig} className="min-h-[300px] w-full">
                <ResponsiveContainer width="100%" height={300}>
                 <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
@@ -88,18 +100,24 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
               </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
+           <CardFooter className="pt-6">
+             <div className="w-full">
+                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
+                <p className="text-sm text-muted-foreground">El modelo aprende a trazar una "frontera" invisible que separa eficazmente a los clientes que probablemente abandonarán (cruces rojas) de los que permanecerán (círculos verdes), permitiendo acciones de retención proactivas.</p>
+             </div>
+          </CardFooter>
         </Card>
 
-        <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
                 <Users className="text-primary"/>
-                <span>Segmentación de Datos (K-Means)</span>
+                <span>Segmentación de Datos</span>
             </CardTitle>
-            <CardDescription>Agrupación de puntos de datos en clústeres para identificar patrones (ej. perfiles de clientes).</CardDescription>
+            <CardDescription>Agrupación de datos no etiquetados en clústeres con K-Means.</CardDescription>
           </CardHeader>
-          <CardContent>
-             <ChartContainer config={kMeansChartConfig} className="min-h-[300px] w-full">
+          <CardContent className="flex-grow">
+             <ChartContainer config={kMeansData} className="min-h-[300px] w-full">
               <ResponsiveContainer width="100%" height={300}>
                 <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
@@ -107,7 +125,6 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
                   <YAxis type="number" dataKey="y" name="Variable Y" stroke="hsl(var(--muted-foreground))" />
                   <ChartTooltip cursor={{ strokeDasharray: '3 3' }} content={<ChartTooltipContent />} />
                   <Scatter name="Data Points" data={kMeansData} fill="var(--color-data)">
-                     {/* This is a visual simulation. In a real scenario, colors would be assigned by the K-Means algorithm */}
                     {kMeansData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.x + entry.y < 100 ? "hsl(var(--chart-1))" : "hsl(var(--chart-3))"} />
                     ))}
@@ -116,6 +133,43 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
               </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
+           <CardFooter className="pt-6">
+               <div className="w-full">
+                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
+                <p className="text-sm text-muted-foreground">El algoritmo K-Means identifica patrones y agrupa los datos en clústeres distintos (azul y violeta), lo que permite descubrir segmentos de clientes, como "usuarios de alto valor" vs. "usuarios ocasionales".</p>
+             </div>
+          </CardFooter>
+        </Card>
+
+         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <Fuel className="text-primary"/>
+                <span>Predicción de Consumo</span>
+            </CardTitle>
+            <CardDescription>Estimación del consumo de combustible usando Regresión Lineal.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow">
+             <ChartContainer config={fuelChartConfig} className="min-h-[300px] w-full">
+              <ResponsiveContainer width="100%" height={300}>
+                <ComposedChart data={fuelData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                  <XAxis type="number" dataKey="engineSize" name="Motor (L)" unit="L" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis type="number" dataKey="mpg" name="Consumo (MPG)" stroke="hsl(var(--muted-foreground))" />
+                  <ChartTooltip cursor={{strokeDasharray: '3 3'}} content={<ChartTooltipContent />} />
+                  <Legend />
+                  <Scatter name="Datos Reales" dataKey="mpg" fill="var(--color-mpg)" />
+                  <Line name="Línea de Predicción" dataKey={(d) => 50 - 8.5 * d.engineSize} stroke="var(--color-prediction)" strokeWidth={2} dot={false} />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </CardContent>
+          <CardFooter className="pt-6">
+            <div className="w-full">
+                <h4 className="font-semibold flex items-center gap-2 mb-2"><LineChartIcon className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
+                <p className="text-sm text-muted-foreground">El modelo de regresión aprende la relación entre el tamaño del motor y el consumo, generando una línea de tendencia (violeta) que puede predecir el consumo para vehículos no vistos en los datos originales.</p>
+             </div>
+          </CardFooter>
         </Card>
       </div>
     </Section>
