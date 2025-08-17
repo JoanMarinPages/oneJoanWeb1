@@ -29,6 +29,7 @@ type DashboardPageProps = {
   params: { lang: Locale };
 };
 
+
 export default function DashboardPage({ params: { lang } }: DashboardPageProps) {
   const [dictionary, setDictionary] = useState<any>(null);
 

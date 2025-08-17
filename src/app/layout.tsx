@@ -1,40 +1,9 @@
 
-import type { Metadata } from 'next';
-import './globals.css';
-import { Providers } from '@/components/providers';
-import { cn } from '@/lib/utils';
-import { Inter, Space_Grotesk } from 'next/font/google';
-import { AuthProvider } from '@/components/auth-provider';
+// This file is intentionally blank. 
+// The root layout is now handled by src/app/[lang]/layout.tsx to support i18n.
+// This file can be removed, but is kept to avoid breaking the mental model of a root layout.
+// Or it can be used for things that are truly outside of the i18n scope.
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-});
-
-export const metadata: Metadata = {
-  title: 'OneJoan | Soluciones Digitales de Alto Impacto',
-  description: 'Portfolio de Joan Marín, desarrollador freelance especializado en web, apps, IA y Realidad Aumentada.',
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="es" className={cn(inter.variable, spaceGrotesk.variable, '!scroll-smooth')} suppressHydrationWarning>
-      <body className="font-body antialiased bg-background text-foreground">
-        <Providers>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
-        </Providers>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }
