@@ -16,8 +16,8 @@ type Proposal = {
   id: string;
   proposal: {
     summary: string;
-    budget: { min: number; max: number };
-    timeline: { min: number; max: number; unit: string };
+    budget?: { min: number; max: number };
+    timeline?: { min: number; max: number; unit: string };
   };
   status: string;
   createdAt: string;
@@ -32,6 +32,7 @@ export default function DashboardPage() {
     if (user) {
       const fetchProposals = async () => {
         try {
+          setLoading(true);
           const userProposals = await getUserProposals(user.uid);
           setProposals(userProposals as Proposal[]);
         } catch (error) {
@@ -61,12 +62,20 @@ export default function DashboardPage() {
         <main className="flex-1 flex flex-col items-center justify-center text-center">
             <h1 className="text-2xl font-bold mb-4">Acceso Denegado</h1>
             <p className="text-muted-foreground mb-4">Por favor, inicia sesión para ver tu dashboard.</p>
-             <Button onClick={() => { (window as any).logIn?.() }}>Iniciar Sesión</Button>
+             <Button onClick={() => { logIn() }}>Iniciar Sesión</Button>
         </main>
         <Footer />
       </div>
     );
   }
+  
+  const logIn = () => {
+    const authProvider = (window as any).authProvider;
+    if (authProvider) {
+      authProvider.logIn();
+    }
+  }
+
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -93,7 +102,9 @@ export default function DashboardPage() {
                   {proposals.map((p) => (
                     <TableRow key={p.id}>
                       <TableCell className="font-medium max-w-sm truncate">{p.proposal.summary}</TableCell>
-                      <TableCell>€{p.proposal.budget.min} - €{p.proposal.budget.max}</TableCell>
+                      <TableCell>
+                        {p.proposal.budget ? `€${p.proposal.budget.min} - €${p.proposal.budget.max}` : 'N/A'}
+                      </TableCell>
                       <TableCell>
                         <Badge variant={p.status === 'pending' ? 'secondary' : 'default'}>{p.status}</Badge>
                       </TableCell>
@@ -112,4 +123,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

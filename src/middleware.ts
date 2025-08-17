@@ -20,19 +20,30 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Check if the pathname already has a locale
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) {
+    return;
+  }
 
+  // Redirect to the default locale
   const locale = getLocale(request);
   request.nextUrl.pathname = `/${locale}${pathname}`;
+  
+  // Use replace instead of redirect to avoid changing the URL in the browser bar for the root path
+  if (pathname === '/') {
+    return NextResponse.rewrite(request.nextUrl);
+  }
+  
   return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {
   matcher: [
+    // Skip all internal paths (_next, assets, etc.)
     '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)',
   ],
 };
