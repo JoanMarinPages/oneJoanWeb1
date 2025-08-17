@@ -96,7 +96,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
-                        <BarChart data={barChartData} margin={{ left: 0, right: 20 }}>
+                        <BarChart data={barChartData} margin={{ left: -20, right: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
                             <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
                             <YAxis tickLine={false} axisLine={false} tickMargin={8} />
@@ -152,6 +152,7 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                         <LineChart data={lineChartData} margin={{ left: -20, right: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)"/>
                             <YAxis domain={[60, 90]} tickLine={false} axisLine={false}/>
+                            <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
                             <ChartTooltip 
                                 cursor={{stroke: 'hsl(var(--primary))', strokeWidth: 1.5, strokeDasharray: '3 3'}}
                                 content={<ChartTooltipContent />}

@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button';
 import { getDictionary } from '@/lib/get-dictionary';
 import { Locale } from '@/i18n-config';
 
-
 type Proposal = {
   id: string;
   proposal: {
@@ -26,10 +25,11 @@ type Proposal = {
   createdAt: string;
 };
 
-export default function DashboardPage({ params: { lang } }: { params: { lang: Locale } }) {
-  const { user, loading: authLoading } = useAuth();
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [loading, setLoading] = useState(true);
+type DashboardPageProps = {
+  params: { lang: Locale };
+};
+
+export default function DashboardPage({ params: { lang } }: DashboardPageProps) {
   const [dictionary, setDictionary] = useState<any>(null);
 
   useEffect(() => {
@@ -39,6 +39,22 @@ export default function DashboardPage({ params: { lang } }: { params: { lang: Lo
     };
     fetchDictionary();
   }, [lang]);
+
+  if (!dictionary) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+  
+  return <DashboardClient dictionary={dictionary} />
+}
+
+function DashboardClient({ dictionary }: { dictionary: any }) {
+  const { user, loading: authLoading } = useAuth();
+  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -66,7 +82,7 @@ export default function DashboardPage({ params: { lang } }: { params: { lang: Lo
     }
   }
 
-  if (authLoading || loading || !dictionary) {
+  if (authLoading || loading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />

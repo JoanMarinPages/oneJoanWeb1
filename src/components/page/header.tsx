@@ -32,24 +32,35 @@ export function Header({ dictionary }: { dictionary: any }) {
         return segments.join('/');
     }
 
+    const getCurrentLocale = () => {
+        if (!pathname) return i18n.defaultLocale;
+        const segments = pathname.split('/');
+        return (i18n.locales.find(l => l === segments[1]) || i18n.defaultLocale) as Locale;
+    }
+
+    const currentLocale = getCurrentLocale();
+
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
             <div className="container flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-                <Link href="/" className="flex items-center gap-2">
+                <Link href={`/${currentLocale}`} className="flex items-center gap-2">
                     <Code2 className="h-7 w-7 text-primary" />
                     <span className="font-bold text-xl font-headline">OneJoan</span>
                 </Link>
                 
                 <nav className="hidden md:flex items-center gap-1">
-                    {navLinks.map((link) => (
-                        <Link 
-                            key={link.href} 
-                            href={link.href.startsWith('/') ? getRedirectedPath(pathname.split('/')[1] as Locale) + link.href.substring(1) : link.href}
-                            className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                        >
-                            {dictionary[link.labelKey]}
-                        </Link>
-                    ))}
+                    {navLinks.map((link) => {
+                        const href = link.href.startsWith('/') ? `/${currentLocale}${link.href}` : link.href;
+                        return (
+                            <Link 
+                                key={link.href} 
+                                href={href}
+                                className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                            >
+                                {dictionary[link.labelKey]}
+                            </Link>
+                        )
+                    })}
                 </nav>
 
                 <div className="hidden md:flex items-center gap-4">
@@ -92,7 +103,7 @@ export function Header({ dictionary }: { dictionary: any }) {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                  <DropdownMenuItem asChild>
-                                    <Link href={getRedirectedPath(pathname.split('/')[1] as Locale) + 'dashboard'}>
+                                    <Link href={`/${currentLocale}/dashboard`}>
                                         <User className="mr-2 h-4 w-4" />
                                         <span>{dictionary.dashboard}</span>
                                     </Link>
@@ -121,14 +132,17 @@ export function Header({ dictionary }: { dictionary: any }) {
                         </SheetTrigger>
                         <SheetContent side="right">
                             <div className="flex flex-col gap-6 p-6">
-                                <Link href="/" className="flex items-center gap-2 mb-4">
+                                <Link href={`/${currentLocale}`} className="flex items-center gap-2 mb-4">
                                     <Code2 className="h-7 w-7 text-primary" />
                                     <span className="font-bold text-lg font-headline">OneJoan</span>
                                 </Link>
                                 <nav className="flex flex-col gap-4">
-                                    {navLinks.map(link => (
-                                        <Link key={link.href} href={link.href} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
-                                    ))}
+                                    {navLinks.map(link => {
+                                        const href = link.href.startsWith('/') ? `/${currentLocale}${link.href}` : link.href;
+                                        return (
+                                           <Link key={link.href} href={href} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
+                                        )
+                                    })}
                                 </nav>
                                 <div className="mt-4">
                                      {user ? (
@@ -143,7 +157,7 @@ export function Header({ dictionary }: { dictionary: any }) {
                                                     <p className="text-xs text-muted-foreground">{user.email}</p>
                                                 </div>
                                             </div>
-                                             <Button asChild variant="outline"><Link href={getRedirectedPath(pathname.split('/')[1] as Locale) + 'dashboard'}>{dictionary.dashboard}</Link></Button>
+                                             <Button asChild variant="outline"><Link href={`/${currentLocale}/dashboard`}>{dictionary.dashboard}</Link></Button>
                                             <Button onClick={logOut} variant="outline">{dictionary.logout}</Button>
                                         </div>
                                      ) : (

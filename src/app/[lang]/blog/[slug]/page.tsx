@@ -3,14 +3,17 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import { Header } from '@/components/page/header';
 import { Footer } from '@/components/page/footer';
 import { getDictionary } from '@/lib/get-dictionary';
-import { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
-export async function generateStaticParams({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateStaticParams() {
   const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-    lang,
-  }));
+  const params = i18n.locales.flatMap((lang) => 
+    posts.map((post) => ({
+      slug: post.slug,
+      lang,
+    }))
+  );
+  return params;
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string, lang: Locale } }) {
