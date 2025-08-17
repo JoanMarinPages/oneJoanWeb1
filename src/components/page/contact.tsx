@@ -84,7 +84,7 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
 
     const title = (
         <>
-            Hablemos de tu <span className="animated-gradient-text">Proyecto</span>
+            Hablemos de tu <span className="text-primary">Proyecto</span>
         </>
     );
 

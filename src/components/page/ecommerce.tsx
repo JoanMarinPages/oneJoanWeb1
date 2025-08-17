@@ -99,7 +99,7 @@ export function Ecommerce() {
 
   const title = (
     <>
-      <span className="animated-gradient-text">E-commerce Dinámico</span> y Moderno
+      <span className="text-primary">E-commerce Dinámico</span> y Moderno
     </>
   );
 

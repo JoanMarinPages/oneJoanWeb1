@@ -84,7 +84,7 @@ export function Hero() {
             variants={itemVariants}
             className="font-headline text-5xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl"
           >
-            Elevate Your <span className="animated-gradient-text">Digital Vision</span>
+            Elevate Your <span className="text-primary">Digital Vision</span>
           </motion.h1>
 
           <motion.p

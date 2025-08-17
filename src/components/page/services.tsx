@@ -49,7 +49,7 @@ export function Services() {
                     <Card className="bg-transparent backdrop-blur-sm rounded-2xl p-8 md:p-12 border-0">
                         <div className="text-center mb-12 text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                                Un <span className="animated-gradient-text">Ecosistema de Soluciones</span> a tu Medida
+                                Un <span className="text-primary">Ecosistema de Soluciones</span> a tu Medida
                             </h2>
                             <p className="mx-auto max-w-6xl text-white/90 md:text-xl/relaxed mt-4">
                                 Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.

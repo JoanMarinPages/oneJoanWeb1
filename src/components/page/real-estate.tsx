@@ -43,7 +43,7 @@ interface RealEstateProps {
 export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
   const title = (
     <>
-      Soluciones para <span className="animated-gradient-text">Inmobiliaria y Arquitectura</span>
+      Soluciones para <span className="text-primary">Inmobiliaria y Arquitectura</span>
     </>
   );
 

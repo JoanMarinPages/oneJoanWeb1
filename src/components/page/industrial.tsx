@@ -80,7 +80,7 @@ interface IndustrialProps {
 export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
     const title = (
     <>
-      Dashboard de <span className="animated-gradient-text">Analítica Industrial</span>
+      Dashboard de <span className="text-primary">Analítica Industrial</span>
     </>
   );
 

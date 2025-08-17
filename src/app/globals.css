@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 221 83% 70%; /* Lighter Blue */
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
@@ -23,7 +23,7 @@
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 188 88% 65%; /* Lighter Cyan */
+    --accent: 188 88% 40%;
     --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -77,12 +77,6 @@
 }
 
 @layer utilities {
-  .animated-gradient-text {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
-    background-size: 200% auto;
-    animation: gradient-animation 5s ease-in-out infinite;
-  }
-
   .animate-tilt {
     animation: tilt 10s infinite linear;
   }
@@ -97,18 +91,6 @@
   .bg-radial-gradient {
       background-color: hsl(var(--muted) / 0.5);
       background-image: radial-gradient(circle at 50% 50%, hsl(var(--background)), hsl(var(--muted)));
-  }
-
-  @keyframes gradient-animation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 
   @keyframes tilt {

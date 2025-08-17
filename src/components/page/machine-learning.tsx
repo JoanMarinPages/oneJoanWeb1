@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -62,7 +63,7 @@ interface MachineLearningProps {
 export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
   const title = (
     <>
-      Casos de Estudio de <span className="animated-gradient-text">Machine Learning</span>
+      Casos de Estudio de <span className="text-primary">Machine Learning</span>
     </>
   );
 
