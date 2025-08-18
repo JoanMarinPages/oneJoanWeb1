@@ -18,11 +18,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  turbo: {
-    resolveAliases: {
-      three: 'three',
-    },
-  },
 };
 
 export default nextConfig;
