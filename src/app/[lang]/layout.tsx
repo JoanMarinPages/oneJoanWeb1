@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 
-export default function LocaleLayout({
+export default function RootLayout({
   children,
   params,
 }: {

@@ -34,7 +34,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
           <MachineLearning backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" />
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
-          <Ecommerce backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" />
+          <Ecommerce />
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
           <Contact backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runvGCn32u5cHM_--ar_12869_--video_1_db1350cf-9e75-4647-af40-dfcd3d87446b_3.mp4" />
