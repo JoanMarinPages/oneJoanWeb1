@@ -55,7 +55,7 @@ export function Services() {
                                 Desde el concepto hasta el despliegue, ofrezco un abanico de servicios tecnológicos para impulsar tu proyecto.
                             </p>
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                             {services.map((service, index) => (
                                 <Card 
                                     key={service.title} 
@@ -79,3 +79,5 @@ export function Services() {
         </section>
     )
 }
+
+    

@@ -112,10 +112,10 @@ export function Ecommerce() {
       description={description}
       backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4"
     >
-      <div className="relative h-[700px] w-full overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
-        <div className="absolute inset-0 flex p-8 gap-8">
+      <div className="relative w-full overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
+        <div className="absolute inset-0 flex flex-col md:flex-row p-4 md:p-8 gap-8">
           
-          <div className="h-full w-[35%] flex flex-col">
+          <div className="h-full w-full md:w-[35%] flex flex-col">
             <div className="flex-shrink-0 mb-4">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {categories.map((category) => (
@@ -134,7 +134,7 @@ export function Ecommerce() {
                     ))}
                 </div>
             </div>
-            <div className="h-full overflow-hidden flex-grow">
+            <div className="h-[400px] md:h-full overflow-hidden flex-grow">
                 <div className="animate-scroll-y space-y-4">
                     {displayProducts.map((product, index) => (
                         <Card key={`${product.id}-${index}`} className="p-4 flex items-center gap-4 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-md border-white/20">
@@ -160,10 +160,10 @@ export function Ecommerce() {
             </div>
           </div>
 
-          <div className="w-[65%] h-full">
+          <div className="w-full md:w-[65%] h-full">
              <Card className="h-full w-full flex flex-col p-6 bg-white/60 dark:bg-black/60 backdrop-blur-md rounded-xl shadow-lg border-white/20">
                 <div className="flex-grow flex items-center justify-center">
-                    <Image src="https://placehold.co/800x600.png" alt={featuredProduct.name} width={450} height={350} className="rounded-lg object-cover" data-ai-hint={featuredProduct.hint}/>
+                    <Image src="https://placehold.co/800x600.png" alt={featuredProduct.name} width={450} height={350} className="rounded-lg object-cover max-w-full h-auto" data-ai-hint={featuredProduct.hint}/>
                 </div>
                 <div className="flex-shrink-0 pt-6">
                     <div className="text-center mb-4">
@@ -186,7 +186,7 @@ export function Ecommerce() {
 
         <div
           className={cn(
-            "absolute top-0 right-0 h-full w-96 bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
+            "absolute top-0 right-0 h-full w-full max-w-sm bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
             cartOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
@@ -263,3 +263,5 @@ function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: Reac
         </Button>
     )
 }
+
+    
