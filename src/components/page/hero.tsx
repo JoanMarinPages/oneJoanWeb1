@@ -1,11 +1,11 @@
-
 "use client";
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Code2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
 
 export function Hero() {
   const containerVariants = {
@@ -74,8 +74,8 @@ export function Hero() {
           className="flex flex-col items-center text-center gap-8"
         >
           <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="py-2 px-4 rounded-full bg-white/5 border-white/10 text-white backdrop-blur-sm">
-                <Code2 className="h-5 w-5 text-primary mr-2" />
+            <Badge variant="outline" className="py-2 px-4 rounded-full bg-white/5 border-white/10 text-white backdrop-blur-sm flex items-center gap-2">
+                <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={24} height={24} className="h-6 w-6" />
                 <span className="font-bold font-headline text-lg">OneJoan</span>
             </Badge>
           </motion.div>
