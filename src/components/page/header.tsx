@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Code2, Menu, LogIn, LogOut, User, Globe, LayoutDashboard } from 'lucide-react';
+import { LogIn, LogOut, User, Globe, LayoutDashboard, Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useAuth } from '../auth-provider';
@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { usePathname } from 'next/navigation';
 import { i18n, type Locale } from '@/i18n-config';
+import Image from 'next/image';
 
 
 const navLinks = [
@@ -44,7 +45,7 @@ export function Header({ dictionary }: { dictionary: any }) {
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
             <div className="container flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
                 <Link href={`/${currentLocale}`} className="flex items-center gap-2">
-                    <Code2 className="h-7 w-7 text-primary" />
+                    <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={32} height={32} className="h-8 w-8" />
                     <span className="font-bold text-xl font-headline">OneJoan</span>
                 </Link>
                 
@@ -133,7 +134,7 @@ export function Header({ dictionary }: { dictionary: any }) {
                         <SheetContent side="right">
                             <div className="flex flex-col gap-6 p-6">
                                 <Link href={`/${currentLocale}`} className="flex items-center gap-2 mb-4">
-                                    <Code2 className="h-7 w-7 text-primary" />
+                                    <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={32} height={32} className="h-8 w-8" />
                                     <span className="font-bold text-lg font-headline">OneJoan</span>
                                 </Link>
                                 <nav className="flex flex-col gap-4">
