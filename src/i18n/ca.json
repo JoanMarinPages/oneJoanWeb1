@@ -1,0 +1,13 @@
+
+{
+  "Header": {
+    "services": "Serveis",
+    "real_estate": "Immobiliària",
+    "industry": "Indústria",
+    "ecommerce": "E-commerce",
+    "blog": "Blog",
+    "contact": "Contacte",
+    "login": "Inicia sessió",
+    "logout": "Tanca la sessió"
+  }
+}
