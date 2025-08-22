@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 
 export function Hero() {
@@ -62,11 +61,9 @@ export function Hero() {
           animate="visible"
           className="flex flex-col items-center text-center gap-8"
         >
-           <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="py-2 px-4 rounded-full bg-background/50 border-border/30 backdrop-blur-sm flex items-center gap-2">
-                <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={24} height={24} className="h-6 w-6" />
-                <span className="font-bold font-headline text-lg text-foreground">OneJoan</span>
-            </Badge>
+           <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
+             <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={48} height={48} className="h-12 w-12" />
+             <span className="font-bold font-headline text-2xl text-foreground">OneJoan</span>
           </motion.div>
 
           <motion.h1

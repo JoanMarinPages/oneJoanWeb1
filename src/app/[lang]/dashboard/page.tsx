@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -30,24 +31,8 @@ type DashboardPageProps = {
 };
 
 
-export default function DashboardPage({ params: { lang } }: DashboardPageProps) {
-  const [dictionary, setDictionary] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchDictionary = async () => {
-      const dict = await getDictionary(lang);
-      setDictionary(dict);
-    };
-    fetchDictionary();
-  }, [lang]);
-
-  if (!dictionary) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
+export default async function DashboardPage({ params: { lang } }: DashboardPageProps) {
+  const dictionary = await getDictionary(lang);
   
   return <DashboardClient dictionary={dictionary} lang={lang} />
 }
