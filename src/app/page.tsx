@@ -10,11 +10,29 @@ import { Ecommerce } from '@/components/page/ecommerce';
 import { AnimatedSection } from '@/components/page/animated-section';
 import { MachineLearning } from '@/components/page/machine-learning';
 import { getDictionary } from '@/lib/get-dictionary';
-import { Locale } from '@/i18n-config';
+import { Locale, i18n } from '@/i18n-config';
+
+// This is a temporary solution to get the dictionary on a server component.
+// In a real app, you'd likely use a different approach.
+async function getDictionaryForPage(request: any) {
+    const negotiatorHeaders: Record<string, string> = {}
+    request.headers.forEach((value: string, key: string) => (negotiatorHeaders[key] = value))
+    
+    // @ts-ignore locales are readonly
+    const locales: string[] = i18n.locales
+    const { match } = require('@formatjs/intl-localematcher');
+    const Negotiator = require('negotiator');
+    const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
+    const defaultLocale = i18n.defaultLocale
+
+    const locale = match(languages, locales, defaultLocale) as Locale;
+    
+    return getDictionary(locale);
+}
 
 
-export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
-  const dictionary = await getDictionary(lang);
+export default async function Home(request: any) {
+  const dictionary = await getDictionaryForPage(request);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">

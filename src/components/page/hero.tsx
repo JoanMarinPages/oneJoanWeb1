@@ -32,37 +32,25 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center bg-hero-dark overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          className="absolute top-[10%] left-[5%] h-48 w-48 bg-indigo-500/10 rounded-full blur-2xl backdrop-blur-md border border-indigo-500/20 animate-shape-float-1"
+    <section id="hero" className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center bg-background bg-grid-pattern overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-radial-gradient">
+         <motion.div
+          className="absolute top-[10%] left-[5%] h-48 w-48 border border-primary/10 rounded-full animate-shape-float-1"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
         />
         <motion.div
-          className="absolute top-[20%] right-[10%] h-40 w-64 bg-rose-500/10 rounded-2xl blur-2xl backdrop-blur-md border border-rose-500/20 animate-shape-float-2"
+          className="absolute top-[20%] right-[10%] h-40 w-64 border border-accent/10 rounded-2xl animate-shape-float-2"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
         />
         <motion.div
-          className="absolute bottom-[15%] left-[20%] h-32 w-32 bg-violet-500/10 rounded-full blur-2xl backdrop-blur-md border border-violet-500/20 animate-shape-float-3"
+          className="absolute bottom-[15%] left-[20%] h-32 w-32 border border-primary/10 rounded-full animate-shape-float-3"
            initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-        />
-         <motion.div
-          className="absolute bottom-[25%] right-[25%] h-24 w-24 bg-amber-500/10 rounded-full blur-2xl backdrop-blur-md border border-amber-500/20 animate-shape-float-1"
-           initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        />
-         <motion.div
-          className="hidden md:block absolute top-[50%] left-[30%] h-20 w-20 bg-cyan-500/10 rounded-lg blur-2xl backdrop-blur-md border border-cyan-500/20 animate-shape-float-2"
-           initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 1 }}
         />
       </div>
 
@@ -73,25 +61,27 @@ export function Hero() {
           animate="visible"
           className="flex flex-col items-center text-center gap-8"
         >
-          <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="py-2 px-4 rounded-full bg-white/5 border-white/10 text-white backdrop-blur-sm flex items-center gap-2">
+           <motion.div variants={itemVariants}>
+            <Badge variant="outline" className="py-2 px-4 rounded-full bg-background/50 border-border/30 backdrop-blur-sm flex items-center gap-2">
                 <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={24} height={24} className="h-6 w-6" />
-                <span className="font-bold font-headline text-lg">OneJoan</span>
+                <span className="font-bold font-headline text-lg text-foreground">OneJoan</span>
             </Badge>
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
-            className="font-headline text-5xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl"
+            className="font-headline text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl"
           >
-            Elevate Your <span className="text-primary">Digital Vision</span>
+            Tu competencia reza para que no me encuentres.
+            <br />
+            Hablemos de tu <span className="animated-gradient-text bg-clip-text text-transparent">Ventaja Injusta</span>.
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
-            className="max-w-3xl text-lg text-white/70 md:text-xl"
+            className="max-w-3xl text-lg text-muted-foreground md:text-xl"
           >
-            Crafting immersive and intelligent digital experiences. I specialize in building high-performance web applications, integrating advanced AI, and creating stunning visual solutions that captivate and engage.
+            Convierto clics en clientes y proyectos en imperios. Mientras otros te entregan una web, yo te entrego resultados: más ventas, más leads y un crecimiento que tus rivales no podrán ignorar.
           </motion.p>
 
           <motion.div
@@ -99,12 +89,12 @@ export function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <Button size="lg" asChild>
-              <Link href="#services">
-                Explore Services <ArrowRight className="ml-2" />
+              <Link href="#contact">
+                Empezar mi Proyecto <ArrowRight className="ml-2" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="bg-white/5 border-white/20 text-white hover:bg-white/10">
-              <Link href="#contact">Get in Touch</Link>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="#services">Ver Servicios</Link>
             </Button>
           </motion.div>
         </motion.div>

@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 221 83% 53%;
+    --primary: 260 83% 63%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
@@ -23,7 +23,7 @@
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 188 88% 40%;
+    --accent: 300 88% 60%;
     --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,10 +31,10 @@
 
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 221 83% 53%;
+    --ring: 260 83% 63%;
 
-    --chart-1: 221 83% 53%; /* primary */
-    --chart-2: 188 88% 40%; /* accent */
+    --chart-1: 260 83% 63%; /* primary */
+    --chart-2: 300 88% 60%; /* accent */
     --chart-3: 28 100% 67%;
     --chart-4: 330 84% 60%;
     --chart-5: 160 70% 50%;
@@ -77,6 +77,10 @@
 }
 
 @layer utilities {
+  .animated-gradient-text {
+    @apply bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient;
+  }
+
   .animate-tilt {
     animation: tilt 10s infinite linear;
   }
@@ -89,8 +93,7 @@
   }
 
   .bg-radial-gradient {
-      background-color: hsl(var(--muted) / 0.5);
-      background-image: radial-gradient(circle at 50% 50%, hsl(var(--background)), hsl(var(--muted)));
+    background-image: radial-gradient(circle at 50% 50%, transparent, hsl(var(--background)));
   }
 
   @keyframes tilt {
@@ -139,5 +142,11 @@
   }
   .animate-shape-float-3 {
     animation: shape-float-3 12s ease-in-out infinite;
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
