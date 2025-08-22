@@ -33,7 +33,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center bg-background bg-grid-pattern overflow-hidden">
+    <section id="hero" className="relative w-full pt-32 pb-20 flex items-center justify-center bg-background bg-grid-pattern overflow-hidden">
         <div className="absolute inset-0 z-0 bg-radial-gradient">
          <motion.div
           className="absolute top-[10%] left-[5%] h-48 w-48 border border-primary/10 rounded-full animate-shape-float-1"
