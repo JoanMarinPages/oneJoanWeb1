@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -64,22 +63,24 @@ export function Hero() {
         >
            <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
              <Image src="/assets/logos/logoOnejoan.png" alt="OneJoan Logo" width={96} height={96} className="h-24 w-24" />
-             <div className="relative w-full">
+             <div className="relative">
                 <video
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="absolute inset-0 w-full h-full object-cover z-0"
+                    className="w-full h-full object-cover"
                 >
                     <source src="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" type="video/mp4" />
                 </video>
-                <span className={cn(
-                    "font-bold font-headline text-5xl relative z-10",
-                    "video-text-clip"
-                )}>
-                    OneJoan
-                </span>
+                <div
+                    className={cn(
+                        "absolute inset-0 font-bold font-headline text-5xl",
+                        "video-text-clip"
+                    )}
+                >
+                   OneJoan
+                </div>
              </div>
           </motion.div>
 

@@ -97,7 +97,7 @@
   }
 
   .video-text-clip {
-    @apply bg-clip-text text-transparent;
+    @apply bg-white mix-blend-screen text-transparent bg-clip-text;
   }
 
   @keyframes tilt {
