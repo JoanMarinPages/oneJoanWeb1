@@ -70,14 +70,13 @@ export function Hero() {
                     loop
                     muted
                     playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] object-cover"
                 >
                     <source src="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" type="video/mp4" />
                 </video>
                 <h1
                     className={cn(
-                        "font-bold font-headline text-5xl",
-                        "video-text-clip"
+                        "font-bold font-headline text-5xl video-text-clip",
                     )}
                 >
                    OneJoan
