@@ -96,6 +96,10 @@
     background-image: radial-gradient(circle at 50% 50%, transparent, hsl(var(--background)));
   }
 
+  .video-text-clip {
+    @apply bg-clip-text text-transparent;
+  }
+
   @keyframes tilt {
     0%,
     50%,
