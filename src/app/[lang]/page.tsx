@@ -16,7 +16,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
   const dictionary = await getDictionary(lang);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <>
       <Header dictionary={dictionary.Header} />
       <main className="flex-1">
         <Hero />
@@ -37,9 +37,9 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
           <Contact backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runvGCn32u5cHM_--ar_12869_--video_1_db1350cf-9e75-4647-af40-dfcd3d87446b_3.mp4" />
-        </AimatedSection>
+        </AnimatedSection>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
