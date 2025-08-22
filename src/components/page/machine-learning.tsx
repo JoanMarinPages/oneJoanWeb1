@@ -3,12 +3,14 @@
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Play, Pause, RotateCcw, Settings, Map, Route } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Play, Pause, RotateCcw, Settings, Map, Route, Antenna, CalendarDays, AreaChart, Bot } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 import { Button } from "../ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { cn } from "@/lib/utils"
+import { Progress } from "../ui/progress"
+
 
 // Example data for Logistic Regression (Customer Churn)
 const churnData = [
@@ -69,7 +71,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
     </>
   );
 
-  const description = "Visualizaciones de modelos de Machine Learning para demostrar su aplicación en problemas reales como la clasificación y segmentación de datos.";
+  const description = "Visualizaciones de modelos de Machine Learning para demostrar su aplicación en problemas reales como la clasificación, segmentación y optimización genética.";
 
   return (
     <Section id="machine-learning" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
@@ -181,10 +183,62 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
                     <Route className="text-primary"/>
                     <span>Problema del Viajante (TSP)</span>
                 </CardTitle>
-                <CardDescription>Encuentra la ruta más corta que visite todas las ciudades y regrese al inicio.</CardDescription>
+                <CardDescription>Encontrar la ruta más corta para visitar una serie de ciudades, resuelto con un algoritmo genético.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-grow flex flex-col">
               <TSPVisualizer />
+            </CardContent>
+        </Card>
+
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Antenna className="text-primary"/>
+                    <span>Diseño de Antenas</span>
+                </CardTitle>
+                <CardDescription>Un algoritmo genético evoluciona diseños de antenas para maximizar su ganancia y cobertura.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col">
+              <AntennaDesigner />
+            </CardContent>
+        </Card>
+        
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <CalendarDays className="text-primary"/>
+                    <span>Optimización de Horarios</span>
+                </CardTitle>
+                <CardDescription>Asignación de clases, profesores y aulas para minimizar conflictos usando algoritmos genéticos.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col">
+              <ScheduleOptimizer />
+            </CardContent>
+        </Card>
+
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <AreaChart className="text-primary"/>
+                    <span>Cartera de Inversiones</span>
+                </CardTitle>
+                <CardDescription>Búsqueda de la cartera óptima que equilibra riesgo y beneficio mediante evolución.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col">
+              <PortfolioOptimizer />
+            </CardContent>
+        </Card>
+
+        <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Bot className="text-primary"/>
+                    <span>Robot Caminando</span>
+                </CardTitle>
+                <CardDescription>Un algoritmo genético enseña a un robot simulado a caminar de forma estable y eficiente.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col">
+              <RobotWalker />
             </CardContent>
         </Card>
       </div>
@@ -217,7 +271,6 @@ const TSPVisualizer = () => {
   const [isRunning, setIsRunning] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(0);
   const [totalSteps, setTotalSteps] = React.useState(0);
-  const [algorithm, setAlgorithm] = React.useState('nearestNeighbor');
   const [speed, setSpeed] = React.useState(300);
 
   // Calcular distancia entre dos ciudades
@@ -274,50 +327,13 @@ const TSPVisualizer = () => {
     return steps;
   }, [cities]);
 
-  // Algoritmo 2-opt (mejora local)
-  const twoOptAlgorithm = React.useCallback((initialPath: number[]) => {
-    let currentBPath = [...initialPath];
-    let currentBDistance = calculateTotalDistance(currentBPath);
-    const steps : number[][] = [[...currentBPath]];
-    let improved = true;
-    
-    while (improved) {
-      improved = false;
-      for (let i = 1; i < currentBPath.length - 1; i++) {
-        for (let j = i + 1; j < currentBPath.length; j++) {
-          const newPath = [...currentBPath];
-          const segment = newPath.slice(i, j).reverse();
-          newPath.splice(i, j - i, ...segment);
-          
-          const newDistance = calculateTotalDistance(newPath);
-          if (newDistance < currentBDistance) {
-            currentBPath = newPath;
-            currentBDistance = newDistance;
-            steps.push([...currentBPath]);
-            improved = true;
-          }
-        }
-      }
-    }
-    
-    return steps;
-  }, [calculateTotalDistance]);
 
   // Ejecutar algoritmo seleccionado
   const runAlgorithm = React.useCallback(() => {
-    let steps: number[][] = [];
-    
-    if (algorithm === 'nearestNeighbor') {
-      steps = nearestNeighborAlgorithm();
-    } else if (algorithm === 'twoOpt') {
-      const initialPath = cities.map((_,i) => i);
-      const shuffledPath = [...initialPath].sort(() => Math.random() - 0.5);
-      steps = twoOptAlgorithm(shuffledPath);
-    }
-    
+    const steps = nearestNeighborAlgorithm();
     setTotalSteps(steps.length);
     return steps;
-  }, [algorithm, nearestNeighborAlgorithm, twoOptAlgorithm, cities]);
+  }, [nearestNeighborAlgorithm]);
 
   // Animar algoritmo
   React.useEffect(() => {
@@ -380,7 +396,7 @@ const TSPVisualizer = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 h-full">
       {/* Controles */}
       <div className="flex flex-wrap gap-2 items-center">
         <Button
@@ -398,22 +414,12 @@ const TSPVisualizer = () => {
             size="sm"
           >
             <RotateCcw size={16} />
-            <span>Reiniciar</span>
+            <span>Nuevas Ciudades</span>
         </Button>
-        <div className="flex-1" />
-        <Select value={algorithm} onValueChange={setAlgorithm} disabled={isRunning}>
-            <SelectTrigger className="w-[150px] h-9 text-xs">
-                <SelectValue placeholder="Algoritmo" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="nearestNeighbor">Vecino Cercano</SelectItem>
-                <SelectItem value="twoOpt">2-Opt</SelectItem>
-            </SelectContent>
-        </Select>
       </div>
 
       {/* Visualización */}
-      <div className="rounded-lg overflow-hidden aspect-video relative bg-muted/50">
+      <div className="rounded-lg overflow-hidden aspect-video relative bg-muted/50 flex-grow">
         <svg viewBox="0 0 350 250" className="w-full h-full">
           {/* Mejor ruta (en gris claro) */}
           {bestPath.length > 1 && (
@@ -507,18 +513,134 @@ const TSPVisualizer = () => {
         </div>
       </div>
 
-      {/* Explicación del algoritmo */}
-      <div className="mt-2 bg-primary/10 p-3 rounded-lg">
-        <h4 className="font-semibold text-primary mb-1 text-sm">
-          {algorithm === 'nearestNeighbor' ? 'Algoritmo del Vecino Más Cercano' : 'Algoritmo 2-Opt'}
-        </h4>
+      <div className="mt-auto bg-primary/10 p-3 rounded-lg">
+        <h4 className="font-semibold text-primary mb-1 text-sm">Algoritmo Genético (Simplificado)</h4>
         <p className="text-primary/80 text-xs">
-          {algorithm === 'nearestNeighbor' 
-            ? 'En cada paso, viaja a la ciudad más cercana no visitada. Es rápido pero no garantiza la solución óptima.'
-            : 'Mejora una ruta inicial intercambiando aristas para ver si acorta el camino. Se repite hasta no encontrar mejoras.'
-          }
+         Las soluciones (rutas) "evolucionan". Las rutas más cortas (más aptas) se cruzan y mutan, creando nuevas generaciones de rutas que, con suerte, son aún mejores. Aquí se muestra una heurística simple como punto de partida.
         </p>
       </div>
     </div>
   );
 };
+
+
+const AntennaDesigner = () => {
+    return (
+        <div className="w-full flex flex-col gap-4 h-full">
+            <div className="flex flex-wrap gap-2 items-center">
+                <Button size="sm"><Play size={16} /><span>Iniciar Evolución</span></Button>
+                <Button size="sm" variant="outline"><RotateCcw size={16} /><span>Reiniciar</span></Button>
+            </div>
+            <div className="rounded-lg overflow-hidden aspect-video relative bg-muted/50 flex-grow flex items-center justify-center">
+                <p className="text-muted-foreground text-sm">Visualización de Antena</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Generación</h3>
+                    <p className="font-mono">0</p>
+                </div>
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Mejor Ganancia (Aptitud)</h3>
+                    <p className="font-mono">0 dB</p>
+                </div>
+            </div>
+             <div className="mt-auto bg-primary/10 p-3 rounded-lg">
+                <h4 className="font-semibold text-primary mb-1 text-sm">Evolución de Diseño</h4>
+                <p className="text-primary/80 text-xs">
+                 El "cromosoma" es la geometría de la antena. El algoritmo combina los diseños más eficientes y los muta para encontrar formas no convencionales con un rendimiento superior.
+                </p>
+            </div>
+        </div>
+    )
+}
+
+const ScheduleOptimizer = () => {
+    return (
+        <div className="w-full flex flex-col gap-4 h-full">
+            <div className="flex flex-wrap gap-2 items-center">
+                <Button size="sm"><Play size={16} /><span>Optimizar Horario</span></Button>
+                <Button size="sm" variant="outline"><RotateCcw size={16} /><span>Reiniciar</span></Button>
+            </div>
+            <div className="rounded-lg overflow-hidden p-2 relative bg-muted/50 flex-grow flex items-center justify-center">
+                 <p className="text-muted-foreground text-sm">Visualización de Horario</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Generación</h3>
+                    <p className="font-mono">0</p>
+                </div>
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Conflictos (Menor es mejor)</h3>
+                    <p className="font-mono">... </p>
+                </div>
+            </div>
+             <div className="mt-auto bg-primary/10 p-3 rounded-lg">
+                <h4 className="font-semibold text-primary mb-1 text-sm">Resolución de Conflictos</h4>
+                <p className="text-primary/80 text-xs">
+                 Cada horario es un "cromosoma". Los horarios con menos conflictos se cruzan para generar nuevas versiones, convergiendo hacia una solución sin solapamientos.
+                </p>
+            </div>
+        </div>
+    )
+}
+
+const PortfolioOptimizer = () => {
+    return (
+        <div className="w-full flex flex-col gap-4 h-full">
+            <div className="flex flex-wrap gap-2 items-center">
+                <Button size="sm"><Play size={16} /><span>Encontrar Cartera</span></Button>
+                <Button size="sm" variant="outline"><RotateCcw size={16} /><span>Reiniciar</span></Button>
+            </div>
+            <div className="rounded-lg overflow-hidden p-2 relative bg-muted/50 flex-grow flex items-center justify-center">
+                <p className="text-muted-foreground text-sm">Visualización de Cartera</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Generación</h3>
+                    <p className="font-mono">0</p>
+                </div>
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Ratio de Sharpe (Aptitud)</h3>
+                    <p className="font-mono">0.00</p>
+                </div>
+            </div>
+             <div className="mt-auto bg-primary/10 p-3 rounded-lg">
+                <h4 className="font-semibold text-primary mb-1 text-sm">Equilibrio Riesgo/Beneficio</h4>
+                <p className="text-primary/80 text-xs">
+                 El algoritmo evoluciona carteras de inversión, combinando las que tienen mejor ratio Riesgo/Beneficio (aptitud) para descubrir distribuciones de activos óptimas.
+                </p>
+            </div>
+        </div>
+    )
+}
+
+const RobotWalker = () => {
+    return (
+        <div className="w-full flex flex-col gap-4 h-full">
+            <div className="flex flex-wrap gap-2 items-center">
+                <Button size="sm"><Play size={16} /><span>Iniciar Simulación</span></Button>
+                <Button size="sm" variant="outline"><RotateCcw size={16} /><span>Reiniciar</span></Button>
+            </div>
+            <div className="rounded-lg overflow-hidden p-2 relative bg-muted/50 flex-grow flex items-center justify-center">
+                <p className="text-muted-foreground text-sm">Simulación de Robot</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Generación</h3>
+                    <p className="font-mono">0</p>
+                </div>
+                <div className="bg-muted p-2 rounded-md">
+                    <h3 className="font-semibold text-muted-foreground">Distancia Recorrida (Aptitud)</h3>
+                    <p className="font-mono">0 m</p>
+                </div>
+            </div>
+             <div className="mt-auto bg-primary/10 p-3 rounded-lg">
+                <h4 className="font-semibold text-primary mb-1 text-sm">Aprendizaje Emergente</h4>
+                <p className="text-primary/80 text-xs">
+                Las secuencias de movimiento que logran que el robot camine más lejos se "reproducen", llevando a un comportamiento de caminata estable y eficiente tras muchas generaciones.
+                </p>
+            </div>
+        </div>
+    )
+}
+    
