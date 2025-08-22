@@ -1,12 +1,14 @@
-
 "use client"
 
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Play, Pause, RotateCcw, Settings, Map, Route } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
+import { Button } from "../ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { cn } from "@/lib/utils"
 
 // Example data for Logistic Regression (Customer Churn)
 const churnData = [
@@ -174,39 +176,349 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
         </Card>
         
         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-                <Award className="text-primary"/>
-                <span>RL: Car Racing</span>
-            </CardTitle>
-            <CardDescription>Entrenamiento de agentes para completar un circuito de carreras.</CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow flex flex-col items-center justify-center gap-4">
-            <div className="w-full max-w-[350px] aspect-square overflow-hidden relative">
-              <svg viewBox="0 0 120 120" className="w-full h-full absolute top-0 left-0">
-                 <path 
-                    d="M 60,5 C 120,5 120,60 100,60 C 80,60 80,80 100,80 C 120,80 120,115 60,115 C 0,115 0,80 20,80 C 40,80 40,60 20,60 C 0,60 0,5 60,5 Z"
-                    stroke="hsl(var(--border))" 
-                    strokeWidth="12"
-                    fill="hsl(var(--muted))" 
-                />
-                <rect x="55" y="-5" width="10" height="20" fill="hsl(var(--foreground))">
-                    <animate attributeName="fill" values="hsl(var(--foreground));hsl(var(--primary));hsl(var(--foreground))" dur="1s" repeatCount="indefinite" />
-                </rect>
-              </svg>
-               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-destructive shadow-lg animate-car-success"></div>
-               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-muted-foreground shadow animate-car-fail-1"></div>
-               <div className="w-4 h-4 -mt-2 -ml-2 rounded-full bg-muted-foreground shadow animate-car-fail-2"></div>
-            </div>
-          </CardContent>
-          <CardFooter className="pt-6">
-            <div className="w-full">
-                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
-                <p className="text-sm text-muted-foreground">La simulación muestra múltiples iteraciones. Los coches grises representan agentes "novatos" que fallan al salirse de la pista (penalización). El coche rojo es el agente "entrenado" que, tras miles de intentos, ha aprendido la ruta óptima para maximizar la recompensa completando el circuito.</p>
-             </div>
-          </CardFooter>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Route className="text-primary"/>
+                    <span>Problema del Viajante (TSP)</span>
+                </CardTitle>
+                <CardDescription>Encuentra la ruta más corta que visite todas las ciudades y regrese al inicio.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <TSPVisualizer />
+            </CardContent>
         </Card>
       </div>
     </Section>
   )
 }
+
+
+const TSPVisualizer = () => {
+  // Generar 10 ciudades aleatorias
+  const generateCities = React.useCallback(() => {
+    const cities = [];
+    const names = ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Bilbao', 'Málaga', 'Zaragoza', 'Murcia', 'Palma', 'Córdoba'];
+    
+    for (let i = 0; i < 10; i++) {
+      cities.push({
+        id: i,
+        name: names[i],
+        x: Math.random() * 300 + 25,
+        y: Math.random() * 200 + 25
+      });
+    }
+    return cities;
+  }, []);
+
+  const [cities, setCities] = React.useState(generateCities);
+  const [currentPath, setCurrentPath] = React.useState<number[]>([]);
+  const [bestPath, setBestPath] = React.useState<number[]>([]);
+  const [bestDistance, setBestDistance] = React.useState(Infinity);
+  const [isRunning, setIsRunning] = React.useState(false);
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const [totalSteps, setTotalSteps] = React.useState(0);
+  const [algorithm, setAlgorithm] = React.useState('nearestNeighbor');
+  const [speed, setSpeed] = React.useState(300);
+
+  // Calcular distancia entre dos ciudades
+  const calculateDistance = (city1: {x:number, y:number}, city2: {x:number, y:number}) => {
+    const dx = city1.x - city2.x;
+    const dy = city1.y - city2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  // Calcular distancia total de un camino
+  const calculateTotalDistance = React.useCallback((path: number[]) => {
+    if (path.length < 2) return 0;
+    let total = 0;
+    for (let i = 0; i < path.length - 1; i++) {
+      total += calculateDistance(cities[path[i]], cities[path[i + 1]]);
+    }
+    // Agregar distancia de vuelta al inicio
+    if (path.length === cities.length) {
+      total += calculateDistance(cities[path[path.length - 1]], cities[path[0]]);
+    }
+    return total;
+  }, [cities]);
+
+  // Algoritmo del vecino más cercano
+  const nearestNeighborAlgorithm = React.useCallback(() => {
+    const visited = new Set();
+    const path = [0]; // Comenzar en la ciudad 0
+    visited.add(0);
+    
+    const steps = [];
+    
+    while (visited.size < cities.length) {
+      const currentCity = path[path.length - 1];
+      let nearestCity = -1;
+      let nearestDistance = Infinity;
+      
+      for (let i = 0; i < cities.length; i++) {
+        if (!visited.has(i)) {
+          const distance = calculateDistance(cities[currentCity], cities[i]);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestCity = i;
+          }
+        }
+      }
+      
+      if (nearestCity !== -1) {
+        path.push(nearestCity);
+        visited.add(nearestCity);
+        steps.push([...path]);
+      }
+    }
+    
+    return steps;
+  }, [cities]);
+
+  // Algoritmo 2-opt (mejora local)
+  const twoOptAlgorithm = React.useCallback((initialPath: number[]) => {
+    let currentBPath = [...initialPath];
+    let currentBDistance = calculateTotalDistance(currentBPath);
+    const steps : number[][] = [[...currentBPath]];
+    let improved = true;
+    
+    while (improved) {
+      improved = false;
+      for (let i = 1; i < currentBPath.length - 1; i++) {
+        for (let j = i + 1; j < currentBPath.length; j++) {
+          const newPath = [...currentBPath];
+          const segment = newPath.slice(i, j).reverse();
+          newPath.splice(i, j - i, ...segment);
+          
+          const newDistance = calculateTotalDistance(newPath);
+          if (newDistance < currentBDistance) {
+            currentBPath = newPath;
+            currentBDistance = newDistance;
+            steps.push([...currentBPath]);
+            improved = true;
+          }
+        }
+      }
+    }
+    
+    return steps;
+  }, [calculateTotalDistance]);
+
+  // Ejecutar algoritmo seleccionado
+  const runAlgorithm = React.useCallback(() => {
+    let steps: number[][] = [];
+    
+    if (algorithm === 'nearestNeighbor') {
+      steps = nearestNeighborAlgorithm();
+    } else if (algorithm === 'twoOpt') {
+      const initialPath = cities.map((_,i) => i);
+      const shuffledPath = [...initialPath].sort(() => Math.random() - 0.5);
+      steps = twoOptAlgorithm(shuffledPath);
+    }
+    
+    setTotalSteps(steps.length);
+    return steps;
+  }, [algorithm, nearestNeighborAlgorithm, twoOptAlgorithm, cities]);
+
+  // Animar algoritmo
+  React.useEffect(() => {
+    if (!isRunning) return;
+    
+    const steps = runAlgorithm();
+    if (steps.length === 0) {
+        setIsRunning(false);
+        return;
+    };
+    
+    let stepIndex = 0;
+    
+    const interval = setInterval(() => {
+      if (stepIndex < steps.length) {
+        const path = steps[stepIndex];
+        setCurrentPath(path);
+        setCurrentStep(stepIndex + 1);
+        
+        const distance = calculateTotalDistance(path);
+        if (distance < bestDistance) {
+          setBestDistance(distance);
+          setBestPath([...path]);
+        }
+        
+        stepIndex++;
+      } else {
+        const finalPath = steps[steps.length - 1];
+        const finalDistance = calculateTotalDistance(finalPath);
+        if (finalDistance < bestDistance) {
+            setBestDistance(finalDistance);
+            setBestPath([...finalPath]);
+        }
+        setIsRunning(false);
+      }
+    }, speed);
+    
+    return () => clearInterval(interval);
+  }, [isRunning, runAlgorithm, speed, bestDistance, calculateTotalDistance]);
+
+  const handleStart = () => {
+    handleReset(false);
+    setIsRunning(true);
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
+  };
+
+  const handleReset = (regenerateCities = true) => {
+    setIsRunning(false);
+    setCurrentPath([]);
+    setBestPath([]);
+    setBestDistance(Infinity);
+    setCurrentStep(0);
+    setTotalSteps(0);
+    if(regenerateCities) {
+      setCities(generateCities());
+    }
+  };
+
+  return (
+    <div className="w-full flex flex-col gap-4">
+      {/* Controles */}
+      <div className="flex flex-wrap gap-2 items-center">
+        <Button
+            onClick={isRunning ? handleStop : handleStart}
+            variant={isRunning ? "destructive" : "default"}
+            size="sm"
+            disabled={totalSteps > 0 && currentStep >= totalSteps}
+          >
+            {isRunning ? <Pause size={16} /> : <Play size={16} />}
+            <span>{isRunning ? 'Pausar' : 'Iniciar'}</span>
+        </Button>
+         <Button
+            onClick={() => handleReset()}
+            variant="outline"
+            size="sm"
+          >
+            <RotateCcw size={16} />
+            <span>Reiniciar</span>
+        </Button>
+        <div className="flex-1" />
+        <Select value={algorithm} onValueChange={setAlgorithm} disabled={isRunning}>
+            <SelectTrigger className="w-[150px] h-9 text-xs">
+                <SelectValue placeholder="Algoritmo" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="nearestNeighbor">Vecino Cercano</SelectItem>
+                <SelectItem value="twoOpt">2-Opt</SelectItem>
+            </SelectContent>
+        </Select>
+      </div>
+
+      {/* Visualización */}
+      <div className="rounded-lg overflow-hidden aspect-video relative bg-muted/50">
+        <svg viewBox="0 0 350 250" className="w-full h-full">
+          {/* Mejor ruta (en gris claro) */}
+          {bestPath.length > 1 && (
+            <g stroke="hsl(var(--border))" strokeWidth="1" strokeDasharray="3 3" fill="none">
+              {bestPath.map((cityIndex, i) => {
+                const nextIndex = (i + 1) % bestPath.length;
+                const city1 = cities[cityIndex];
+                const city2 = cities[bestPath[nextIndex]];
+                return (
+                  <line
+                    key={`best-${i}`}
+                    x1={city1.x}
+                    y1={city1.y}
+                    x2={city2.x}
+                    y2={city2.y}
+                  />
+                );
+              })}
+            </g>
+          )}
+
+          {/* Ruta actual */}
+          {currentPath.length > 1 && (
+            <g stroke="hsl(var(--primary))" strokeWidth="1.5" fill="none">
+              {currentPath.map((cityIndex, i) => {
+                if (i === currentPath.length - 1) return null;
+                const city1 = cities[cityIndex];
+                const city2 = cities[currentPath[i + 1]];
+                return (
+                  <line
+                    key={`current-${i}`}
+                    x1={city1.x}
+                    y1={city1.y}
+                    x2={city2.x}
+                    y2={city2.y}
+                  />
+                );
+              })}
+              {/* Línea de regreso al inicio si la ruta está completa */}
+              {currentPath.length === cities.length && (
+                <line
+                  x1={cities[currentPath[currentPath.length - 1]].x}
+                  y1={cities[currentPath[currentPath.length - 1]].y}
+                  x2={cities[currentPath[0]].x}
+                  y2={cities[currentPath[0]].y}
+                  strokeDasharray="5,3"
+                />
+              )}
+            </g>
+          )}
+
+          {/* Ciudades */}
+          {cities.map((city, index) => {
+            const isVisited = currentPath.includes(index);
+            const isCurrent = currentPath.length > 0 && currentPath[currentPath.length - 1] === index;
+            
+            return (
+              <g key={city.id} className="cursor-pointer">
+                <circle
+                  cx={city.x}
+                  cy={city.y}
+                  r="6"
+                  fill={isCurrent ? "hsl(var(--destructive))" : isVisited ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
+                  stroke="hsl(var(--card))"
+                  strokeWidth="1"
+                />
+                <text
+                  x={city.x}
+                  y={city.y - 10}
+                  textAnchor="middle"
+                  className="text-[8px] font-medium fill-foreground"
+                >
+                  {city.name}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+
+       <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="bg-muted p-2 rounded-md">
+          <h3 className="font-semibold text-muted-foreground">Progreso</h3>
+          <p className="font-mono">{currentStep} / {totalSteps}</p>
+        </div>
+        <div className="bg-muted p-2 rounded-md">
+          <h3 className="font-semibold text-muted-foreground">Mejor Distancia</h3>
+          <p className="font-mono">
+            {bestDistance !== Infinity ? bestDistance.toFixed(0) : '...'}
+          </p>
+        </div>
+      </div>
+
+      {/* Explicación del algoritmo */}
+      <div className="mt-2 bg-primary/10 p-3 rounded-lg">
+        <h4 className="font-semibold text-primary mb-1 text-sm">
+          {algorithm === 'nearestNeighbor' ? 'Algoritmo del Vecino Más Cercano' : 'Algoritmo 2-Opt'}
+        </h4>
+        <p className="text-primary/80 text-xs">
+          {algorithm === 'nearestNeighbor' 
+            ? 'En cada paso, viaja a la ciudad más cercana no visitada. Es rápido pero no garantiza la solución óptima.'
+            : 'Mejora una ruta inicial intercambiando aristas para ver si acorta el camino. Se repite hasta no encontrar mejoras.'
+          }
+        </p>
+      </div>
+    </div>
+  );
+};
