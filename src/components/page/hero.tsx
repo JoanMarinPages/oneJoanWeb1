@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -69,18 +70,18 @@ export function Hero() {
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                 >
                     <source src="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4" type="video/mp4" />
                 </video>
-                <div
+                <h1
                     className={cn(
-                        "absolute inset-0 font-bold font-headline text-5xl",
+                        "font-bold font-headline text-5xl",
                         "video-text-clip"
                     )}
                 >
                    OneJoan
-                </div>
+                </h1>
              </div>
           </motion.div>
 
