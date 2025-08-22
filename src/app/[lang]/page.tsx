@@ -1,4 +1,3 @@
-
 import { Header } from '@/components/page/header';
 import { Hero } from '@/components/page/hero';
 import { RealEstate } from '@/components/page/real-estate';
@@ -10,29 +9,11 @@ import { Ecommerce } from '@/components/page/ecommerce';
 import { AnimatedSection } from '@/components/page/animated-section';
 import { MachineLearning } from '@/components/page/machine-learning';
 import { getDictionary } from '@/lib/get-dictionary';
-import { Locale, i18n } from '@/i18n-config';
-
-// This is a temporary solution to get the dictionary on a server component.
-// In a real app, you'd likely use a different approach.
-async function getDictionaryForPage(request: any) {
-    const negotiatorHeaders: Record<string, string> = {}
-    request.headers.forEach((value: string, key: string) => (negotiatorHeaders[key] = value))
-    
-    // @ts-ignore locales are readonly
-    const locales: string[] = i18n.locales
-    const { match } = require('@formatjs/intl-localematcher');
-    const Negotiator = require('negotiator');
-    const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
-    const defaultLocale = i18n.defaultLocale
-
-    const locale = match(languages, locales, defaultLocale) as Locale;
-    
-    return getDictionary(locale);
-}
+import { Locale } from '@/i18n-config';
 
 
-export default async function Home(request: any) {
-  const dictionary = await getDictionaryForPage(request);
+export default async function Home({ params: { lang } }: { params: { lang: Locale }}) {
+  const dictionary = await getDictionary(lang);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -56,7 +37,7 @@ export default async function Home(request: any) {
         </AnimatedSection>
         <AnimatedSection delay={0.3}>
           <Contact backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runvGCn32u5cHM_--ar_12869_--video_1_db1350cf-9e75-4647-af40-dfcd3d87446b_3.mp4" />
-        </AnimatedSection>
+        </AimatedSection>
       </main>
       <Footer />
     </div>
