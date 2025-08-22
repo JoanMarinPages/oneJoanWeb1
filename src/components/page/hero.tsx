@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -72,16 +73,16 @@ export function Hero() {
             variants={itemVariants}
             className="font-headline text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl"
           >
-            Tu competencia reza para que no me encuentres.
+            Más que una web, tu 
             <br />
-            Hablemos de tu <span className="animated-gradient-text bg-clip-text text-transparent">Ventaja Injusta</span>.
+            <span className="animated-gradient-text bg-clip-text text-transparent">Ventaja Estratégica</span>.
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="max-w-3xl text-lg text-muted-foreground md:text-xl"
           >
-            Convierto clics en clientes y proyectos en imperios. Mientras otros te entregan una web, yo te entrego resultados: más ventas, más leads y un crecimiento que tus rivales no podrán ignorar.
+            Transformo ideas en soluciones digitales de alto impacto. Mi objetivo es simple: entregar resultados que impulsen tu crecimiento y te diferencien en el mercado.
           </motion.p>
 
           <motion.div
