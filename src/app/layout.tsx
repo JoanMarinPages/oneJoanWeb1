@@ -1,4 +1,5 @@
 import { Providers } from "@/components/providers";
+import { AnalyticsProvider } from "@/components/analytics-provider";
 
 // Even though this is the root layout, we don't need to specify
 // the <html> or <body> tags here. That is handled by the
@@ -10,7 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <Providers>
-      {children}
+      <AnalyticsProvider>
+        {children}
+      </AnalyticsProvider>
     </Providers>
   );
 }
