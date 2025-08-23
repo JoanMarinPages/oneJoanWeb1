@@ -26,6 +26,12 @@ export function Header({ dictionary }: { dictionary: any }) {
     const { user, logIn, logOut } = useAuth();
     const pathname = usePathname();
     
+    const getCurrentLocale = () => {
+        if (!pathname) return i18n.defaultLocale;
+        const segments = pathname.split('/');
+        return (i18n.locales.find(l => l === segments[1]) || i18n.defaultLocale) as Locale;
+    }
+    
     const getRedirectedPath = (locale: Locale) => {
         if (!pathname) return '/';
         const segments = pathname.split('/');
@@ -33,13 +39,15 @@ export function Header({ dictionary }: { dictionary: any }) {
         return segments.join('/');
     }
 
-    const getCurrentLocale = () => {
-        if (!pathname) return i18n.defaultLocale;
-        const segments = pathname.split('/');
-        return (i18n.locales.find(l => l === segments[1]) || i18n.defaultLocale) as Locale;
+    const currentLocale = getCurrentLocale();
+    
+    const createLocalizedPath = (path: string) => {
+        if (path.startsWith('/#')) {
+            return `/${currentLocale}${path}`;
+        }
+        return `/${currentLocale}${path}`;
     }
 
-    const currentLocale = getCurrentLocale();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
@@ -50,18 +58,15 @@ export function Header({ dictionary }: { dictionary: any }) {
                 </Link>
                 
                 <nav className="hidden md:flex items-center gap-1">
-                    {navLinks.map((link) => {
-                        const href = link.href.startsWith('/') ? (link.href.startsWith('/#') ? `/${currentLocale}${link.href}` : `/${currentLocale}${link.href}`) : link.href;
-                        return (
-                            <Link 
-                                key={link.href} 
-                                href={href}
-                                className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                            >
-                                {dictionary[link.labelKey]}
-                            </Link>
-                        )
-                    })}
+                    {navLinks.map((link) => (
+                        <Link 
+                            key={link.href} 
+                            href={createLocalizedPath(link.href)}
+                            className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            {dictionary[link.labelKey]}
+                        </Link>
+                    ))}
                 </nav>
 
                 <div className="hidden md:flex items-center gap-4">
@@ -138,12 +143,9 @@ export function Header({ dictionary }: { dictionary: any }) {
                                     <span className="font-bold text-lg font-headline">OneJoan</span>
                                 </Link>
                                 <nav className="flex flex-col gap-4">
-                                    {navLinks.map(link => {
-                                        const href = link.href.startsWith('/') ? (link.href.startsWith('/#') ? `/${currentLocale}${link.href}` : `/${currentLocale}${link.href}`) : link.href;
-                                        return (
-                                           <Link key={link.href} href={href} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
-                                        )
-                                    })}
+                                    {navLinks.map(link => (
+                                       <Link key={link.href} href={createLocalizedPath(link.href)} className="text-lg font-medium hover:text-primary transition-colors">{dictionary[link.labelKey]}</Link>
+                                    ))}
                                 </nav>
                                 <div className="mt-4">
                                      {user ? (
