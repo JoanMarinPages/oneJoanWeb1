@@ -249,6 +249,7 @@ const TSPVisualizer = () => {
   const [speed, setSpeed] = React.useState(300);
 
   React.useEffect(() => {
+    // Generate cities only on the client-side
     setCities(generateCities());
   }, [generateCities]);
 
@@ -498,7 +499,7 @@ const ScheduleOptimizer = () => {
     const [schedule, setSchedule] = React.useState<any[]>([]);
     const [generation, setGeneration] = React.useState(0);
     const [isRunning, setIsRunning] = React.useState(false);
-    const [conflicts, setConflicts] = React.useState(0);
+    const [conflicts, setConflicts] = React.useState(Infinity);
     const [bestSchedule, setBestSchedule] = React.useState<any[] | null>(null);
     const [minConflicts, setMinConflicts] = React.useState(Infinity);
 
@@ -578,10 +579,13 @@ const ScheduleOptimizer = () => {
     };
 
     React.useEffect(() => {
-        const initialSchedule = createRandomSchedule();
-        setSchedule(initialSchedule);
-        setConflicts(calculateConflicts(initialSchedule));
-    }, [createRandomSchedule]);
+        // Generate on client
+        if(schedule.length === 0) {
+            const initialSchedule = createRandomSchedule();
+            setSchedule(initialSchedule);
+            setConflicts(calculateConflicts(initialSchedule));
+        }
+    }, [createRandomSchedule, schedule.length]);
     
     const handleReset = () => {
         setIsRunning(false);
@@ -670,20 +674,32 @@ const PortfolioOptimizer = () => {
         { name: 'Commodities', expectedReturn: 0.10, risk: 0.20, color: "hsl(var(--chart-4))" },
         { name: 'Acciones Valor', expectedReturn: 0.09, risk: 0.18, color: "hsl(var(--chart-5))" }
     ];
+    
+    const chartConfig = React.useMemo(() => {
+        const config: any = {};
+        assets.forEach(asset => {
+            config[asset.name] = {
+                label: asset.name,
+                color: asset.color
+            };
+        });
+        return config;
+    }, [assets]);
+
 
     const createRandomPortfolio = React.useCallback(() => {
         let weights = Array.from({ length: assets.length }, () => Math.random());
         const sum = weights.reduce((a, b) => a + b, 0);
         weights = weights.map(w => w / sum);
         return weights;
-    }, []);
+    }, [assets.length]);
 
     const calculateSharpeRatio = React.useCallback((weights: number[]) => {
         const expectedReturn = weights.reduce((sum, weight, i) => sum + weight * assets[i].expectedReturn, 0);
         const portfolioRisk = Math.sqrt(weights.reduce((sum, weight, i) => sum + (weight * weight * assets[i].risk * assets[i].risk), 0));
         const riskFreeRate = 0.02;
         return portfolioRisk > 0 ? (expectedReturn - riskFreeRate) / portfolioRisk : 0;
-    }, []);
+    }, [assets]);
 
     const evolvePortfolio = React.useCallback(() => {
         const population = Array.from({ length: 30 }, createRandomPortfolio);
@@ -731,10 +747,12 @@ const PortfolioOptimizer = () => {
     };
 
     React.useEffect(() => {
-        const initialPortfolio = createRandomPortfolio();
-        setPortfolio(initialPortfolio);
-        setSharpeRatio(calculateSharpeRatio(initialPortfolio));
-    }, [createRandomPortfolio, calculateSharpeRatio]);
+        if(portfolio.length === 0) {
+            const initialPortfolio = createRandomPortfolio();
+            setPortfolio(initialPortfolio);
+            setSharpeRatio(calculateSharpeRatio(initialPortfolio));
+        }
+    }, [createRandomPortfolio, calculateSharpeRatio, portfolio.length]);
 
     const handleReset = () => {
         setIsRunning(false);
@@ -763,12 +781,14 @@ const PortfolioOptimizer = () => {
             <div className="flex flex-col h-full">
                 <h5 className="font-medium text-center mb-2">{title}</h5>
                 <div className="flex-grow">
-                     <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => (`${name}: ${Number(value).toFixed(1)}%`)} />} />
-                            <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} />
-                        </PieChart>
-                    </ResponsiveContainer>
+                    <ChartContainer config={chartConfig} className="w-full h-full">
+                         <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => (`${name}: ${Number(value).toFixed(1)}%`)} />} />
+                                <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </ChartContainer>
                 </div>
                 <div className="text-xs mt-2 space-y-1">
                      {assets.map((asset, i) => (
