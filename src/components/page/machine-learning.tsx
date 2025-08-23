@@ -764,7 +764,7 @@ const PortfolioOptimizer = () => {
         setBestSharpe(-Infinity);
     };
     
-    const renderPieChart = (weights: number[], title: string) => {
+    const renderPieChart = (weights: number[], title: string, config: any) => {
         if (!weights || weights.length === 0) return (
              <div className="flex items-center justify-center h-full">
                 <p className="text-muted-foreground text-sm">Pulsa "Encontrar" para empezar</p>
@@ -781,7 +781,7 @@ const PortfolioOptimizer = () => {
             <div className="flex flex-col h-full">
                 <h5 className="font-medium text-center mb-2">{title}</h5>
                 <div className="flex-grow">
-                    <ChartContainer config={chartConfig} className="w-full h-full">
+                    <ChartContainer config={config} className="w-full h-full min-h-[150px]">
                          <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => (`${name}: ${Number(value).toFixed(1)}%`)} />} />
@@ -831,8 +831,8 @@ const PortfolioOptimizer = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4 flex-grow">
-                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(portfolio, "Cartera Actual")}</div>
-                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(bestPortfolio, "Mejor Cartera")}</div>
+                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(portfolio, "Cartera Actual", chartConfig)}</div>
+                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(bestPortfolio, "Mejor Cartera", chartConfig)}</div>
             </div>
 
             <div className="mt-auto bg-primary/10 p-3 rounded-lg">
