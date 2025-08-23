@@ -30,7 +30,7 @@ export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
 
-export default async function RootLayout({
+export default async function LangLayout({
   children,
   params: { lang },
 }: Readonly<{
@@ -39,20 +39,10 @@ export default async function RootLayout({
 }>) {
   const dictionary = await getDictionary(lang);
   return (
-    <html lang={lang} className={cn(inter.variable, spaceGrotesk.variable, '!scroll-smooth')} suppressHydrationWarning>
-      <body className="font-body antialiased bg-background text-foreground">
-        <Providers>
-          <AnalyticsProvider>
-            <AuthProvider>
-              <div className="flex flex-col min-h-screen bg-background text-foreground">
-                  <Header dictionary={dictionary.Header} />
-                  {children}
-                  <Footer />
-              </div>
-            </AuthProvider>
-          </AnalyticsProvider>
-        </Providers>
-      </body>
-    </html>
+      <div className="flex flex-col min-h-screen bg-background text-foreground">
+          <Header dictionary={dictionary.Header} />
+          {children}
+          <Footer />
+      </div>
   );
 }

@@ -1,12 +1,9 @@
 
-
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/auth-provider';
 import { getUserProposals } from '@/app/actions';
-import { Header } from '@/components/page/header';
-import { Footer } from '@/components/page/footer';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -30,30 +27,12 @@ type DashboardPageProps = {
   params: { lang: Locale };
 };
 
-
-export default function DashboardPage({ params: { lang } }: DashboardPageProps) {
-  const [dictionary, setDictionary] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchDictionary = async () => {
-      const dict = await getDictionary(lang);
-      setDictionary(dict);
-    };
-    fetchDictionary();
-  }, [lang]);
-
-  if (!dictionary) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-  
-  return <DashboardClient dictionary={dictionary} lang={lang} />
+export default async function DashboardPage({ params: { lang } }: DashboardPageProps) {
+  const dictionary = await getDictionary(lang);
+  return <DashboardClient dictionary={dictionary} />;
 }
 
-function DashboardClient({ dictionary, lang }: { dictionary: any, lang: Locale }) {
+function DashboardClient({ dictionary }: { dictionary: any }) {
   const { user, loading: authLoading } = useAuth();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -94,61 +73,53 @@ function DashboardClient({ dictionary, lang }: { dictionary: any, lang: Locale }
 
   if (!user) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Header dictionary={dictionary.Header}/>
-        <main className="flex-1 flex flex-col items-center justify-center text-center">
-            <h1 className="text-2xl font-bold mb-4">Acceso Denegado</h1>
-            <p className="text-muted-foreground mb-4">Por favor, inicia sesión para ver tu dashboard.</p>
-             <Button onClick={logIn}>{dictionary.Header.login}</Button>
-        </main>
-        <Footer />
-      </div>
+      <main className="flex-1 flex flex-col items-center justify-center text-center my-20">
+          <h1 className="text-2xl font-bold mb-4">Acceso Denegado</h1>
+          <p className="text-muted-foreground mb-4">Por favor, inicia sesión para ver tu dashboard.</p>
+           <Button onClick={logIn}>{dictionary.Header.login}</Button>
+      </main>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header dictionary={dictionary.Header}/>
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Tu Dashboard</h1>
-        <Card>
-          <CardHeader>
-            <CardTitle>Mis Propuestas</CardTitle>
-            <CardDescription>Aquí puedes ver el estado de todas tus solicitudes.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {proposals.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Proyecto</TableHead>
-                    <TableHead>Presupuesto</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead>Fecha</TableHead>
+    <main className="flex-1 container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Tu Dashboard</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>Mis Propuestas</CardTitle>
+          <CardDescription>Aquí puedes ver el estado de todas tus solicitudes.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {proposals.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Proyecto</TableHead>
+                  <TableHead>Presupuesto</TableHead>
+                  <TableHead>Estado</TableHead>
+                  <TableHead>Fecha</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {proposals.map((p) => (
+                  <TableRow key={p.id}>
+                    <TableCell className="font-medium max-w-sm truncate">{p.proposal.summary}</TableCell>
+                    <TableCell>
+                      {p.proposal.budget ? `€${p.proposal.budget.min} - €${p.proposal.budget.max}` : 'N/A'}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={p.status === 'pending' ? 'secondary' : 'default'}>{p.status}</Badge>
+                    </TableCell>
+                    <TableCell>{new Date(p.createdAt).toLocaleDateString()}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {proposals.map((p) => (
-                    <TableRow key={p.id}>
-                      <TableCell className="font-medium max-w-sm truncate">{p.proposal.summary}</TableCell>
-                      <TableCell>
-                        {p.proposal.budget ? `€${p.proposal.budget.min} - €${p.proposal.budget.max}` : 'N/A'}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={p.status === 'pending' ? 'secondary' : 'default'}>{p.status}</Badge>
-                      </TableCell>
-                      <TableCell>{new Date(p.createdAt).toLocaleDateString()}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            ) : (
-              <p className="text-muted-foreground text-center py-8">No has enviado ninguna propuesta todavía.</p>
-            )}
-          </CardContent>
-        </Card>
-      </main>
-      <Footer />
-    </div>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <p className="text-muted-foreground text-center py-8">No has enviado ninguna propuesta todavía.</p>
+          )}
+        </CardContent>
+      </Card>
+    </main>
   );
 }
