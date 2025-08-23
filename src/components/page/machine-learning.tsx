@@ -4,7 +4,7 @@
 import * as React from "react"
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend, Cell, ResponsiveContainer, ComposedChart, Line, PieChart, Pie } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Play, Pause, RotateCcw, Settings, Map, Route, Antenna, CalendarDays, AreaChart, Bot } from "lucide-react"
+import { BrainCircuit, Users, Fuel, LineChart as LineChartIcon, Eye, Award, Play, Pause, RotateCcw, Settings, Map, Route, Antenna, CalendarDays, AreaChart, Bot, Target, Clock, TrendingUp } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 import { Button } from "../ui/button"
@@ -123,7 +123,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
             <CardDescription>Agrupación de datos no etiquetados en clústeres con K-Means.</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
-             <ChartContainer config={kMeansData} className="min-h-[300px] w-full">
+             <ChartContainer config={{}} className="min-h-[300px] w-full">
               <ResponsiveContainer width="100%" height={300}>
                 <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
@@ -181,7 +181,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <Route className="text-primary"/>
+                    <Target className="text-primary"/>
                     <span>Problema del Viajante (TSP)</span>
                 </CardTitle>
                 <CardDescription>Encontrar la ruta más corta para visitar una serie de ciudades, resuelto con un algoritmo genético.</CardDescription>
@@ -194,7 +194,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <CalendarDays className="text-primary"/>
+                    <Clock className="text-primary"/>
                     <span>Optimización de Horarios</span>
                 </CardTitle>
                 <CardDescription>Asignación de clases, profesores y aulas para minimizar conflictos usando algoritmos genéticos.</CardDescription>
@@ -207,7 +207,7 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
         <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <AreaChart className="text-primary"/>
+                    <TrendingUp className="text-primary"/>
                     <span>Cartera de Inversiones</span>
                 </CardTitle>
                 <CardDescription>Búsqueda de la cartera óptima que equilibra riesgo y beneficio mediante evolución.</CardDescription>
@@ -224,7 +224,6 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
 
 
 const TSPVisualizer = () => {
-  // Generar 10 ciudades aleatorias
   const generateCities = React.useCallback(() => {
     const cities = [];
     const names = ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Bilbao', 'Málaga', 'Zaragoza', 'Murcia', 'Palma', 'Córdoba'];
@@ -240,7 +239,7 @@ const TSPVisualizer = () => {
     return cities;
   }, []);
 
-  const [cities, setCities] = React.useState(generateCities);
+  const [cities, setCities] = React.useState<{id: number, name: string, x: number, y: number}[]>([]);
   const [currentPath, setCurrentPath] = React.useState<number[]>([]);
   const [bestPath, setBestPath] = React.useState<number[]>([]);
   const [bestDistance, setBestDistance] = React.useState(Infinity);
@@ -249,31 +248,32 @@ const TSPVisualizer = () => {
   const [totalSteps, setTotalSteps] = React.useState(0);
   const [speed, setSpeed] = React.useState(300);
 
-  // Calcular distancia entre dos ciudades
+  React.useEffect(() => {
+    setCities(generateCities());
+  }, [generateCities]);
+
   const calculateDistance = (city1: {x:number, y:number}, city2: {x:number, y:number}) => {
     const dx = city1.x - city2.x;
     const dy = city1.y - city2.y;
     return Math.sqrt(dx * dx + dy * dy);
   };
 
-  // Calcular distancia total de un camino
   const calculateTotalDistance = React.useCallback((path: number[]) => {
-    if (path.length < 2) return 0;
+    if (path.length < 2 || cities.length === 0) return 0;
     let total = 0;
     for (let i = 0; i < path.length - 1; i++) {
       total += calculateDistance(cities[path[i]], cities[path[i + 1]]);
     }
-    // Agregar distancia de vuelta al inicio
     if (path.length === cities.length) {
       total += calculateDistance(cities[path[path.length - 1]], cities[path[0]]);
     }
     return total;
   }, [cities]);
 
-  // Algoritmo del vecino más cercano
   const nearestNeighborAlgorithm = React.useCallback(() => {
+    if (cities.length === 0) return [];
     const visited = new Set();
-    const path = [0]; // Comenzar en la ciudad 0
+    const path = [0]; 
     visited.add(0);
     
     const steps = [];
@@ -304,16 +304,14 @@ const TSPVisualizer = () => {
   }, [cities]);
 
 
-  // Ejecutar algoritmo seleccionado
   const runAlgorithm = React.useCallback(() => {
     const steps = nearestNeighborAlgorithm();
     setTotalSteps(steps.length);
     return steps;
   }, [nearestNeighborAlgorithm]);
 
-  // Animar algoritmo
   React.useEffect(() => {
-    if (!isRunning) return;
+    if (!isRunning || cities.length === 0) return;
     
     const steps = runAlgorithm();
     if (steps.length === 0) {
@@ -348,7 +346,7 @@ const TSPVisualizer = () => {
     }, speed);
     
     return () => clearInterval(interval);
-  }, [isRunning, runAlgorithm, speed, bestDistance, calculateTotalDistance]);
+  }, [isRunning, runAlgorithm, speed, bestDistance, calculateTotalDistance, cities.length]);
 
   const handleStart = () => {
     handleReset(false);
@@ -373,13 +371,12 @@ const TSPVisualizer = () => {
 
   return (
     <div className="w-full flex flex-col gap-4 h-full">
-      {/* Controles */}
       <div className="flex flex-wrap gap-2 items-center">
         <Button
             onClick={isRunning ? handleStop : handleStart}
             variant={isRunning ? "destructive" : "default"}
             size="sm"
-            disabled={totalSteps > 0 && currentStep >= totalSteps}
+            disabled={totalSteps > 0 && currentStep >= totalSteps && totalSteps > 0}
           >
             {isRunning ? <Pause size={16} /> : <Play size={16} />}
             <span>{isRunning ? 'Pausar' : 'Iniciar'}</span>
@@ -394,16 +391,15 @@ const TSPVisualizer = () => {
         </Button>
       </div>
 
-      {/* Visualización */}
       <div className="rounded-lg overflow-hidden aspect-video relative bg-muted/50 flex-grow">
         <svg viewBox="0 0 350 250" className="w-full h-full">
-          {/* Mejor ruta (en gris claro) */}
           {bestPath.length > 1 && (
             <g stroke="hsl(var(--border))" strokeWidth="1" strokeDasharray="3 3" fill="none">
               {bestPath.map((cityIndex, i) => {
                 const nextIndex = (i + 1) % bestPath.length;
                 const city1 = cities[cityIndex];
                 const city2 = cities[bestPath[nextIndex]];
+                if (!city1 || !city2) return null;
                 return (
                   <line
                     key={`best-${i}`}
@@ -417,13 +413,13 @@ const TSPVisualizer = () => {
             </g>
           )}
 
-          {/* Ruta actual */}
           {currentPath.length > 1 && (
             <g stroke="hsl(var(--primary))" strokeWidth="1.5" fill="none">
               {currentPath.map((cityIndex, i) => {
                 if (i === currentPath.length - 1) return null;
                 const city1 = cities[cityIndex];
                 const city2 = cities[currentPath[i + 1]];
+                if (!city1 || !city2) return null;
                 return (
                   <line
                     key={`current-${i}`}
@@ -434,8 +430,7 @@ const TSPVisualizer = () => {
                   />
                 );
               })}
-              {/* Línea de regreso al inicio si la ruta está completa */}
-              {currentPath.length === cities.length && (
+              {currentPath.length === cities.length && cities.length > 0 && (
                 <line
                   x1={cities[currentPath[currentPath.length - 1]].x}
                   y1={cities[currentPath[currentPath.length - 1]].y}
@@ -447,7 +442,6 @@ const TSPVisualizer = () => {
             </g>
           )}
 
-          {/* Ciudades */}
           {cities.map((city, index) => {
             const isVisited = currentPath.includes(index);
             const isCurrent = currentPath.length > 0 && currentPath[currentPath.length - 1] === index;
@@ -580,19 +574,21 @@ const ScheduleOptimizer = () => {
     }, [isRunning, evolveSchedule]);
 
     const handleStart = () => {
-        if (schedule.length === 0) {
-            const initialSchedule = createRandomSchedule();
-            setSchedule(initialSchedule);
-            setConflicts(calculateConflicts(initialSchedule));
-        }
         setIsRunning(true);
     };
+
+    React.useEffect(() => {
+        const initialSchedule = createRandomSchedule();
+        setSchedule(initialSchedule);
+        setConflicts(calculateConflicts(initialSchedule));
+    }, [createRandomSchedule]);
     
     const handleReset = () => {
         setIsRunning(false);
-        setSchedule([]);
         setGeneration(0);
-        setConflicts(0);
+        const initialSchedule = createRandomSchedule();
+        setSchedule(initialSchedule);
+        setConflicts(calculateConflicts(initialSchedule));
         setBestSchedule(null);
         setMinConflicts(Infinity);
     };
@@ -731,19 +727,21 @@ const PortfolioOptimizer = () => {
     }, [isRunning, evolvePortfolio]);
 
     const handleStart = () => {
-        if (portfolio.length === 0) {
-            const initialPortfolio = createRandomPortfolio();
-            setPortfolio(initialPortfolio);
-            setSharpeRatio(calculateSharpeRatio(initialPortfolio));
-        }
         setIsRunning(true);
     };
 
+    React.useEffect(() => {
+        const initialPortfolio = createRandomPortfolio();
+        setPortfolio(initialPortfolio);
+        setSharpeRatio(calculateSharpeRatio(initialPortfolio));
+    }, [createRandomPortfolio, calculateSharpeRatio]);
+
     const handleReset = () => {
         setIsRunning(false);
-        setPortfolio([]);
         setGeneration(0);
-        setSharpeRatio(0);
+        const initialPortfolio = createRandomPortfolio();
+        setPortfolio(initialPortfolio);
+        setSharpeRatio(calculateSharpeRatio(initialPortfolio));
         setBestPortfolio(null);
         setBestSharpe(-Infinity);
     };
@@ -791,7 +789,8 @@ const PortfolioOptimizer = () => {
         <div className="w-full flex flex-col gap-4 h-full">
             <div className="flex flex-wrap gap-2 items-center">
                 <Button onClick={isRunning ? () => setIsRunning(false) : handleStart} size="sm" variant={isRunning ? "destructive" : "default"}>
-                    <Play size={16} /><span>{isRunning ? 'Pausar' : 'Encontrar Cartera'}</span>
+                    {isRunning ? <Pause size={16}/> : <Play size={16} />}
+                    <span>{isRunning ? 'Pausar' : 'Encontrar Cartera'}</span>
                 </Button>
                 <Button onClick={handleReset} size="sm" variant="outline"><RotateCcw size={16} /><span>Reiniciar</span></Button>
             </div>
@@ -825,5 +824,3 @@ const PortfolioOptimizer = () => {
         </div>
     )
 }
-
-    
