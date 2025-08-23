@@ -1,23 +1,15 @@
-import { Header } from '@/components/page/header';
 import { Hero } from '@/components/page/hero';
 import { RealEstate } from '@/components/page/real-estate';
 import { Industrial } from '@/components/page/industrial';
 import { Contact } from '@/components/page/contact';
-import { Footer } from '@/components/page/footer';
 import { Services } from '@/components/page/services';
 import { Ecommerce } from '@/components/page/ecommerce';
 import { AnimatedSection } from '@/components/page/animated-section';
 import { MachineLearning } from '@/components/page/machine-learning';
-import { getDictionary } from '@/lib/get-dictionary';
-import { Locale } from '@/i18n-config';
 
-
-export default async function Home({ params: { lang } }: { params: { lang: Locale }}) {
-  const dictionary = await getDictionary(lang);
-
+export default function Home() {
   return (
     <>
-      <Header dictionary={dictionary.Header} />
       <main className="flex-1">
         <Hero />
         <AnimatedSection delay={0.2}>
@@ -39,7 +31,6 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
           <Contact backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runvGCn32u5cHM_--ar_12869_--video_1_db1350cf-9e75-4647-af40-dfcd3d87446b_3.mp4" />
         </AnimatedSection>
       </main>
-      <Footer />
     </>
   );
 }
