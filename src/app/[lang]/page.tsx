@@ -1,3 +1,4 @@
+
 import { Hero } from '@/components/page/hero';
 import { RealEstate } from '@/components/page/real-estate';
 import { Industrial } from '@/components/page/industrial';
