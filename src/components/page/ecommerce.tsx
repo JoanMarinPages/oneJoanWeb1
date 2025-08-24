@@ -188,7 +188,7 @@ export function Ecommerce({ dictionary }: EcommerceProps) {
 
         <div
           className={cn(
-            "absolute top-0 right-0 h-full w-full max-w-sm bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
+            "absolute top-0 right-0 h-full w-full max-w-md md:max-w-[65%] bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
             cartOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
