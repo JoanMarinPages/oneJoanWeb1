@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -96,7 +97,7 @@ export default {
         },
         'scroll-y': {
             '0%': { transform: 'translateY(0)' },
-            '100%': { transform: 'translateY(calc(-100% + 700px))' },
+            '100%': { transform: 'translateY(calc(-100% + 600px))' },
         },
         "shape-float-1": {
           "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
@@ -142,3 +143,5 @@ export default {
   },
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;
+
+    

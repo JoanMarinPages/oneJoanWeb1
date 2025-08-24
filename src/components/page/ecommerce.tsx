@@ -99,7 +99,7 @@ export function Ecommerce({ dictionary }: EcommerceProps) {
     return allProducts.filter(p => p.category === activeFilter);
   }, [activeFilter]);
   
-  const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts];
+  const displayProducts = [...filteredProducts, ...filteredProducts];
 
   const title = (
     <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("E-commerce Dinámico", `<span class="text-primary">E-commerce Dinámico</span>`) }} />
@@ -114,7 +114,7 @@ export function Ecommerce({ dictionary }: EcommerceProps) {
       description={description}
       backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4"
     >
-      <div className="relative w-full min-h-[700px] overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
+      <div className="relative w-full min-h-[600px] overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
         <div className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
           
           <div className="h-full w-full md:w-[35%] flex flex-col">
@@ -265,3 +265,5 @@ function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: Reac
         </Button>
     )
 }
+
+    
