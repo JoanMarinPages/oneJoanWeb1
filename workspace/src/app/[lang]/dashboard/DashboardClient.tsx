@@ -50,11 +50,21 @@ export function DashboardClient({ dictionary }: DashboardClientProps) {
   }, [user, authLoading]);
   
   const logIn = () => {
-    const authProvider = (window as any).authProvider;
-    if (authProvider) {
-      authProvider.logIn();
+    // This is a workaround to call the logIn function from the AuthProvider context
+    // which is not directly available in a server component that can't use hooks.
+    // A better approach would be to have a global state or a different architecture
+    // for authentication actions if needed outside of client components.
+    if (typeof window !== 'undefined') {
+      (window as any).logIn?.();
     }
-  }
+  };
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        (window as any).logIn = logIn;
+    }
+  }, [logIn]);
+
 
   if (authLoading || loading) {
     return (
