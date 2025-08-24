@@ -28,9 +28,10 @@ type Message = {
 
 interface ContactProps {
   backgroundVideoUrl: string;
+  dictionary: any;
 }
 
-export function Contact({ backgroundVideoUrl }: ContactProps) {
+export function Contact({ backgroundVideoUrl, dictionary }: ContactProps) {
     const [messages, setMessages] = React.useState<Message[]>([]);
     const [input, setInput] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
@@ -39,9 +40,9 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
     React.useEffect(() => {
         // Start the conversation with a greeting from the assistant
         setMessages([
-            { role: 'model', content: "¡Hola! Soy el asistente virtual de OneJoan. Estoy aquí para ayudarte a perfilar tu proyecto y ofrecerte una propuesta inicial. Para empezar, ¿cuál es tu nombre y en qué tipo de proyecto estás pensando?" }
+            { role: 'model', content: dictionary.chat_greeting }
         ]);
-    }, []);
+    }, [dictionary.chat_greeting]);
 
     React.useEffect(() => {
         // Scroll to the bottom whenever messages change
@@ -83,12 +84,10 @@ export function Contact({ backgroundVideoUrl }: ContactProps) {
     };
 
     const title = (
-        <>
-            Hablemos de tu <span className="text-primary">Proyecto</span>
-        </>
+        <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("Proyecto", `<span class="text-primary">Proyecto</span>`) }} />
     );
 
-    const description = "Chatea con mi asistente de IA para definir tus necesidades y obtener una propuesta preliminar en minutos.";
+    const description = dictionary.subtitle;
 
 
     return (
@@ -327,6 +326,7 @@ function ContactFormModal({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
+
                                     <FormControl>
                                         <Input placeholder="tu@email.com" {...field} />
                                     </FormControl>
@@ -347,5 +347,3 @@ function ContactFormModal({
         </Dialog>
     );
 }
-
-    

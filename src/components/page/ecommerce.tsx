@@ -77,7 +77,11 @@ const featuredProduct = allProducts[0];
 const cartProduct = allProducts[1];
 const categories = ["Todos", "Portátil", "Periférico", "Monitor"];
 
-export function Ecommerce() {
+interface EcommerceProps {
+  dictionary: any;
+}
+
+export function Ecommerce({ dictionary }: EcommerceProps) {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [activeConfig, setActiveConfig] = React.useState({ ram: "16GB", storage: "1TB", cpu: "M4 Pro" });
   const [activeFilter, setActiveFilter] = React.useState("Todos");
@@ -98,12 +102,10 @@ export function Ecommerce() {
   const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts];
 
   const title = (
-    <>
-      <span className="text-primary">E-commerce Dinámico</span> y Moderno
-    </>
+    <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("E-commerce Dinámico", `<span class="text-primary">E-commerce Dinámico</span>`) }} />
   );
 
-  const description = "Desde catálogos animados hasta carritos de compra interactivos, creo experiencias de compra online que convierten visitantes en clientes.";
+  const description = dictionary.subtitle;
 
   return (
     <Section 
@@ -263,5 +265,3 @@ function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: Reac
         </Button>
     )
 }
-
-    

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -5,7 +6,11 @@ import Link from 'next/link';
 import { Code2, Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import { Button } from '../ui/button';
 
-export function Footer() {
+interface FooterProps {
+  dictionary: any;
+}
+
+export function Footer({ dictionary }: FooterProps) {
   const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
@@ -22,7 +27,7 @@ export function Footer() {
                 <span className="font-bold text-xl font-headline">OneJoan</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Soluciones digitales de alto impacto para llevar tu negocio al siguiente nivel.
+              {dictionary.subtitle}
             </p>
             <div className="flex gap-2 mt-2">
               <Button variant="ghost" size="icon" asChild>
@@ -49,36 +54,36 @@ export function Footer() {
           </div>
           
           <div>
-            <h4 className="font-headline font-semibold mb-4">Servicios</h4>
+            <h4 className="font-headline font-semibold mb-4">{dictionary.services_title}</h4>
             <ul className="space-y-2">
-              <li><Link href="#real-estate" className="text-sm text-muted-foreground hover:text-primary transition-colors">Inmobiliaria y Arquitectura</Link></li>
-              <li><Link href="#industrial" className="text-sm text-muted-foreground hover:text-primary transition-colors">Simulación Industrial</Link></li>
-              <li><span className="text-sm text-muted-foreground/50">Desarrollo Web y Apps</span></li>
-              <li><span className="text-sm text-muted-foreground/50">Inteligencia Artificial</span></li>
+              <li><Link href="#real-estate" className="text-sm text-muted-foreground hover:text-primary transition-colors">{dictionary.service1}</Link></li>
+              <li><Link href="#industrial" className="text-sm text-muted-foreground hover:text-primary transition-colors">{dictionary.service2}</Link></li>
+              <li><span className="text-sm text-muted-foreground">{dictionary.service3}</span></li>
+              <li><span className="text-sm text-muted-foreground">{dictionary.service4}</span></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-headline font-semibold mb-4">Legal</h4>
+            <h4 className="font-headline font-semibold mb-4">{dictionary.legal_title}</h4>
             <ul className="space-y-2">
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Política de Privacidad</Link></li>
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Términos de Servicio</Link></li>
-               <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Política de Cookies</Link></li>
+              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">{dictionary.legal1}</Link></li>
+              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">{dictionary.legal2}</Link></li>
+               <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">{dictionary.legal3}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-headline font-semibold mb-4">Contacto</h4>
+            <h4 className="font-headline font-semibold mb-4">{dictionary.contact_title}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>joanmarinpages@gmail.com</li>
               <li>(+34) 666 777 888</li>
-              <li>Barcelona, España</li>
+              <li>{dictionary.contact3}</li>
             </ul>
           </div>
 
         </div>
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>© {year || new Date().getFullYear()} Joan Marín. Todos los derechos reservados.</p>
+            <p>© {year || new Date().getFullYear()} Joan Marín. {dictionary.copyright}</p>
         </div>
       </div>
     </footer>

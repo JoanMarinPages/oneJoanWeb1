@@ -9,5 +9,86 @@
     "contact": "Contact",
     "login": "Login",
     "logout": "Log Out"
+  },
+  "Hero": {
+    "title1": "More than a website, your",
+    "title2": "Strategic Advantage",
+    "subtitle": "I transform ideas into high-impact digital solutions. My goal is simple: to deliver results that drive your growth and set you apart in the market.",
+    "cta1": "Start my Project",
+    "cta2": "View Services"
+  },
+  "Services": {
+    "title": "An Ecosystem of Solutions Tailored to You",
+    "subtitle": "From concept to deployment, I offer a range of technological services to boost your project.",
+    "service1_title": "Web and App Development",
+    "service1_desc": "Custom, robust, and scalable web and mobile solutions with a user-centered design.",
+    "service2_title": "Artificial Intelligence",
+    "service2_desc": "I integrate AI models to automate processes, gain insights, and create personalized experiences.",
+    "service3_title": "Augmented Reality",
+    "service3_desc": "I transform interaction with the real world through immersive and interactive AR experiences.",
+    "service4_title": "Industrial Simulation",
+    "service4_desc": "I create digital twins and process simulations to optimize production and reduce costs."
+  },
+  "RealEstate": {
+    "title": "Solutions for Real Estate and Architecture",
+    "subtitle": "Interactive visualizations and immersive experiences that bring your projects to life before they are built.",
+    "project1_title": "Showcase your<br />space",
+    "project1_desc": "Create professional views",
+    "project2_title": "The world's most advanced<br/>NeRF 3D generation technology"
+  },
+  "Industrial": {
+    "title": "Industrial Analytics Dashboard",
+    "subtitle": "Optimize processes and predict outcomes through motion simulation, data analysis, and interactive visualizations.",
+    "chart1_title": "Performance Analysis",
+    "chart1_desc": "Comparison of leads generated vs. sales closed.",
+    "chart1_legend1": "New Leads",
+    "chart1_legend2": "Sales Closed",
+    "chart2_title": "Efficiency by Sector",
+    "chart2_desc": "Resource distribution and effectiveness.",
+    "chart2_legend1": "Production",
+    "chart2_legend2": "Logistics",
+    "chart2_legend3": "Maintenance",
+    "chart2_legend4": "Quality",
+    "chart3_title": "OEE Evolution (%)",
+    "chart3_desc": "Overall Equipment Effectiveness",
+    "card1_title": "Process Simulation",
+    "card1_desc": "Visualize and optimize assembly lines, logistics flows, or any industrial process to identify bottlenecks and improve efficiency before physical implementation.",
+    "card2_title": "Digital Twins",
+    "card2_desc": "Create virtual replicas of your assets for real-time monitoring, predictive maintenance, and risk-free scenario testing for production.",
+    "card3_title": "Data Dashboards",
+    "card3_desc": "Transform raw data from sensors and machinery into actionable insights through interactive dashboards that display key performance indicators of your operation."
+  },
+  "MachineLearning": {
+    "title": "Machine Learning Case Studies",
+    "subtitle": "Visualizations of Machine Learning models to demonstrate their application in real-world problems like classification, segmentation, and genetic optimization.",
+    "card1_title": "Customer Classification",
+    "card1_desc": "Predicting customer churn using Logistic Regression.",
+    "card1_footer_title": "Analysis and Results",
+    "card1_footer_desc": "The model learns to draw an invisible 'boundary' that effectively separates customers who are likely to churn from those who will stay, enabling proactive retention actions."
+  },
+  "Ecommerce": {
+    "title": "Dynamic and Modern E-commerce",
+    "subtitle": "From animated product catalogs to interactive shopping carts, I create online shopping experiences that turn visitors into customers."
+  },
+  "Contact": {
+    "title": "Let's Talk About Your Project",
+    "subtitle": "Chat with my AI assistant to define your needs and get a preliminary proposal in minutes.",
+    "chat_greeting": "Hello! I'm OneJoan's virtual assistant. I'm here to help you outline your project and provide you with an initial proposal. To get started, what's your name and what kind of project are you thinking of?"
+  },
+  "Footer": {
+    "subtitle": "High-impact digital solutions to take your business to the next level.",
+    "services_title": "Services",
+    "service1": "Real Estate & Architecture",
+    "service2": "Industrial Simulation",
+    "service3": "Web & App Development",
+    "service4": "Artificial Intelligence",
+    "legal_title": "Legal",
+    "legal1": "Privacy Policy",
+    "legal2": "Terms of Service",
+    "legal3": "Cookie Policy",
+    "contact_title": "Contact",
+
+    "contact3": "Barcelona, Spain",
+    "copyright": "All rights reserved."
   }
 }

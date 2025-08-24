@@ -63,16 +63,15 @@ const fuelChartConfig = {
 
 interface MachineLearningProps {
   backgroundVideoUrl: string;
+  dictionary: any;
 }
 
-export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
+export function MachineLearning({ backgroundVideoUrl, dictionary }: MachineLearningProps) {
   const title = (
-    <>
-      Casos de Estudio de <span className="text-primary">Machine Learning</span>
-    </>
+    <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("Machine Learning", `<span class="text-primary">Machine Learning</span>`) }} />
   );
 
-  const description = "Visualizaciones de modelos de Machine Learning para demostrar su aplicación en problemas reales como la clasificación, segmentación y optimización genética.";
+  const description = dictionary.subtitle;
 
   return (
     <Section id="machine-learning" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
@@ -81,9 +80,9 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
                 <BrainCircuit className="text-primary"/>
-                <span>Clasificación de Clientes</span>
+                <span>{dictionary.card1_title}</span>
             </CardTitle>
-            <CardDescription>Predicción de abandono (churn) de clientes usando Regresión Logística.</CardDescription>
+            <CardDescription>{dictionary.card1_desc}</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
             <ChartContainer config={churnChartConfig} className="min-h-[300px] w-full">
@@ -108,8 +107,8 @@ export function MachineLearning({ backgroundVideoUrl }: MachineLearningProps) {
           </CardContent>
            <CardFooter className="pt-6">
              <div className="w-full">
-                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>Análisis y Resultados</h4>
-                <p className="text-sm text-muted-foreground">El modelo aprende a trazar una "frontera" invisible que separa eficazmente a los clientes que probablemente abandonarán (cruces rojas) de los que permanecerán (círculos verdes), permitiendo acciones de retención proactivas.</p>
+                <h4 className="font-semibold flex items-center gap-2 mb-2"><Eye className="h-5 w-5 text-primary"/>{dictionary.card1_footer_title}</h4>
+                <p className="text-sm text-muted-foreground">{dictionary.card1_footer_desc}</p>
              </div>
           </CardFooter>
         </Card>
@@ -249,7 +248,6 @@ const TSPVisualizer = () => {
   const [speed, setSpeed] = React.useState(300);
 
   React.useEffect(() => {
-    // Generate cities only on the client-side
     setCities(generateCities());
   }, [generateCities]);
 
@@ -579,7 +577,6 @@ const ScheduleOptimizer = () => {
     };
 
     React.useEffect(() => {
-        // Generate on client
         if(schedule.length === 0) {
             const initialSchedule = createRandomSchedule();
             setSchedule(initialSchedule);
@@ -764,7 +761,7 @@ const PortfolioOptimizer = () => {
         setBestSharpe(-Infinity);
     };
     
-    const renderPieChart = (weights: number[], title: string, config: any) => {
+    const renderPieChart = (weights: number[] | null, title: string) => {
         if (!weights || weights.length === 0) return (
              <div className="flex items-center justify-center h-full">
                 <p className="text-muted-foreground text-sm">Pulsa "Encontrar" para empezar</p>
@@ -781,7 +778,7 @@ const PortfolioOptimizer = () => {
             <div className="flex flex-col h-full">
                 <h5 className="font-medium text-center mb-2">{title}</h5>
                 <div className="flex-grow">
-                    <ChartContainer config={config} className="w-full h-full min-h-[150px]">
+                    <ChartContainer config={chartConfig} className="w-full h-full min-h-[150px]">
                          <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => (`${name}: ${Number(value).toFixed(1)}%`)} />} />
@@ -831,8 +828,8 @@ const PortfolioOptimizer = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4 flex-grow">
-                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(portfolio, "Cartera Actual", chartConfig)}</div>
-                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(bestPortfolio, "Mejor Cartera", chartConfig)}</div>
+                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(portfolio, "Cartera Actual")}</div>
+                 <div className="rounded-lg bg-muted/50 p-2">{renderPieChart(bestPortfolio, "Mejor Cartera")}</div>
             </div>
 
             <div className="mt-auto bg-primary/10 p-3 rounded-lg">

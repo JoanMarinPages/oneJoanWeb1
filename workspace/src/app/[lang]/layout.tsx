@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from 'next/font/google';
 import "../globals.css";
@@ -39,7 +40,7 @@ export default async function LangLayout({
   params: { lang: Locale };
 }>) {
   const dictionary = await getDictionary(lang);
-  
+
   return (
       <div className="flex flex-col min-h-screen bg-background text-foreground">
           <Header dictionary={dictionary.Header} />

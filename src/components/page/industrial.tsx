@@ -8,91 +8,91 @@ import { Building2, TrendingUp, Zap } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Section } from "./section"
 
-const barChartData = [
-  { date: "Ene", "Nuevos Contactos": 186, "Ventas Realizadas": 80 },
-  { date: "Feb", "Nuevos Contactos": 305, "Ventas Realizadas": 200 },
-  { date: "Mar", "Nuevos Contactos": 237, "Ventas Realizadas": 120 },
-  { date: "Abr", "Nuevos Contactos": 273, "Ventas Realizadas": 190 },
-  { date: "May", "Nuevos Contactos": 209, "Ventas Realizadas": 130 },
-  { date: "Jun", "Nuevos Contactos": 214, "Ventas Realizadas": 140 },
-]
-
-const barChartConfig = {
-  "Nuevos Contactos": {
-    label: "Nuevos Contactos",
-    color: "hsl(var(--accent))",
-  },
-  "Ventas Realizadas": {
-    label: "Ventas Realizadas",
-    color: "hsl(var(--primary))",
-  },
-}
-
-const lineChartData = [
-  { month: 'Enero', oee: 65 },
-  { month: 'Febrero', oee: 72 },
-  { month: 'Marzo', oee: 78 },
-  { month: 'Abril', oee: 75 },
-  { month: 'Mayo', oee: 82 },
-  { month: 'Junio', oee: 85 },
-];
-
-const lineChartConfig = {
-  oee: {
-    label: "OEE",
-    color: "hsl(var(--primary))",
-  },
-}
-
-const pieChartData = [
-    { name: 'Producción', value: 400, fill: 'hsl(var(--chart-1))' },
-    { name: 'Logística', value: 300, fill: 'hsl(var(--chart-2))' },
-    { name: 'Mantenimiento', value: 200, fill: 'hsl(var(--chart-3))' },
-    { name: 'Calidad', value: 278, fill: 'hsl(var(--chart-4))' },
-];
-
-const pieChartConfig = {
-  value: {
-    label: "Value",
-  },
-  Producción: {
-    label: "Producción",
-    color: "hsl(var(--chart-1))",
-  },
-  Logística: {
-    label: "Logística",
-    color: "hsl(var(--chart-2))",
-  },
-  Mantenimiento: {
-    label: "Mantenimiento",
-    color: "hsl(var(--chart-3))",
-  },
-  Calidad: {
-    label: "Calidad",
-    color: "hsl(var(--chart-4))",
-  },
-}
-
 interface IndustrialProps {
   backgroundVideoUrl: string;
+  dictionary: any;
 }
 
-export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
-    const title = (
-    <>
-      Dashboard de <span className="text-primary">Analítica Industrial</span>
-    </>
-  );
+export function Industrial({ backgroundVideoUrl, dictionary }: IndustrialProps) {
+    
+    const barChartData = [
+      { date: "Ene", [dictionary.chart1_legend1]: 186, [dictionary.chart1_legend2]: 80 },
+      { date: "Feb", [dictionary.chart1_legend1]: 305, [dictionary.chart1_legend2]: 200 },
+      { date: "Mar", [dictionary.chart1_legend1]: 237, [dictionary.chart1_legend2]: 120 },
+      { date: "Abr", [dictionary.chart1_legend1]: 273, [dictionary.chart1_legend2]: 190 },
+      { date: "May", [dictionary.chart1_legend1]: 209, [dictionary.chart1_legend2]: 130 },
+      { date: "Jun", [dictionary.chart1_legend1]: 214, [dictionary.chart1_legend2]: 140 },
+    ]
 
-  const description = "Optimiza procesos y predice resultados mediante la simulación de movimientos, análisis de datos y visualizaciones interactivas.";
+    const barChartConfig = {
+      [dictionary.chart1_legend1]: {
+        label: dictionary.chart1_legend1,
+        color: "hsl(var(--accent))",
+      },
+      [dictionary.chart1_legend2]: {
+        label: dictionary.chart1_legend2,
+        color: "hsl(var(--primary))",
+      },
+    }
+
+    const lineChartData = [
+      { month: 'Enero', oee: 65 },
+      { month: 'Febrero', oee: 72 },
+      { month: 'Marzo', oee: 78 },
+      { month: 'Abril', oee: 75 },
+      { month: 'Mayo', oee: 82 },
+      { month: 'Junio', oee: 85 },
+    ];
+
+    const lineChartConfig = {
+      oee: {
+        label: "OEE",
+        color: "hsl(var(--primary))",
+      },
+    }
+
+    const pieChartData = [
+        { name: dictionary.chart2_legend1, value: 400, fill: 'hsl(var(--chart-1))' },
+        { name: dictionary.chart2_legend2, value: 300, fill: 'hsl(var(--chart-2))' },
+        { name: dictionary.chart2_legend3, value: 200, fill: 'hsl(var(--chart-3))' },
+        { name: dictionary.chart2_legend4, value: 278, fill: 'hsl(var(--chart-4))' },
+    ];
+    
+    const pieChartConfig = {
+      value: {
+        label: "Value",
+      },
+      [dictionary.chart2_legend1]: {
+        label: dictionary.chart2_legend1,
+        color: "hsl(var(--chart-1))",
+      },
+      [dictionary.chart2_legend2]: {
+        label: dictionary.chart2_legend2,
+        color: "hsl(var(--chart-2))",
+      },
+      [dictionary.chart2_legend3]: {
+        label: dictionary.chart2_legend3,
+        color: "hsl(var(--chart-3))",
+      },
+      [dictionary.chart2_legend4]: {
+        label: dictionary.chart2_legend4,
+        color: "hsl(var(--chart-4))",
+      },
+    }
+
+    const title = (
+        <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("Analítica Industrial", `<span class="text-primary">Analítica Industrial</span>`) }} />
+    );
+
+    const description = dictionary.subtitle;
 
   return (
     <Section id="industrial" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <Card className="lg:col-span-2 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
-                    <CardTitle>Análisis de Rendimiento (Enero - Junio {new Date().getFullYear()})</CardTitle>
-                    <CardDescription>Comparativa de contactos generados vs. ventas cerradas.</CardDescription>
+                    <CardTitle>{dictionary.chart1_title} ({new Date().getFullYear()})</CardTitle>
+                    <CardDescription>{dictionary.chart1_desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={barChartConfig} className="min-h-[300px] w-full">
@@ -105,16 +105,16 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                                 content={<ChartTooltipContent />}
                             />
                             <Legend />
-                            <Bar dataKey="Nuevos Contactos" fill="var(--color-Nuevos Contactos)" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="Ventas Realizadas" fill="var(--color-Ventas Realizadas)" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey={dictionary.chart1_legend1} fill={`var(--color-${dictionary.chart1_legend1})`} radius={[4, 4, 0, 0]} />
+                            <Bar dataKey={dictionary.chart1_legend2} fill={`var(--color-${dictionary.chart1_legend2})`} radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ChartContainer>
                 </CardContent>
             </Card>
                 <Card className="bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
-                    <CardTitle>Eficiencia por Sector</CardTitle>
-                        <CardDescription>Distribución de recursos y efectividad.</CardDescription>
+                    <CardTitle>{dictionary.chart2_title}</CardTitle>
+                        <CardDescription>{dictionary.chart2_desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={pieChartConfig} className="min-h-[300px] w-full">
@@ -144,8 +144,8 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <Card className="lg:col-span-1 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                 <CardHeader>
-                    <CardTitle>Evolución OEE (%)</CardTitle>
-                    <CardDescription>Overall Equipment Effectiveness</CardDescription>
+                    <CardTitle>{dictionary.chart3_title}</CardTitle>
+                    <CardDescription>{dictionary.chart3_desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={lineChartConfig} className="min-h-[300px] w-full">
@@ -166,27 +166,27 @@ export function Industrial({ backgroundVideoUrl }: IndustrialProps) {
                 <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><Zap className="h-7 w-7 text-primary"/></div>
                     <div>
-                        <h3 className="text-xl font-bold font-headline">Simulación de Procesos</h3>
+                        <h3 className="text-xl font-bold font-headline">{dictionary.card1_title}</h3>
                         <p className="text-muted-foreground mt-1">
-                            Visualiza y optimiza cadenas de montaje, flujos logísticos o cualquier proceso industrial para identificar cuellos de botella y mejorar la eficiencia antes de la implementación física.
+                            {dictionary.card1_desc}
                         </p>
                     </div>
                 </Card>
                     <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><Building2 className="h-7 w-7 text-primary"/></div>
                     <div>
-                        <h3 className="text-xl font-bold font-headline">Gemelos Digitales</h3>
+                        <h3 className="text-xl font-bold font-headline">{dictionary.card2_title}</h3>
                         <p className="text-muted-foreground mt-1">
-                            Crea réplicas virtuales de tus activos para monitorización en tiempo real, mantenimiento predictivo y pruebas de escenarios sin riesgo para la producción.
+                            {dictionary.card2_desc}
                         </p>
                     </div>
                 </Card>
                     <Card className="flex items-start gap-4 p-6 bg-card/80 backdrop-blur-sm border-white/10 shadow-lg shadow-primary/5">
                     <div className="p-3 bg-primary/10 rounded-full"><TrendingUp className="h-7 w-7 text-primary"/></div>
                     <div>
-                        <h3 className="text-xl font-bold font-headline">Dashboards de Datos</h3>
+                        <h3 className="text-xl font-bold font-headline">{dictionary.card3_title}</h3>
                         <p className="text-muted-foreground mt-1">
-                            Transforma datos brutos de sensores y maquinaria en insights accionables a través de dashboards interactivos que muestran KPIs clave de tu operación.
+                           {dictionary.card3_desc}
                         </p>
                     </div>
                 </Card>

@@ -9,5 +9,85 @@
     "contact": "Contacte",
     "login": "Inicia sessió",
     "logout": "Tanca la sessió"
+  },
+  "Hero": {
+    "title1": "Més que una web, el teu",
+    "title2": "Avantatge Estratègic",
+    "subtitle": "Transformo idees en solucions digitals d'alt impacte. El meu objectiu és simple: lliurar resultats que impulsin el teu creixement i et diferenciïn en el mercat.",
+    "cta1": "Començar el meu Projecte",
+    "cta2": "Veure Serveis"
+  },
+  "Services": {
+    "title": "Un Ecosistema de Solucions a la teva Mida",
+    "subtitle": "Des del concepte fins al desplegament, ofereixo un ventall de serveis tecnològics per impulsar el teu projecte.",
+    "service1_title": "Desenvolupament Web i Apps",
+    "service1_desc": "Solucions web i mòbils a mida, robustes i escalables, amb un disseny centrat en l'usuari.",
+    "service2_title": "Intel·ligència Artificial",
+    "service2_desc": "Integro models d'IA per automatitzar processos, obtenir insights i crear experiències personalitzades.",
+    "service3_title": "Realitat Augmentada",
+    "service3_desc": "Transformo la interacció amb el món real a través d'experiències de RA immersives i interactives.",
+    "service4_title": "Simulació Industrial",
+    "service4_desc": "Creo bessons digitals i simulacions de processos per optimitzar la producció i reduir costos."
+  },
+  "RealEstate": {
+    "title": "Solucions per a Immobiliària i Arquitectura",
+    "subtitle": "Visualitzacions interactives i experiències immersives que donen vida als teus projectes abans de construir-los.",
+    "project1_title": "Llumena el teu<br />espai",
+    "project1_desc": "Crea vistes professionals",
+    "project2_title": "La tecnologia de generació 3D NeRF<br/>més avançada del món"
+  },
+  "Industrial": {
+    "title": "Dashboard d'Analítica Industrial",
+    "subtitle": "Optimitza processos i prediu resultats mitjançant la simulació de moviments, anàlisi de dades i visualitzacions interactives.",
+    "chart1_title": "Anàlisi de Rendiment",
+    "chart1_desc": "Comparativa de contactes generats vs. vendes tancades.",
+    "chart1_legend1": "Nous Contactes",
+    "chart1_legend2": "Vendes Realitzades",
+    "chart2_title": "Eficiència per Sector",
+    "chart2_desc": "Distribució de recursos i efectivitat.",
+    "chart2_legend1": "Producció",
+    "chart2_legend2": "Logística",
+    "chart2_legend3": "Manteniment",
+    "chart2_legend4": "Qualitat",
+    "chart3_title": "Evolució OEE (%)",
+    "chart3_desc": "Overall Equipment Effectiveness",
+    "card1_title": "Simulació de Processos",
+    "card1_desc": "Visualitza i optimitza cadenes de muntatge, fluxos logístics o qualsevol procés industrial per identificar colls d'ampolla i millorar l'eficiència abans de la implementació física.",
+    "card2_title": "Bessons Digitals",
+    "card2_desc": "Crea rèpliques virtuals dels teus actius per a monitorització en temps real, manteniment predictiu i proves d'escenaris sense risc per a la producció.",
+    "card3_title": "Dashboards de Dades",
+    "card3_desc": "Transforma dades brutes de sensors i maquinària en insights accionables a través de dashboards interactius que mostren KPIs clau de la teva operació."
+  },
+  "MachineLearning": {
+    "title": "Casos d'Estudi de Machine Learning",
+    "subtitle": "Visualitzacions de models de Machine Learning per demostrar la seva aplicació en problemes reals com la classificació, segmentació i optimització genètica.",
+    "card1_title": "Classificació de Clients",
+    "card1_desc": "Predicció d'abandonament (churn) de clients usant Regressió Logística.",
+    "card1_footer_title": "Anàlisi i Resultats",
+    "card1_footer_desc": "El model aprèn a traçar una \"frontera\" invisible que separa eficaçment els clients que probablement abandonaran dels que es quedaran, permetent accions de retenció proactives."
+  },
+  "Ecommerce": {
+    "title": "E-commerce Dinàmic i Modern",
+    "subtitle": "Des de catàlegs animats fins a cistelles de la compra interactives, creo experiències de compra en línia que converteixen visitants en clients."
+  },
+  "Contact": {
+    "title": "Parlem del teu Projecte",
+    "subtitle": "Xateja amb el meu assistent d'IA per definir les teves necessitats i obtenir una proposta preliminar en minuts.",
+    "chat_greeting": "Hola! Sóc l'assistent virtual de OneJoan. Estic aquí per ajudar-te a perfilar el teu projecte i oferir-te una proposta inicial. Per començar, quin és el teu nom i en quin tipus de projecte estàs pensant?"
+  },
+  "Footer": {
+    "subtitle": "Solucions digitals d'alt impacte per portar el teu negoci al següent nivell.",
+    "services_title": "Serveis",
+    "service1": "Immobiliària i Arquitectura",
+    "service2": "Simulació Industrial",
+    "service3": "Desenvolupament Web i Apps",
+    "service4": "Intel·ligència Artificial",
+    "legal_title": "Legal",
+    "legal1": "Política de Privacitat",
+    "legal2": "Termes de Servei",
+    "legal3": "Política de Cookies",
+    "contact_title": "Contacte",
+    "contact3": "Barcelona, Espanya",
+    "copyright": "Tots els drets reservats."
   }
 }

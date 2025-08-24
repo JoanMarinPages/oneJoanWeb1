@@ -4,50 +4,46 @@
 import { Home, Building } from "lucide-react";
 import { Section } from './section';
 
-const projects = [
-  {
-    video: "/assets/videosCasa/new hero.mp4",
-    icon: <Home className="h-8 w-8 text-primary" />,
-    overlay: (
-      <>
-        <div className="absolute top-8 left-8">
-          <h3 className="text-5xl md:text-6xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
-            Luce tu<br />espacio
-          </h3>
-        </div>
-        <div className="absolute bottom-8 left-8 text-left">
-            <p className="mt-2 text-xl md:text-2xl text-white">
-                Crea vistas profesionales
-            </p>
-        </div>
-      </>
-    )
-  },
-  {
-    video: "/assets/videosCasa/creator 1080 p 60 fps.mp4",
-    icon: <Building className="h-8 w-8 text-primary" />,
-    overlay: (
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
-            <h3 className="text-3xl md:text-4xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
-                La tecnología de generación 3D NeRF<br/>más avanzada del mundo
-            </h3>
-        </div>
-    )
-  },
-];
-
 interface RealEstateProps {
   backgroundVideoUrl: string;
+  dictionary: any;
 }
 
-export function RealEstate({ backgroundVideoUrl }: RealEstateProps) {
+export function RealEstate({ backgroundVideoUrl, dictionary }: RealEstateProps) {
+
+  const projects = [
+    {
+      video: "/assets/videosCasa/new hero.mp4",
+      icon: <Home className="h-8 w-8 text-primary" />,
+      overlay: (
+        <>
+          <div className="absolute top-8 left-8">
+            <h3 className="text-5xl md:text-6xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }} dangerouslySetInnerHTML={{ __html: dictionary.project1_title }}/>
+          </div>
+          <div className="absolute bottom-8 left-8 text-left">
+              <p className="mt-2 text-xl md:text-2xl text-white">
+                  {dictionary.project1_desc}
+              </p>
+          </div>
+        </>
+      )
+    },
+    {
+      video: "/assets/videosCasa/creator 1080 p 60 fps.mp4",
+      icon: <Building className="h-8 w-8 text-primary" />,
+      overlay: (
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
+              <h3 className="text-3xl md:text-4xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }} dangerouslySetInnerHTML={{ __html: dictionary.project2_title }}/>
+          </div>
+      )
+    },
+  ];
+
   const title = (
-    <>
-      Soluciones para <span className="text-primary">Inmobiliaria y Arquitectura</span>
-    </>
+    <span dangerouslySetInnerHTML={{ __html: dictionary.title.replace("Inmobiliaria y Arquitectura", `<span class="text-primary">Inmobiliaria y Arquitectura</span>`) }} />
   );
 
-  const description = "Visualizaciones interactivas y experiencias inmersivas que dan vida a tus proyectos antes de construirlos.";
+  const description = dictionary.subtitle;
 
   return (
     <Section id="real-estate" title={title} description={description} backgroundVideoUrl={backgroundVideoUrl}>

@@ -8,7 +8,11 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
-export function Hero() {
+interface HeroProps {
+  dictionary: any;
+}
+
+export function Hero({ dictionary }: HeroProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -88,16 +92,16 @@ export function Hero() {
             variants={itemVariants}
             className="font-headline text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl"
           >
-            Más que una web, tu 
+            {dictionary.title1}
             <br />
-            <span className="animated-gradient-text bg-clip-text text-transparent">Ventaja Estratégica</span>.
+            <span className="animated-gradient-text bg-clip-text text-transparent">{dictionary.title2}</span>.
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="max-w-3xl text-lg text-muted-foreground md:text-xl"
           >
-            Transformo ideas en soluciones digitales de alto impacto. Mi objetivo es simple: entregar resultados que impulsen tu crecimiento y te diferencien en el mercado.
+            {dictionary.subtitle}
           </motion.p>
 
           <motion.div
@@ -106,11 +110,11 @@ export function Hero() {
           >
             <Button size="lg" asChild>
               <Link href="#contact">
-                Empezar mi Proyecto <ArrowRight className="ml-2" />
+                {dictionary.cta1} <ArrowRight className="ml-2" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="#services">Ver Servicios</Link>
+              <Link href="#services">{dictionary.cta2}</Link>
             </Button>
           </motion.div>
         </motion.div>
