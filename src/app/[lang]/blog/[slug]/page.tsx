@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string,
 
         </article>
       </main>
-      <Footer />
+      <Footer dictionary={dictionary.Footer} />
     </div>
   );
 }
