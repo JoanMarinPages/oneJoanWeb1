@@ -19,6 +19,27 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "OneJoan | Soluciones Digitales de Alto Impacto",
   description: "Portfolio de Joan Marín, desarrollador freelance especializado en web, apps, IA y Realidad Aumentada.",
+  icons: {
+    icon: "/assets/logos/logoOnejoan.png",
+    shortcut: "/assets/logos/logoOnejoan.png",
+    apple: "/assets/logos/logoOnejoan.png",
+  },
+  openGraph: {
+    title: "OneJoan | Soluciones Digitales de Alto Impacto",
+    description: "Transformo ideas en soluciones digitales que impulsan tu crecimiento. Descubre mis proyectos de desarrollo web, IA y Realidad Aumentada.",
+    url: "https://onejoan.com", // Replace with your actual domain
+    siteName: "OneJoan",
+    images: [
+      {
+        url: "/assets/logos/logoOnejoan.png", // Must be an absolute URL
+        width: 512,
+        height: 512,
+        alt: "Logo de OneJoan",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
