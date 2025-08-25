@@ -1,11 +1,9 @@
+
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from 'next/font/google';
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { i18n, Locale } from "@/i18n-config";
-import { AuthProvider } from "@/components/auth-provider";
-import { Providers } from "@/components/providers";
-import { AnalyticsProvider } from "@/components/analytics-provider";
 import { getDictionary } from '@/lib/get-dictionary';
 import { Header } from '@/components/page/header';
 import { Footer } from '@/components/page/footer';
