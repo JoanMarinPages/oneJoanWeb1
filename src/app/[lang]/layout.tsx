@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from 'next/font/google';
-import "../globals.css";
+import "@/app/globals.css";
 import { cn } from "@/lib/utils";
 import { i18n, Locale } from "@/i18n-config";
 import { getDictionary } from '@/lib/get-dictionary';
