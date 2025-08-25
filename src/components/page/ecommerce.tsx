@@ -114,8 +114,8 @@ export function Ecommerce({ dictionary }: EcommerceProps) {
       description={description}
       backgroundVideoUrl="/assets/ondesVideo/social_yow_one_httpss.mj.runHb7pva_IXRU_--ar_12869_--video_1_d1590073-1217-4c55-ab72-085a3085ba55_0.mp4"
     >
-      <div className="relative w-full min-h-[600px] overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
-        <div className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
+      <div className="relative w-full overflow-hidden rounded-xl bg-card/80 backdrop-blur-md border border-white/20 shadow-xl shadow-primary/10">
+        <div className="relative flex flex-col md:flex-row p-4 md:p-8 gap-8">
           
           <div className="h-full w-full md:w-[35%] flex flex-col">
             <div className="flex-shrink-0 mb-4">
@@ -184,66 +184,66 @@ export function Ecommerce({ dictionary }: EcommerceProps) {
                 </div>
             </Card>
           </div>
-        </div>
 
-        <div
-          className={cn(
-            "absolute top-0 right-0 h-full w-full max-w-md md:max-w-[65%] bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
-            cartOpen ? "translate-x-0" : "translate-x-full"
-          )}
-        >
-          <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b border-border/20">
-              <h3 className="text-xl font-bold font-headline flex items-center gap-2">
-                <ShoppingCart className="h-6 w-6 text-primary" />
-                Tu Carrito
-              </h3>
-              <Button variant="ghost" size="icon" onClick={() => setCartOpen(false)}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="flex-1 p-6 space-y-6 overflow-y-auto">
-              <div className="flex gap-4">
-                <Image
-                  src={cartProduct.image}
-                  alt={cartProduct.name}
-                  width={90}
-                  height={90}
-                  className="rounded-lg object-cover"
-                  data-ai-hint={cartProduct.hint}
-                />
-                <div className="flex-1">
-                  <h4 className="font-semibold">{cartProduct.name}</h4>
-                  <p className="text-muted-foreground text-sm">{cartProduct.description}</p>
-                  <p className="font-bold mt-1">{cartProduct.price}</p>
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-1 border rounded-md p-0.5">
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><Minus className="h-4 w-4" /></Button>
-                      <span className="font-bold text-sm px-1">1</span>
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><Plus className="h-4 w-4" /></Button>
+          <div
+            className={cn(
+              "md:absolute top-0 right-0 h-full w-full md:max-w-[65%] bg-card/80 backdrop-blur-xl border-l border-border/20 shadow-2xl transform transition-transform duration-700 ease-in-out",
+              cartOpen ? "translate-x-0" : "translate-x-full"
+            )}
+          >
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-between p-6 border-b border-border/20">
+                <h3 className="text-xl font-bold font-headline flex items-center gap-2">
+                  <ShoppingCart className="h-6 w-6 text-primary" />
+                  Tu Carrito
+                </h3>
+                <Button variant="ghost" size="icon" onClick={() => setCartOpen(false)}>
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+                <div className="flex gap-4">
+                  <Image
+                    src={cartProduct.image}
+                    alt={cartProduct.name}
+                    width={90}
+                    height={90}
+                    className="rounded-lg object-cover"
+                    data-ai-hint={cartProduct.hint}
+                  />
+                  <div className="flex-1">
+                    <h4 className="font-semibold">{cartProduct.name}</h4>
+                    <p className="text-muted-foreground text-sm">{cartProduct.description}</p>
+                    <p className="font-bold mt-1">{cartProduct.price}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-1 border rounded-md p-0.5">
+                        <Button variant="ghost" size="icon" className="h-6 w-6"><Minus className="h-4 w-4" /></Button>
+                        <span className="font-bold text-sm px-1">1</span>
+                        <Button variant="ghost" size="icon" className="h-6 w-6"><Plus className="h-4 w-4" /></Button>
+                      </div>
+                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive h-8 w-8">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive h-8 w-8">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
                   </div>
                 </div>
+                 <Badge variant="secondary" className="w-full justify-center py-1">¡Solo quedan 3 en stock!</Badge>
               </div>
-               <Badge variant="secondary" className="w-full justify-center py-1">¡Solo quedan 3 en stock!</Badge>
-            </div>
-            <div className="p-6 border-t border-border/20 mt-auto space-y-4">
-                <div className="flex justify-between font-medium">
-                    <span>Subtotal</span>
-                    <span>{cartProduct.price}</span>
-                </div>
-                 <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>Envío</span>
-                    <span>Gratis</span>
-                </div>
-                <div className="flex justify-between font-bold text-lg border-t border-border/20 pt-4 mt-4">
-                    <span>Total</span>
-                    <span>{cartProduct.price}</span>
-                </div>
-              <Button size="lg" className="w-full">Finalizar Compra</Button>
+              <div className="p-6 border-t border-border/20 mt-auto space-y-4">
+                  <div className="flex justify-between font-medium">
+                      <span>Subtotal</span>
+                      <span>{cartProduct.price}</span>
+                  </div>
+                   <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>Envío</span>
+                      <span>Gratis</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-lg border-t border-border/20 pt-4 mt-4">
+                      <span>Total</span>
+                      <span>{cartProduct.price}</span>
+                  </div>
+                <Button size="lg" className="w-full">Finalizar Compra</Button>
+              </div>
             </div>
           </div>
         </div>
@@ -265,5 +265,7 @@ function ConfigOption({ icon, label, value, activeValue, onClick }: { icon: Reac
         </Button>
     )
 }
+
+    
 
     
