@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from 'next/font/google';
-import "./globals.css";
+import '@/globals.css';
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/components/auth-provider";
 import { Providers } from "@/components/providers";
