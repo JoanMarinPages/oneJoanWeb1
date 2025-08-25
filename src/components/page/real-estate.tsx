@@ -3,6 +3,8 @@
 
 import { Home, Building } from "lucide-react";
 import { Section } from './section';
+import Image from "next/image";
+import Link from "next/link";
 
 interface RealEstateProps {
   backgroundVideoUrl: string;
@@ -32,9 +34,16 @@ export function RealEstate({ backgroundVideoUrl, dictionary }: RealEstateProps) 
       video: "/assets/videosCasa/creator 1080 p 60 fps.mp4",
       icon: <Building className="h-8 w-8 text-primary" />,
       overlay: (
-          <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
-              <h3 className="text-3xl md:text-4xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }} dangerouslySetInnerHTML={{ __html: dictionary.project2_title }}/>
-          </div>
+          <>
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 max-w-md text-center">
+                <h3 className="text-3xl md:text-4xl font-bold font-headline text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }} dangerouslySetInnerHTML={{ __html: dictionary.project2_title }}/>
+            </div>
+            <div className="absolute bottom-8 right-8">
+                <Link href="https://visionlux.es/" target="_blank" rel="noopener noreferrer">
+                    <Image src="/assets/logos/visionlux-logo.png" alt="VisionLux Logo" width={150} height={50} />
+                </Link>
+            </div>
+          </>
       )
     },
   ];
